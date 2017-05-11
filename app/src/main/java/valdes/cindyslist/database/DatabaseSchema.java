@@ -3,7 +3,7 @@ package valdes.cindyslist.database;
 /***************************************************************************************************
  * Class to keep track of SQLite db schema
  */
-public class DBschema {
+public class DatabaseSchema {
 
     /***********************************************************************************************
      * Class for the products table
