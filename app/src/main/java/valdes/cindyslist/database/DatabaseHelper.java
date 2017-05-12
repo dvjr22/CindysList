@@ -91,6 +91,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     }
 
+    private void insertProducts(){
+
+    }
+
 
 
 
