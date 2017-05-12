@@ -1,7 +1,14 @@
 package valdes.cindyslist.database;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static valdes.cindyslist.database.DatabaseSchema.*;
 
 /***************************************************************************************************
  * Class that manages the SQLite database
@@ -39,5 +46,63 @@ public class DatabaseManager {
         database = new DatabaseHelper(context).getWritableDatabase();
 
     }
+
+    /***********************************************************************************************
+     * Sets up a Cursor to query the SQLite database
+     *
+     * @param tableName         Name of the table to be queried
+     * @param columns           The columns to be selected
+     *                          Can be null
+     * @param whereClause       Where clause
+     *                          Can be null
+     * @param whereArgs         The arguments for the where clause
+     *                          Can be null
+     * @param groupBy           How results should be grouped
+     *                          Can be null
+     * @return                  An instance of the cursor with the query
+     */
+    private DatabaseCursorWrapper queryDatabase(String tableName, String[] columns,
+                                                String whereClause, String[] whereArgs,
+                                                String groupBy){
+
+        // query(String table, String[] columns, String selection, String[] selectionArgs,
+        //      String groupBy, String having, String orderBy)
+        // Cursor is closed in the calling method
+        Cursor cursor = database.query(
+                tableName,
+                columns,
+                whereClause,
+                whereArgs,
+                groupBy,
+                null, // having
+                null // order by
+        );
+
+        return new DatabaseCursorWrapper(cursor);
+
+    }
+
+    /***********************************************************************************************
+     * Sets the values of a Product to ContentValues to be inserted into the SQLite database
+     *
+     * @param product       Product to be inserted into the SQLite database
+     * @return              The values to be inserted in a ContentValues object
+     */
+    // TODO: 5/12/17 return to private after testing -DVJ
+    public static ContentValues setProductValues(Product product){
+
+        ContentValues values = new ContentValues();
+
+        values.put(Products.Attributes.CATEGORY, product.getCategory());
+        values.put(Products.Attributes.PRODUCT, product.getProductName());
+        values.put(Products.Attributes.PRICE, product.getPrice());
+        values.put(Products.Attributes.PIC_ID, product.getPicId());
+        values.put(Products.Attributes.UPC, product.getUpc());
+
+        return values;
+
+    }
+
+
 
 }

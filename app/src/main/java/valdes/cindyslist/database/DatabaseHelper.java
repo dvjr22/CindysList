@@ -1,5 +1,6 @@
 package valdes.cindyslist.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -67,6 +68,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 Lists.Attributes.PRICE + ", " +
                 Lists.Attributes.QTY + ")"
         );
+
+        // For testing purposes
+        insertProducts(db);
     }
 
     /***********************************************************************************************
@@ -93,7 +97,34 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     }
 
-    private void insertProducts(){
+    /***********************************************************************************************
+     * Inserts testing data into SQLite db
+     *
+     * @param db        SQLite database that data will receive data
+     */
+    public void insertProducts(SQLiteDatabase db){
+
+        ContentValues apple = DatabaseManager.
+                setProductValues(new Product("Fruits", "Apple", .99, 123456, "123456"));
+        ContentValues bannana = DatabaseManager.
+                setProductValues(new Product("Fruits", "Bannanas", .99, 123456, "123456"));
+
+        ContentValues carrots = DatabaseManager.
+                setProductValues(new Product("Vegetables", "Carrots", .99, 123456, "123456"));
+        ContentValues garlic = DatabaseManager.
+                setProductValues(new Product("Vegetables", "Garlic", .99, 123456, "123456"));
+
+        ContentValues ham = DatabaseManager.
+                setProductValues(new Product("Deli", "Ham", .99, 123456, "123456"));
+        ContentValues cheese = DatabaseManager.
+                setProductValues(new Product("Deli", "Cheese", .99, 123456, "123456"));
+
+        db.insert(Products.NAME, null, apple);
+        db.insert(Products.NAME, null, bannana);
+        db.insert(Products.NAME, null, carrots);
+        db.insert(Products.NAME, null, garlic);
+        db.insert(Products.NAME, null, ham);
+        db.insert(Products.NAME, null, cheese);
 
     }
 

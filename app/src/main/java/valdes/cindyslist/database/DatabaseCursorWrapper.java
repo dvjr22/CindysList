@@ -31,7 +31,7 @@ public class DatabaseCursorWrapper extends CursorWrapper{
         return new Product(
                 getString(getColumnIndex(Products.Attributes.CATEGORY)),
                 getString(getColumnIndex(Products.Attributes.PRODUCT)),
-                getFloat(getColumnIndex(Products.Attributes.PRICE)),
+                getDouble(getColumnIndex(Products.Attributes.PRICE)),
                 getInt(getColumnIndex(Products.Attributes.PIC_ID)),
                 getString(getColumnIndex(Products.Attributes.UPC))
         );
@@ -48,7 +48,7 @@ public class DatabaseCursorWrapper extends CursorWrapper{
         return new CreatedList(
                 getString(getColumnIndex(CreatedLists.Attributes.LIST_NAME)),
                 getInt(getColumnIndex(CreatedLists.Attributes.NUM_OF_ITEMS)),
-                getFloat(getColumnIndex(CreatedLists.Attributes.TOTAL_COST)),
+                getDouble(getColumnIndex(CreatedLists.Attributes.TOTAL_COST)),
                 getString(getColumnIndex(CreatedLists.Attributes.DATE_CREATED))
 
         );

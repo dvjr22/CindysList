@@ -8,7 +8,7 @@ public class Product {
 
     private String category;
     private String productName;
-    private float price;
+    private double price;
     private int picId;
     private String upc;
 
@@ -24,7 +24,7 @@ public class Product {
      * @param picId            R.id of the pic to be used in view displays
      * @param upc               UPC of the product
      */
-    public Product(String category, String productName, float price, int picId, String upc){
+    public Product(String category, String productName, double price, int picId, String upc){
 
         this.category = category;
         this.productName = productName;
@@ -68,7 +68,7 @@ public class Product {
      *
      * @return      Price of the product
      */
-    public float getPrice() { return price; }
+    public double getPrice() { return price; }
 
     /***********************************************************************************************
      * Sets the product's price

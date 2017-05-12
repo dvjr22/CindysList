@@ -13,7 +13,7 @@ public class CreatedList {
     private String title;
     private String date;
     private int items;
-    private float cost;
+    private double cost;
 
     /***********************************************************************************************
      * Constructor
@@ -25,7 +25,7 @@ public class CreatedList {
      * @param items     Number of items in the list
      * @param cost      Total cost of the list
      */
-    public CreatedList(String title, int items, float cost){
+    public CreatedList(String title, int items, double cost){
 
         this.title = title;
         this.items = items;
@@ -49,7 +49,7 @@ public class CreatedList {
      * @param cost      Total cost of the list
      * @param date      Date the list was created/updated
      */
-    public CreatedList(String title, int items, float cost, String date){
+    public CreatedList(String title, int items, double cost, String date){
 
         this.title = title;
         this.items = items;
@@ -118,13 +118,13 @@ public class CreatedList {
      *
      * @return      Total cost of the list
      */
-    public float getCost() { return cost; }
+    public double getCost() { return cost; }
 
     /***********************************************************************************************
      * Set the cost of the list
      *
      * @param cost      Total cost of the list
      */
-    public void setCost(float cost) { this.cost = cost;}
+    public void setCost(double cost) { this.cost = cost;}
 
 }
