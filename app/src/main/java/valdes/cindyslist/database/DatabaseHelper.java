@@ -36,7 +36,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         // Create products table
         // execSQL(String sql)
-        db.execSQL("create table " + Products.NAME + "(" +
+        db.execSQL(
+                "create table " + Products.NAME + "(" +
                 " _id integer primary key autoincrement, " +
                 Products.Attributes.CATEGORY + ", " +
                 Products.Attributes.PRODUCT + ", " +
@@ -48,17 +49,18 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         // Create created_lists table
         // execSQL(String sql)
-        db.execSQL("create table " + CreatedLists.NAME + "(" +
+        db.execSQL(
+                "create table " + CreatedLists.NAME + "(" +
                 " _id integer primary key autoincrement, " +
                 CreatedLists.Attributes.LIST_NAME + ", " +
                 CreatedLists.Attributes.DATE_CREATED + ", " +
                 CreatedLists.Attributes.NUM_OF_ITEMS + ", " +
                 CreatedLists.Attributes.TOTAL_COST + ")"
         );
-
         // Create lists table
         // execSQL(String sql)
-        db.execSQL("create table " + Lists.NAME + "(" +
+        db.execSQL(
+                "create table " + Lists.NAME + "(" +
                 " _id integer primary key autoincrement, " +
                 Lists.Attributes.LIST_NAME + ", " +
                 Lists.Attributes.PRODUCT + ", " +

@@ -34,8 +34,10 @@ public class DatabaseManager {
      * @param context       The context of the application
      */
     private DatabaseManager(Context context){
+
         context = context.getApplicationContext();
         database = new DatabaseHelper(context).getWritableDatabase();
+
     }
 
 }

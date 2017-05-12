@@ -25,6 +25,7 @@ public class Product {
      * @param upc               UPC of the product
      */
     public Product(String category, String productName, float price, int picId, String upc){
+
         this.category = category;
         this.productName = productName;
         // This info below can be pulled from the server at a later date to increase functunality
@@ -39,63 +40,49 @@ public class Product {
      *
      * @return      The category of the product
      */
-    public String getCategory() {
-        return category;
-    }
+    public String getCategory() { return category; }
 
     /***********************************************************************************************
      * Sets the category of the product
      *
      * @param category      The type of category to which the product belongs
      */
-    public void setCategory(String category) {
-        this.category = category;
-    }
+    public void setCategory(String category) { this.category = category; }
 
     /***********************************************************************************************
      * Gets the product's name
      *
      * @return      Name of the product
      */
-    public String getProductName() {
-        return productName;
-    }
+    public String getProductName() { return productName; }
 
     /***********************************************************************************************
      * Sets the product's name
      *
      * @param productName      The name of the product
      */
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
+    public void setProductName(String productName) { this.productName = productName; }
 
     /***********************************************************************************************
      * Gets the product's price
      *
      * @return      Price of the product
      */
-    public float getPrice() {
-        return price;
-    }
+    public float getPrice() { return price; }
 
     /***********************************************************************************************
      * Sets the product's price
      *
      * @param price     Price of the product
      */
-    public void setPrice(float price) {
-        this.price = price;
-    }
+    public void setPrice(float price) { this.price = price; }
 
     /***********************************************************************************************
      * Get the R.id of the picture to be used in the views
      *
      * @return      R.id associated with the product's picture
      */
-    public int getPicId() {
-        return picId;
-    }
+    public int getPicId() { return picId; }
 
     /***********************************************************************************************
      * Set the id of the pic
@@ -103,26 +90,20 @@ public class Product {
      * @param picId     id associated with the product's picture
      */
     // TODO: 5/12/17 Figure out how to assign outside pics to products - DVJ
-    public void setPicId(int picId) {
-        this.picId = picId;
-    }
+    public void setPicId(int picId) { this.picId = picId; }
 
     /***********************************************************************************************
      * Get the product's UPC
      *
      * @return      UPC of the product
      */
-    public String getUpc() {
-        return upc;
-    }
+    public String getUpc() { return upc; }
 
     /***********************************************************************************************
      * Set the product's UPC
      *
      * @param upc       UPC of the product
      */
-    public void setUpc(String upc) {
-        this.upc = upc;
-    }
+    public void setUpc(String upc) { this.upc = upc; }
 
 }
