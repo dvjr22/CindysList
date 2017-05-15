@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static valdes.cindyslist.database.DatabaseSchema.*;
 
 /***************************************************************************************************
@@ -111,12 +114,43 @@ public class DatabaseManager {
 
         ContentValues values = new ContentValues();
 
+        // Place CreatedList values into ContentValues object
         values.put(CreatedLists.Attributes.LIST_NAME, createdList.getTitle());
         values.put(CreatedLists.Attributes.DATE_CREATED, createdList.getDate());
         values.put(CreatedLists.Attributes.NUM_OF_ITEMS, createdList.getItems());
         values.put(CreatedLists.Attributes.TOTAL_COST, createdList.getCost());
 
         return values;
+
+    }
+
+    /***********************************************************************************************
+     * Get all the created lists from the SQLite database
+     *
+     * @return      A list of all the CreatedLists
+     */
+    public List<CreatedList> getCreatedLists(){
+
+        List<CreatedList> createdLists = new ArrayList<>();
+        // Cursor to go over results of the query
+        // select * from created_lists;
+        DatabaseCursorWrapper cursor = queryDatabase(CreatedLists.NAME, null, null, null, null);
+
+        try{
+            // Move to the first returned result
+            cursor.moveToFirst();
+            // Continue until all results have been read
+            while(!cursor.isAfterLast()){
+                // Add results to crreatedLists
+                createdLists.add(cursor.getList());
+                // Move to the next result
+                cursor.moveToNext();
+            }
+        } finally {
+            // Close cursor once all results have been retrieved
+            cursor.close();
+        }
+        return createdLists;
 
     }
 
