@@ -119,12 +119,23 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         ContentValues cheese = DatabaseManager.
                 setProductValues(new Product("Deli", "Cheese", .99, 123456, "123456"));
 
+        ContentValues listOne = DatabaseManager.
+                setListValues(new CreatedList("TestOne", 10, 56.32, "May 15, 2017"));
+        ContentValues listTwo = DatabaseManager.
+                setListValues(new CreatedList("TestTwo", 10, 56.32, "May 15, 2017"));
+        ContentValues listThree = DatabaseManager.
+                setListValues(new CreatedList("TestThree", 10, 56.32, "May 15, 2017"));
+
         db.insert(Products.NAME, null, apple);
         db.insert(Products.NAME, null, bannana);
         db.insert(Products.NAME, null, carrots);
         db.insert(Products.NAME, null, garlic);
         db.insert(Products.NAME, null, ham);
         db.insert(Products.NAME, null, cheese);
+
+        db.insert(CreatedLists.NAME, null, listOne);
+        db.insert(CreatedLists.NAME, null, listTwo);
+        db.insert(CreatedLists.NAME, null, listThree);
 
     }
 

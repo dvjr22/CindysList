@@ -100,6 +100,25 @@ public class DatabaseManager {
 
     }
 
+    /***********************************************************************************************
+     * Sets the values of a CreatedList to ContentValues to be inserted into the SQLite database
+     *
+     * @param createdList       CreatedList to be inserted into the SQLite database
+     * @return                  The values to be inserted in a ContentValues object
+     */
+    // TODO: 5/15/17 return to private after testing - DVJ
+    public static ContentValues setListValues(CreatedList createdList){
+
+        ContentValues values = new ContentValues();
+
+        values.put(CreatedLists.Attributes.LIST_NAME, createdList.getTitle());
+        values.put(CreatedLists.Attributes.DATE_CREATED, createdList.getDate());
+        values.put(CreatedLists.Attributes.NUM_OF_ITEMS, createdList.getItems());
+        values.put(CreatedLists.Attributes.TOTAL_COST, createdList.getCost());
+
+        return values;
+
+    }
 
 
 }
