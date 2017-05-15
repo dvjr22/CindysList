@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
+import java.util.Locale;
 
 import valdes.cindyslist.database.CreatedList;
 import valdes.cindyslist.database.DatabaseManager;
@@ -52,6 +54,9 @@ public class MainFragment extends Fragment {
         return view;
     }
 
+    /***********************************************************************************************
+     *
+     */
     private void updateUI(){
 
         DatabaseManager databaseManager = DatabaseManager.get(getActivity());
@@ -71,6 +76,7 @@ public class MainFragment extends Fragment {
 
         //
         private TextView listName, dateCreated, items, total;
+        private CreatedList createdList;
 
         /*******************************************************************************************
          *
@@ -94,10 +100,15 @@ public class MainFragment extends Fragment {
          */
         public void bindList(CreatedList createdList){
 
+            this.createdList = createdList;
+
             listName.setText(createdList.getTitle());
             dateCreated.setText(createdList.getDate());
-            items.setText(Integer.toString(createdList.getItems()));
-            total.setText(Double.toString(createdList.getCost()));
+            items.setText(String.format(Locale.US," %d", createdList.getItems()));
+            total.setText(String.format(Locale.US, "%1$,.2f", createdList.getCost()));
+
+            //items.setText(Integer.toString(createdList.getItems()));
+            //total.setText(Double.toString(createdList.getCost()));
 
         }
 
@@ -107,6 +118,8 @@ public class MainFragment extends Fragment {
          */
         @Override
         public void onClick(View view){
+
+            Toast.makeText(getActivity(), "You clicked the list: " + createdList.getTitle(), Toast.LENGTH_SHORT).show();
 
         }
 

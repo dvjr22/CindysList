@@ -16,7 +16,7 @@ public class DatabaseCursorWrapper extends CursorWrapper{
      *
      * Creates an instance of the Cursor
      *
-     * @param cursor
+     * @param cursor    An instance of a cursor containing the query to be executed
      */
     public DatabaseCursorWrapper(Cursor cursor){ super(cursor); }
 

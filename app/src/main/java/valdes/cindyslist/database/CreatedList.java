@@ -1,7 +1,9 @@
 package valdes.cindyslist.database;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 /***************************************************************************************************
  * Object Class that creates an instance of a CreatedList
@@ -34,7 +36,9 @@ public class CreatedList {
         // Create a timestamp at list creation
         Calendar calendar = Calendar.getInstance();
         Timestamp timeStamp = new Timestamp(calendar.getTime().getTime());
-        date = timeStamp.toString();
+        // Format timestamp to String for TextView display
+        date = new SimpleDateFormat("MM/dd/yyyy HH:mm", Locale.US).format(timeStamp);
+
 
     }
 
