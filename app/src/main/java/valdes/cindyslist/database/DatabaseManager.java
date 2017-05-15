@@ -5,9 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static valdes.cindyslist.database.DatabaseSchema.*;
 
 /***************************************************************************************************
@@ -88,7 +85,7 @@ public class DatabaseManager {
      * @param product       Product to be inserted into the SQLite database
      * @return              The values to be inserted in a ContentValues object
      */
-    // TODO: 5/12/17 return to private after testing -DVJ
+    // TODO: 5/12/17 return to private after testing - DVJ
     public static ContentValues setProductValues(Product product){
 
         ContentValues values = new ContentValues();
