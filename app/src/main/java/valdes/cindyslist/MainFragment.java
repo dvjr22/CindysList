@@ -14,6 +14,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +56,8 @@ public class MainFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recylerview_lists);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        //setSwipeForRecyclerView();
+
         updateUI();
 
         return view;
@@ -81,7 +84,8 @@ public class MainFragment extends Fragment {
     private class ListHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         //
-        private TextView listName, dateCreated, items, total;
+        private TextView listName, dateCreated, items, total, undo;
+        private LinearLayout listLayout, swipeLayout;
         private CreatedList createdList;
 
         /*******************************************************************************************
@@ -93,10 +97,16 @@ public class MainFragment extends Fragment {
             super(view);
             view.setOnClickListener(this);
 
+            // view_created_list.xml
+            listLayout = (LinearLayout) view.findViewById(R.id.view_created_lists);
             listName = (TextView) view.findViewById(R.id.textview_list_name);
             dateCreated = (TextView) view.findViewById(R.id.textview_date_created);
             items = (TextView) view.findViewById(R.id.textview_items);
             total = (TextView) view.findViewById(R.id.textview_total);
+
+            // view_swipe_delete.xml
+            swipeLayout = (LinearLayout) view.findViewById(R.id.view_swipe_delete);
+            undo = (TextView) view.findViewById(R.id.undo);
 
         }
 

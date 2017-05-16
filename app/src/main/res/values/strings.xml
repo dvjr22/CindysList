@@ -12,6 +12,10 @@
     <string name="price">Price:</string>
     <string name="qty">Qty: </string>
 
+    <!-- view_swipe_delete -->
+    <string name="delete">Delete</string>
+    <string name="undo">Undo</string>
+
     <!-- generics -->
     <string name="holder">place holder</string>
 
