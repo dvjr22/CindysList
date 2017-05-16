@@ -1,16 +1,14 @@
 package valdes.cindyslist;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
+
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +16,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import valdes.cindyslist.Utilities.SwipeUtility;
 import valdes.cindyslist.database.CreatedList;
 import valdes.cindyslist.database.DatabaseManager;
 
 public class MainFragment extends Fragment {
+
+    private static final String TAG = "trace";
 
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
@@ -56,7 +59,7 @@ public class MainFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recylerview_lists);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        //setSwipeForRecyclerView();
+        setSwipeForRecyclerView();
 
         updateUI();
 
@@ -76,6 +79,38 @@ public class MainFragment extends Fragment {
         } else {
             listAdapter.notifyDataSetChanged();
         }
+
+    }
+
+    private void setSwipeForRecyclerView(){
+
+        SwipeUtility swipe = new SwipeUtility(0, ItemTouchHelper.LEFT, getActivity()) {
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
+                int swipedPosition = viewHolder.getAdapterPosition();
+                ListAdapter adapter = (ListAdapter) recyclerView.getAdapter();
+                adapter.pendingRemoval(swipedPosition);
+
+            }
+
+            @Override
+            public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder){
+                int position = viewHolder.getAdapterPosition();
+                ListAdapter adapter = (ListAdapter) recyclerView.getAdapter();
+                if(adapter.isPendingRemoval(position)){
+                    return 0;
+                }
+                return super.getSwipeDirs(recyclerView, viewHolder);
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipe);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
+        swipe.setLeftSwipeLable(getString(R.string.delete));
+        swipe.setLeftcolorCode(ContextCompat.getColor(getActivity(), R.color.colorRed));
+
     }
 
     /***********************************************************************************************
@@ -114,7 +149,7 @@ public class MainFragment extends Fragment {
          *
          * @param createdList
          */
-        public void bindList(CreatedList createdList){
+        public void BindList(CreatedList createdList){
 
             this.createdList = createdList;
 
@@ -135,7 +170,8 @@ public class MainFragment extends Fragment {
         @Override
         public void onClick(View view){
 
-            Toast.makeText(getActivity(), "You clicked the list: " + createdList.getTitle(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "You clicked the list: " , Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "You clicked the list: " + createdList.getTitle(), Toast.LENGTH_SHORT).show();
 
         }
 
@@ -144,13 +180,22 @@ public class MainFragment extends Fragment {
     private class ListAdapter extends RecyclerView.Adapter<ListHolder>{
 
         private List<CreatedList> createdLists;
+        private List<String> itemsPendingRemoval;
+
+        // 4 sec
+        private static final int TIMEOUT = 4000;
+        private Handler handler = new Handler();
+        // Map pending runnables. Allows cancelation if necessary
+        HashMap<String, Runnable> pendingRunnables = new HashMap<>();
 
         /*******************************************************************************************
          *
          * @param createdLists
          */
         private ListAdapter(List<CreatedList> createdLists){
+
             this.createdLists = createdLists;
+            itemsPendingRemoval = new ArrayList<>();
         }
 
         /*******************************************************************************************
@@ -163,7 +208,9 @@ public class MainFragment extends Fragment {
         public ListHolder onCreateViewHolder(ViewGroup parent, int viewType){
 
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            View view = layoutInflater.inflate(R.layout.view_created_lists, parent, false);
+            // Set up swipe transition.
+            // view_swipe_transition includes the layouts view_created_lists and view_swipe_delete
+            View view = layoutInflater.inflate(R.layout.view_swipe_transition, parent, false);
             return new ListHolder(view);
 
         }
@@ -176,8 +223,24 @@ public class MainFragment extends Fragment {
         @Override
         public void onBindViewHolder(ListHolder listHolder, int position){
 
-            CreatedList createdList = createdLists.get(position);
-            listHolder.bindList(createdList);
+            final CreatedList createdList = createdLists.get(position);
+
+            if(itemsPendingRemoval.contains(createdList.getTitle())){
+
+                listHolder.listLayout.setVisibility(View.GONE);
+                listHolder.swipeLayout.setVisibility(View.VISIBLE);
+                listHolder.undo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        undoDelete(createdList);
+                    }
+                });
+            } else {
+
+                listHolder.listLayout.setVisibility(View.VISIBLE);
+                listHolder.swipeLayout.setVisibility(View.GONE);
+                listHolder.BindList(createdList);
+            }
 
         }
 
@@ -189,6 +252,67 @@ public class MainFragment extends Fragment {
         public int getItemCount(){
             return createdLists.size();
         }
+
+
+        private void undoDelete(CreatedList createdList){
+
+            Log.i(TAG, "undoDelete");
+
+            Runnable pendingRemovalRunnable = pendingRunnables.get(createdList.getTitle());
+            pendingRunnables.remove(createdList.getTitle());
+            if(pendingRemovalRunnable != null)
+                handler.removeCallbacks(pendingRemovalRunnable);
+            itemsPendingRemoval.remove(createdList.getTitle());
+            notifyItemChanged(createdLists.indexOf(createdList));
+
+        }
+
+        private void pendingRemoval(final int position){
+
+            CreatedList createdList = createdLists.get(position);
+
+            if(!itemsPendingRemoval.contains(createdList.getTitle())){
+                itemsPendingRemoval.add(createdList.getTitle());
+                notifyItemChanged(position);
+                Runnable pendingRemovalRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+
+                        deleteList(position);
+                    }
+                };
+                handler.postDelayed(pendingRemovalRunnable, TIMEOUT);
+                pendingRunnables.put(createdList.getTitle(), pendingRemovalRunnable);
+            }
+
+        }
+
+        private void deleteList(int position){
+            
+            CreatedList createdList = createdLists.get(position);
+            
+            if(itemsPendingRemoval.contains(createdList.getTitle())){
+
+                itemsPendingRemoval.remove(createdList.getTitle());
+            }
+
+            if(createdLists.contains(createdList)){
+
+                createdLists.remove(createdList);
+                notifyItemRemoved(position);
+                // TODO: 5/16/17 remove from SQLite db here
+            }
+
+        }
+
+        private boolean isPendingRemoval(int position){
+
+            CreatedList createdList = createdLists.get(position);
+            return itemsPendingRemoval.contains(createdList.getTitle());
+
+        }
+
+
 
     }
 
