@@ -154,5 +154,21 @@ public class DatabaseManager {
 
     }
 
+    /***********************************************************************************************
+     * Delete the list from the SQLite database
+     *
+     * @param listName      The CreatedList to be deleted
+     */
+    public void deleteList(String listName){
+
+        // delete(String table, String whereClause, String[] whereArgs)
+        database.delete(CreatedLists.NAME,
+                CreatedLists.Attributes.LIST_NAME + " = ?",
+                new String[] {listName});
+
+        // TODO: 5/16/17 delete all the items in the lists table
+
+    }
+
 
 }

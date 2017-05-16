@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +31,8 @@ public class MainFragment extends Fragment {
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
 
+    private DatabaseManager databaseManager;
+
 
     /***********************************************************************************************
      * Required empty constructor
@@ -49,30 +50,31 @@ public class MainFragment extends Fragment {
 
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
+        // Setup RecyclerView
         recyclerView = (RecyclerView) view.findViewById(R.id.recylerview_lists);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        setSwipeForRecyclerView();
-
         updateUI();
+        setSwipe();
 
         return view;
+
     }
 
     /***********************************************************************************************
-     *
+     * Initial setup of RecyclerView
      */
     private void updateUI(){
 
-        DatabaseManager databaseManager = DatabaseManager.get(getActivity());
+        // Get the database
+        databaseManager = DatabaseManager.get(getActivity());
         List<CreatedList> createdLists = databaseManager.getCreatedLists();
+        // Check if the adapter has been setup and checks for changes
         if(listAdapter == null){
             listAdapter = new ListAdapter(createdLists);
             recyclerView.setAdapter(listAdapter);
@@ -82,7 +84,10 @@ public class MainFragment extends Fragment {
 
     }
 
-    private void setSwipeForRecyclerView(){
+    /***********************************************************************************************
+     * Set swipe to RecyclerView
+     */
+    private void setSwipe(){
 
         SwipeUtility swipe = new SwipeUtility(0, ItemTouchHelper.LEFT, getActivity()) {
             @Override
@@ -96,12 +101,14 @@ public class MainFragment extends Fragment {
 
             @Override
             public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder){
+
                 int position = viewHolder.getAdapterPosition();
                 ListAdapter adapter = (ListAdapter) recyclerView.getAdapter();
                 if(adapter.isPendingRemoval(position)){
                     return 0;
                 }
                 return super.getSwipeDirs(recyclerView, viewHolder);
+
             }
         };
 
@@ -114,7 +121,8 @@ public class MainFragment extends Fragment {
     }
 
     /***********************************************************************************************
-     *
+     * Class that sets up the container for each instance of a view to be displayed in the
+     * Recyler view.
      */
     private class ListHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -124,12 +132,16 @@ public class MainFragment extends Fragment {
         private CreatedList createdList;
 
         /*******************************************************************************************
+         * Constructor
          *
-         * @param view
+         * Creates one instance of the view that will be displayed within the RecyclerView
+         *
+         * @param view      The view that will be used within the RecyclerView
          */
-        public ListHolder(View view){
+        private ListHolder(View view){
 
             super(view);
+            // attach listener for onClick events
             view.setOnClickListener(this);
 
             // view_created_list.xml
@@ -146,10 +158,11 @@ public class MainFragment extends Fragment {
         }
 
         /*******************************************************************************************
+         * Sets the attributes of each CreatedList to the appropriate views
          *
-         * @param createdList
+         * @param createdList       The CreatedList that will be displayed in the RecyclerView
          */
-        public void BindList(CreatedList createdList){
+        private void bindList(CreatedList createdList){
 
             this.createdList = createdList;
 
@@ -158,14 +171,14 @@ public class MainFragment extends Fragment {
             items.setText(String.format(Locale.US," %d", createdList.getItems()));
             total.setText(String.format(Locale.US, "%1$,.2f", createdList.getCost()));
 
-            //items.setText(Integer.toString(createdList.getItems()));
-            //total.setText(Double.toString(createdList.getCost()));
-
         }
 
         /*******************************************************************************************
+         * Android method
          *
-         * @param view
+         * Handles all onClick events for the view
+         *
+         * @param view      The view being clicked
          */
         @Override
         public void onClick(View view){
@@ -177,32 +190,43 @@ public class MainFragment extends Fragment {
 
     }
 
+    /***********************************************************************************************
+     * Class that binds all the views within the RecyclerView to be displayed
+     */
     private class ListAdapter extends RecyclerView.Adapter<ListHolder>{
 
+        // List of objects to be displayed in RecyclerView
         private List<CreatedList> createdLists;
-        private List<String> itemsPendingRemoval;
+        // List of CreatedList titles to track removal
+        private List<String> pendingRemoval;
 
-        // 4 sec
-        private static final int TIMEOUT = 4000;
+        // 3 sec time until delete
+        private static final int TIMEOUT = 3000;
+        // Handler class to handle time delay
         private Handler handler = new Handler();
         // Map pending runnables. Allows cancelation if necessary
         HashMap<String, Runnable> pendingRunnables = new HashMap<>();
 
         /*******************************************************************************************
+         * Constructor
          *
-         * @param createdLists
+         * @param createdLists      The list of objects to be displayed in the RecyclerView
          */
         private ListAdapter(List<CreatedList> createdLists){
 
             this.createdLists = createdLists;
-            itemsPendingRemoval = new ArrayList<>();
+            pendingRemoval = new ArrayList<>();
+
         }
 
         /*******************************************************************************************
+         * Android method
          *
-         * @param parent
-         * @param viewType
-         * @return
+         * Creates the ViewHolder for the RecyclerView
+         *
+         * @param parent        ViewGroup to which view will be added
+         * @param viewType      The type of view
+         * @return              ListHolder with the given view
          */
         @Override
         public ListHolder onCreateViewHolder(ViewGroup parent, int viewType){
@@ -216,16 +240,19 @@ public class MainFragment extends Fragment {
         }
 
         /*******************************************************************************************
+         * Android method
          *
-         * @param listHolder
-         * @param position
+         * Displays data in the specified position
+         *
+         * @param listHolder        ViewHolder with the data to be displayed
+         * @param position          the position in the adapter
          */
         @Override
         public void onBindViewHolder(ListHolder listHolder, int position){
 
             final CreatedList createdList = createdLists.get(position);
 
-            if(itemsPendingRemoval.contains(createdList.getTitle())){
+            if(pendingRemoval.contains(createdList.getTitle())){
 
                 listHolder.listLayout.setVisibility(View.GONE);
                 listHolder.swipeLayout.setVisibility(View.VISIBLE);
@@ -239,14 +266,15 @@ public class MainFragment extends Fragment {
 
                 listHolder.listLayout.setVisibility(View.VISIBLE);
                 listHolder.swipeLayout.setVisibility(View.GONE);
-                listHolder.BindList(createdList);
+                listHolder.bindList(createdList);
             }
 
         }
 
         /*******************************************************************************************
+         * Get the size of the list of objects to be displayed
          *
-         * @return
+         * @return      The size of the list
          */
         @Override
         public int getItemCount(){
@@ -254,31 +282,40 @@ public class MainFragment extends Fragment {
         }
 
 
+        /*******************************************************************************************
+         * Cancels the delete action
+         *
+         * @param createdList       The createdList that the delete action should be cancelled
+         */
         private void undoDelete(CreatedList createdList){
-
-            Log.i(TAG, "undoDelete");
 
             Runnable pendingRemovalRunnable = pendingRunnables.get(createdList.getTitle());
             pendingRunnables.remove(createdList.getTitle());
             if(pendingRemovalRunnable != null)
                 handler.removeCallbacks(pendingRemovalRunnable);
-            itemsPendingRemoval.remove(createdList.getTitle());
+            pendingRemoval.remove(createdList.getTitle());
             notifyItemChanged(createdLists.indexOf(createdList));
 
         }
 
+        /*******************************************************************************************
+         * Queues a CreatedList to be deleted within the timeout
+         *
+         * @param position      The position of the CreatedList within the adapter
+         */
         private void pendingRemoval(final int position){
 
             CreatedList createdList = createdLists.get(position);
 
-            if(!itemsPendingRemoval.contains(createdList.getTitle())){
-                itemsPendingRemoval.add(createdList.getTitle());
+            if(!pendingRemoval.contains(createdList.getTitle())){
+                pendingRemoval.add(createdList.getTitle());
                 notifyItemChanged(position);
                 Runnable pendingRemovalRunnable = new Runnable() {
                     @Override
                     public void run() {
 
                         deleteList(position);
+
                     }
                 };
                 handler.postDelayed(pendingRemovalRunnable, TIMEOUT);
@@ -287,34 +324,40 @@ public class MainFragment extends Fragment {
 
         }
 
+        /*******************************************************************************************
+         * Delete the CreatedList from existence
+         *
+         * @param position      The position of the CreatedList within the adapter
+         */
         private void deleteList(int position){
             
             CreatedList createdList = createdLists.get(position);
             
-            if(itemsPendingRemoval.contains(createdList.getTitle())){
-
-                itemsPendingRemoval.remove(createdList.getTitle());
+            if(pendingRemoval.contains(createdList.getTitle())){
+                pendingRemoval.remove(createdList.getTitle());
             }
 
             if(createdLists.contains(createdList)){
-
                 createdLists.remove(createdList);
                 notifyItemRemoved(position);
-                // TODO: 5/16/17 remove from SQLite db here
+                databaseManager.deleteList(createdList.getTitle());
             }
 
         }
 
+        /*******************************************************************************************
+         * Check if a CreatedList is pending to be deleted
+         *
+         * @param position      The position of the CreatedList
+         * @return              Status of CreatedList
+         */
         private boolean isPendingRemoval(int position){
 
             CreatedList createdList = createdLists.get(position);
-            return itemsPendingRemoval.contains(createdList.getTitle());
+            return pendingRemoval.contains(createdList.getTitle());
 
         }
 
-
-
     }
-
 
 }
