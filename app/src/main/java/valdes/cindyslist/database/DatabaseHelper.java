@@ -65,7 +65,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 " _id integer primary key autoincrement, " +
                 Lists.Attributes.LIST_NAME + ", " +
                 Lists.Attributes.PRODUCT + ", " +
-                Lists.Attributes.PRICE + ", " +
                 Lists.Attributes.QTY + ")"
         );
 
@@ -119,9 +118,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         ContentValues cheese = DatabaseManager.
                 setProductValues(new Product("Deli", "Cheese", .99, 123456, "123456"));
 
-        CreatedList list1 = new CreatedList("TestOne", 10, 23.52);
-        CreatedList list2 = new CreatedList("TestTwo", 15, 50.63);
-        CreatedList list3 = new CreatedList("TestThree", 20, 98.36);
+        CreatedList list1 = new CreatedList("Test List One", 10, 23.52);
+        CreatedList list2 = new CreatedList("Test List Two", 15, 50.63);
+        CreatedList list3 = new CreatedList("Test List Three", 20, 98.36);
 
         ContentValues listOne = DatabaseManager.
                 setListValues(list1);
@@ -129,6 +128,23 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 setListValues(list2);
         ContentValues listThree = DatabaseManager.
                 setListValues(list3);
+
+        ContentValues product1 = DatabaseManager.setProductsInListValues(list1.getTitle(), "Apple", 2);
+        ContentValues product2 = DatabaseManager.setProductsInListValues(list1.getTitle(), "Bannanas", 4);
+        ContentValues product3 = DatabaseManager.setProductsInListValues(list1.getTitle(), "Ham", 1);
+        ContentValues product4 = DatabaseManager.setProductsInListValues(list1.getTitle(), "Carrots", 1);
+
+        ContentValues product5 = DatabaseManager.setProductsInListValues(list2.getTitle(), "Apple", 4);
+        ContentValues product6 = DatabaseManager.setProductsInListValues(list2.getTitle(), "Cheese", 1);
+        ContentValues product7 = DatabaseManager.setProductsInListValues(list2.getTitle(), "Garlic", 3);
+        ContentValues product8 = DatabaseManager.setProductsInListValues(list2.getTitle(), "Ham", 1);
+
+        ContentValues product9 = DatabaseManager.setProductsInListValues(list3.getTitle(), "Apple", 6);
+        ContentValues product10 = DatabaseManager.setProductsInListValues(list3.getTitle(), "Garlic", 2);
+        ContentValues product11 = DatabaseManager.setProductsInListValues(list3.getTitle(), "Carrots", 3);
+        ContentValues product12 = DatabaseManager.setProductsInListValues(list3.getTitle(), "Cheese", 1);
+
+
 
         db.insert(Products.NAME, null, apple);
         db.insert(Products.NAME, null, bannana);
@@ -140,6 +156,19 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.insert(CreatedLists.NAME, null, listOne);
         db.insert(CreatedLists.NAME, null, listTwo);
         db.insert(CreatedLists.NAME, null, listThree);
+
+        db.insert(Lists.NAME, null, product1);
+        db.insert(Lists.NAME, null, product2);
+        db.insert(Lists.NAME, null, product3);
+        db.insert(Lists.NAME, null, product4);
+        db.insert(Lists.NAME, null, product5);
+        db.insert(Lists.NAME, null, product6);
+        db.insert(Lists.NAME, null, product7);
+        db.insert(Lists.NAME, null, product8);
+        db.insert(Lists.NAME, null, product9);
+        db.insert(Lists.NAME, null, product10);
+        db.insert(Lists.NAME, null, product11);
+        db.insert(Lists.NAME, null, product12);
 
     }
 

@@ -59,7 +59,6 @@ public class DatabaseSchema {
             public static final String LIST_NAME = "list_name";
             public static final String PRODUCT = "product";
             public static final String QTY = "qty";
-            public static final String PRICE = "price";
 
         }
     }

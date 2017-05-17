@@ -125,6 +125,27 @@ public class DatabaseManager {
     }
 
     /***********************************************************************************************
+     * Sets the values of the products that have been placed in a CreatedList to be inserted into
+     * SQLite database
+     *
+     * @param listName      The title of the list
+     * @param product       The product that has been selected for the list
+     * @param qty           The quantity of this item in the list
+     * @return              The values to be inserted in a ContentValues object
+     */
+    public static ContentValues setProductsInListValues(String listName, String product, int qty){
+
+        ContentValues values = new ContentValues();
+
+        // Place values into ContentValues object
+        values.put(Lists.Attributes.LIST_NAME, listName);
+        values.put(Lists.Attributes.PRODUCT, product);
+        values.put(Lists.Attributes.QTY, qty);
+
+        return values;
+    }
+
+    /***********************************************************************************************
      * Get all the created lists from the SQLite database
      *
      * @return      A list of all the CreatedLists
