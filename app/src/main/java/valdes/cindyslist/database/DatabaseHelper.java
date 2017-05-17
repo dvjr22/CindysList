@@ -106,17 +106,17 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         ContentValues apple = DatabaseManager.
                 setProductValues(new Product("Fruits", "Apple", .99, 123456, "123456"));
         ContentValues bannana = DatabaseManager.
-                setProductValues(new Product("Fruits", "Bannanas", .99, 123456, "123456"));
+                setProductValues(new Product("Fruits", "Bannanas", 1.00, 123457, "123457"));
 
         ContentValues carrots = DatabaseManager.
-                setProductValues(new Product("Vegetables", "Carrots", .99, 123456, "123456"));
+                setProductValues(new Product("Vegetables", "Carrots", 1.99, 123458, "123458"));
         ContentValues garlic = DatabaseManager.
-                setProductValues(new Product("Vegetables", "Garlic", .99, 123456, "123456"));
+                setProductValues(new Product("Vegetables", "Garlic", 2.99, 123459, "123459"));
 
         ContentValues ham = DatabaseManager.
-                setProductValues(new Product("Deli", "Ham", .99, 123456, "123456"));
+                setProductValues(new Product("Deli", "Ham", 6.99, 123451, "1234561"));
         ContentValues cheese = DatabaseManager.
-                setProductValues(new Product("Deli", "Cheese", .99, 123456, "123456"));
+                setProductValues(new Product("Deli", "Cheese", 4.99, 123452, "1234562"));
 
         CreatedList list1 = new CreatedList("Test List One", 10, 23.52);
         CreatedList list2 = new CreatedList("Test List Two", 15, 50.63);

@@ -82,6 +82,8 @@ public class MainFragment extends Fragment {
             listAdapter.notifyDataSetChanged();
         }
 
+        testDB(createdLists.get(1).getTitle());
+
     }
 
     /***********************************************************************************************
@@ -117,6 +119,12 @@ public class MainFragment extends Fragment {
 
         swipe.setLeftSwipeLable(getString(R.string.delete));
         swipe.setLeftcolorCode(ContextCompat.getColor(getActivity(), R.color.colorRed));
+
+    }
+
+    private void testDB(String title){
+
+        databaseManager.getListProducts(title);
 
     }
 

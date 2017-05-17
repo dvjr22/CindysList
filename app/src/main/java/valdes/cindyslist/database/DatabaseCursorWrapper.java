@@ -6,8 +6,8 @@ import android.database.CursorWrapper;
 import static valdes.cindyslist.database.DatabaseSchema.*;
 
 /***************************************************************************************************
- * Class to delegate calls to Cursor
- * Used to retrieve data and reconstruct objects
+ * Class to handle query the SQLite database and return results in object form
+ *
  */
 public class DatabaseCursorWrapper extends CursorWrapper{
 
@@ -24,7 +24,7 @@ public class DatabaseCursorWrapper extends CursorWrapper{
     /***********************************************************************************************
      * Gets all data associated with a product and creates a Product object
      *
-     * @return      A product object from the SQLite database
+     * @return      A Product object from the SQLite database
      */
     public Product getProduct(){
 
@@ -55,6 +55,24 @@ public class DatabaseCursorWrapper extends CursorWrapper{
 
     }
 
+    /***********************************************************************************************
+     * Gets all data associated with a product in a list and creates a ListProduct object
+     *
+     * @return      A ListProduct object with values from SQLite database
+     */
+    public ListProduct getListProduct(){
 
+        return new ListProduct(
+                getString(getColumnIndex(Lists.Attributes.LIST_NAME)),
+                getString(getColumnIndex(Products.Attributes.CATEGORY)),
+                getString(getColumnIndex(Products.Attributes.PRODUCT)),
+                getDouble(getColumnIndex(Products.Attributes.PRICE)),
+                getInt(getColumnIndex(Products.Attributes.PIC_ID)),
+                getString(getColumnIndex(Products.Attributes.UPC)),
+                getInt(getColumnIndex(Lists.Attributes.QTY))
+
+        );
+
+    }
 
 }

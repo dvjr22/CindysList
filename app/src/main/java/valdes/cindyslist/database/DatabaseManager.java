@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,8 @@ import static valdes.cindyslist.database.DatabaseSchema.*;
  * DatabaseManager is a singleton, there can only be one instance within the application
  */
 public class DatabaseManager {
+
+    private static final String TAG = "trace";
 
     private static DatabaseManager databaseManager;
     private SQLiteDatabase database;
@@ -48,8 +51,9 @@ public class DatabaseManager {
     }
 
     /***********************************************************************************************
-     * Sets up a Cursor to query the SQLite database
+     * Gets the results of a query with a cursor over the result
      *
+     * @param distinct          Filter out duplicates
      * @param tableName         Name of the table to be queried
      * @param columns           The columns to be selected
      *                          Can be null
@@ -61,7 +65,7 @@ public class DatabaseManager {
      *                          Can be null
      * @return                  An instance of the cursor with the query
      */
-    private DatabaseCursorWrapper queryDatabase(String tableName, String[] columns,
+    private DatabaseCursorWrapper queryDatabase(boolean distinct, String tableName, String[] columns,
                                                 String whereClause, String[] whereArgs,
                                                 String groupBy){
 
@@ -69,13 +73,15 @@ public class DatabaseManager {
         //      String groupBy, String having, String orderBy)
         // Cursor is closed in the calling method
         Cursor cursor = database.query(
+                distinct,
                 tableName,
                 columns,
                 whereClause,
                 whereArgs,
                 groupBy,
                 null, // having
-                null // order by
+                null, // order by
+                null // limit
         );
 
         return new DatabaseCursorWrapper(cursor);
@@ -155,14 +161,14 @@ public class DatabaseManager {
         List<CreatedList> createdLists = new ArrayList<>();
         // Cursor to go over results of the query
         // select * from created_lists;
-        DatabaseCursorWrapper cursor = queryDatabase(CreatedLists.NAME, null, null, null, null);
+        DatabaseCursorWrapper cursor = queryDatabase(false, CreatedLists.NAME, null, null, null, null);
 
         try{
             // Move to the first returned result
             cursor.moveToFirst();
             // Continue until all results have been read
             while(!cursor.isAfterLast()){
-                // Add results to crreatedLists
+                // Add results to createdLists
                 createdLists.add(cursor.getList());
                 // Move to the next result
                 cursor.moveToNext();
@@ -172,6 +178,56 @@ public class DatabaseManager {
             cursor.close();
         }
         return createdLists;
+
+    }
+
+    /***********************************************************************************************
+     * Get all the items from a specific list
+     *
+     * @param listName      The name of the list
+     * @return              A list of ListProducts that belong to the list
+     */
+    public List<ListProduct> getListProducts(String listName){
+
+        List<ListProduct> listProducts = new ArrayList<>();
+
+        String tables = Lists.NAME + " a inner join " + Products.NAME + " b on a." +
+                Lists.Attributes.PRODUCT + " = b." + Products.Attributes.PRODUCT;
+
+        // Cursor to go over results of the query
+        // select distinct list_name, category, a.product, price, pic_id, upc, qty
+        // from list_name a inner join products b on a.product = b.product
+        // where list_name = listName
+        DatabaseCursorWrapper cursor = queryDatabase(true,
+                tables,
+                //Lists.NAME + ", " + Products.NAME,
+                new String[]  {
+                        Lists.Attributes.LIST_NAME,
+                        Products.Attributes.CATEGORY,
+                        "a." + Products.Attributes.PRODUCT,
+                        Products.Attributes.PRICE,
+                        Products.Attributes.PIC_ID,
+                        Products.Attributes.UPC,
+                        Lists.Attributes.QTY },
+                Lists.Attributes.LIST_NAME + " = ?",
+                new String[] {listName}, null);
+
+        try {
+            // Move to the first returned result
+            cursor.moveToFirst();
+            // Continue until all results have been read
+            while (!cursor.isAfterLast()){
+                // Add results to listProducts
+                listProducts.add(cursor.getListProduct());
+                // Move to next result
+                cursor.moveToNext();
+
+            }
+        } finally {
+            // Close cursor
+            cursor.close();
+        }
+        return listProducts;
 
     }
 
