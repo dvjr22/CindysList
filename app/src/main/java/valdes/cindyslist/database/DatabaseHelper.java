@@ -101,7 +101,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
      *
      * @param db        SQLite database that data will receive data
      */
-    public void insertProducts(SQLiteDatabase db){
+    private void insertProducts(SQLiteDatabase db){
 
         ContentValues apple = DatabaseManager.
                 setProductValues(new Product("Fruits", "Apple", .99, 123456, "123456"));

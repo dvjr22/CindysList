@@ -14,6 +14,9 @@ import android.view.View;
 
 import valdes.cindyslist.R;
 
+/***************************************************************************************************
+ * Class to handle swipe actions within a RecyclerView
+ */
 public abstract class SwipeUtility extends ItemTouchHelper.SimpleCallback {
 
     private Drawable background;
@@ -27,12 +30,21 @@ public abstract class SwipeUtility extends ItemTouchHelper.SimpleCallback {
     private int leftcolorCode;
     private String leftSwipeLable;
 
+    /***********************************************************************************************
+     *
+     * @param dragDirs
+     * @param swipeDirs
+     * @param context
+     */
     public SwipeUtility(int dragDirs, int swipeDirs, Context context) {
         super(dragDirs, swipeDirs);
         this.context = context;
     }
 
 
+    /***********************************************************************************************
+     *
+     */
     private void init() {
         background = new ColorDrawable();
         xMarkMargin = (int) context.getResources().getDimension(R.dimen.ic_clear_margin);
@@ -41,20 +53,63 @@ public abstract class SwipeUtility extends ItemTouchHelper.SimpleCallback {
         initiated = true;
     }
 
+    /***********************************************************************************************
+     * Android method
+     *
+     * Called when ItemTouchHelper wants to move the dragged item from its old position to the
+     * new position
+     *
+     * @param recyclerView      The RecyclerView to which attached
+     * @param viewHolder        The ViewHolder being dragged by the user
+     * @param target            The ViewHolder appearing as top view is being dragged
+     * @return                  True if viewHolder has been moved
+     */
     @Override
-    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                          RecyclerView.ViewHolder target) {
         return false;
     }
 
+    /***********************************************************************************************
+     * Android method
+     *
+     * Called when a ViewHolder is swiped by the user
+     *
+     * @param viewHolder        The ViewHolder that has been swiped
+     * @param direction         The direction of the swipe
+     */
     @Override
     public abstract void onSwiped(RecyclerView.ViewHolder viewHolder, int direction);
 
+    /***********************************************************************************************
+     * Android method
+     *
+     * Returns the swipe direction of the ViewHolder
+     *
+     * @param recyclerView      The RecyclerView to which attached
+     * @param viewHolder        The RecyclerView for which the swipe direction is queried
+     * @return                  Binary or direction flags
+     */
     @Override
     public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
 
         return super.getSwipeDirs(recyclerView, viewHolder);
     }
 
+    /***********************************************************************************************
+     * Android method
+     *
+     * Called by ItemTouchHelper on RecyclerView's onDraw callback
+     *
+     * @param c                     The canvas which RecyclerView is drawing its children
+     * @param recyclerView          The RecyclerView to which attached
+     * @param viewHolder            The ViewHolder being interacted
+     * @param dX                    The amount of horizontal displacement due to interaction
+     * @param dY                    The amount of vertical displacement due to interaction
+     * @param actionState           The type of interaction on the View
+     * @param isCurrentlyActive     True if being controlled by user, false if returning to
+     *                              original state.
+     */
     @Override
     public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
                             float dX, float dY, int actionState, boolean isCurrentlyActive) {
@@ -95,22 +150,36 @@ public abstract class SwipeUtility extends ItemTouchHelper.SimpleCallback {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
     }
 
-    public String getLeftSwipeLable() {
+    /***********************************************************************************************
+     *
+     * @return
+     */
+    private String getLeftSwipeLable() {
         return leftSwipeLable;
     }
 
+    /***********************************************************************************************
+     *
+     * @param leftSwipeLable
+     */
     public void setLeftSwipeLable(String leftSwipeLable) {
         this.leftSwipeLable = leftSwipeLable;
     }
 
-    public int getLeftcolorCode() {
+    /***********************************************************************************************
+     *
+     * @return
+     */
+    private int getLeftcolorCode() {
         return leftcolorCode;
     }
 
+    /***********************************************************************************************
+     *
+     * @param leftcolorCode
+     */
     public void setLeftcolorCode(int leftcolorCode) {
         this.leftcolorCode = leftcolorCode;
     }
-
-
 
 }

@@ -11,9 +11,9 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +30,7 @@ public class MainFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
+    private Button createNewList;
 
     private DatabaseManager databaseManager;
 
@@ -55,6 +56,17 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
+
+        // Setup Button
+        createNewList = (Button) view.findViewById(R.id.button_create_list);
+        createNewList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(CreateNewListActivity.newIntent(getContext()));
+
+            }
+        });
 
         // Setup RecyclerView
         recyclerView = (RecyclerView) view.findViewById(R.id.recylerview_lists);
@@ -130,7 +142,7 @@ public class MainFragment extends Fragment {
 
     /***********************************************************************************************
      * Class that sets up the container for each instance of a view to be displayed in the
-     * Recyler view.
+     * Recycler view.
      */
     private class ListHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -191,8 +203,7 @@ public class MainFragment extends Fragment {
         @Override
         public void onClick(View view){
 
-            Toast.makeText(getActivity(), "You clicked the list: " , Toast.LENGTH_SHORT).show();
-            //Toast.makeText(getActivity(), "You clicked the list: " + createdList.getTitle(), Toast.LENGTH_SHORT).show();
+            startActivity(ListViewActivity.newIntent(getContext(), createdList.getTitle()));
 
         }
 
@@ -253,7 +264,7 @@ public class MainFragment extends Fragment {
          * Displays data in the specified position
          *
          * @param listHolder        ViewHolder with the data to be displayed
-         * @param position          the position in the adapter
+         * @param position          The position in the adapter
          */
         @Override
         public void onBindViewHolder(ListHolder listHolder, int position){
@@ -280,6 +291,8 @@ public class MainFragment extends Fragment {
         }
 
         /*******************************************************************************************
+         * Android method
+         *
          * Get the size of the list of objects to be displayed
          *
          * @return      The size of the list
