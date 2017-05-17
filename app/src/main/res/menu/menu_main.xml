@@ -6,7 +6,7 @@
     <item
         android:id="@+id/menu_add_item"
         android:title="@string/add_item"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_add_shopping_cart_black_24dp"
         app:showAsAction="ifRoom"/>
 
     <item

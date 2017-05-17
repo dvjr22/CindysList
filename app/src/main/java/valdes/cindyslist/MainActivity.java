@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
      *
      * Adds menu icons to Toolbar if one is present
      *
-     * @param menu      The options menu as last shown or first initialized
-     * @return
+     * @param menu      The options menu to display items
+     * @return          True for the menu to be displayed, false if not shown
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
