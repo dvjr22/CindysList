@@ -7,6 +7,9 @@
     android:orientation="vertical"
     tools:context="valdes.cindyslist.MainActivity">
 
+    <include
+        layout="@layout/toolbar_main"/>
+
     <FrameLayout
         android:id="@+id/main_activity_fragment_container"
         android:layout_width="match_parent"

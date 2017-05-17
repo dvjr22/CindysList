@@ -16,6 +16,11 @@
     <string name="delete">Delete</string>
     <string name="undo">Undo</string>
 
+    <!-- menu_main  -->
+    <string name="add_item">Add Product</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_report">Report</string>
+
     <!-- generics -->
     <string name="holder">place holder</string>
 

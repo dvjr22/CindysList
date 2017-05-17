@@ -19,9 +19,11 @@ public class ListViewActivity extends AppCompatActivity {
      * @return
      */
     public static Intent newIntent(Context context, String listName){
+
         Intent intent = new Intent(context, ListViewActivity.class);
         intent.putExtra(LIST_TITLE, listName);
         return intent;
+
     }
 
     @Override
