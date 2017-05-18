@@ -6,4 +6,7 @@
     android:layout_height="match_parent"
     tools:context="valdes.cindyslist.CreateNewListActivity">
 
+    <include
+        layout="@layout/toolbar_main"/>
+
 </LinearLayout>

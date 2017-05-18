@@ -5,6 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorGreen"/>
+
     <TextView
         android:id="@+id/textview_universal"
         android:layout_width="match_parent"

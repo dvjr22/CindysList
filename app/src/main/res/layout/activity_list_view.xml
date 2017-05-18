@@ -5,6 +5,9 @@
     android:layout_height="match_parent"
     tools:context="valdes.cindyslist.ListViewActivity">
 
+    <include
+        layout="@layout/toolbar_main"/>
+
     <FrameLayout
         android:id="@+id/list_view_activity_fragment_container"
         android:layout_width="match_parent"

@@ -66,6 +66,7 @@ public class UniversalDialogFragment extends DialogFragment {
         // Return Dialog
         return new AlertDialog.Builder(getActivity())
                 .setView(view)
+                .setTitle(stringId)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 
                     // Different onClick events can be set up here depending on parent_id
@@ -104,6 +105,7 @@ public class UniversalDialogFragment extends DialogFragment {
             return;
         }
 
+        // returning to fragment
         getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, null);
     }
 
@@ -126,7 +128,6 @@ public class UniversalDialogFragment extends DialogFragment {
 
         }
 
-
         /*******************************************************************************************
          * Get the HashMap
          *
@@ -145,7 +146,6 @@ public class UniversalDialogFragment extends DialogFragment {
         private static int getString(int id){
             return dialogStrings.get(id);
         }
-
 
     }
 
