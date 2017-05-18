@@ -1,7 +1,10 @@
 package valdes.cindyslist;
 
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +16,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String DIALOG_CONFIRM = "dialog_confirm";
 
     private Toolbar toolbar;
 
@@ -86,9 +91,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        Toast toast = Toast.makeText(this, "Worked", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, "Works", Toast.LENGTH_SHORT);
 
         switch (item.getItemId()){
+
+            case R.id.menu_add_item:
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                DialogFragment dialogFragment = UniversalDialogFragment.newInstance(R.id.menu_add_item);
+                dialogFragment.show(fragmentManager, DIALOG_CONFIRM);
 
             case R.id.action_settings:
                 toast.show();
@@ -103,6 +114,25 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    /***********************************************************************************************
+     *
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode != Activity.RESULT_OK){
+            return;
+        }
+        switch (requestCode){
+
+            default:
+                return;
+        }
     }
 
 }

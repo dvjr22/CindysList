@@ -21,6 +21,9 @@
     <string name="action_settings">Settings</string>
     <string name="action_report">Report</string>
 
+    <!-- dialog_universal  -->
+    <string name="test">Add an item</string>
+
     <!-- generics -->
     <string name="holder">place holder</string>
 

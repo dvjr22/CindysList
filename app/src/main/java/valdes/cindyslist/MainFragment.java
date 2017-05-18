@@ -3,6 +3,7 @@ package valdes.cindyslist;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,7 +31,8 @@ public class MainFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
-    private Button createNewList;
+    private FloatingActionButton createNewList;
+
 
     private DatabaseManager databaseManager;
 
@@ -58,7 +60,7 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         // Setup Button
-        createNewList = (Button) view.findViewById(R.id.button_create_list);
+        createNewList = (FloatingActionButton) view.findViewById(R.id.button_create_list);
         createNewList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
