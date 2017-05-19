@@ -96,8 +96,6 @@ public class MainFragment extends Fragment {
             listAdapter.notifyDataSetChanged();
         }
 
-        testDB(createdLists.get(1).getTitle());
-
     }
 
     /***********************************************************************************************
