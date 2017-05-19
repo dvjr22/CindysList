@@ -81,6 +81,10 @@ public class ListViewFragment extends Fragment {
         databaseManager = DatabaseManager.get(getActivity());
         List<ListProduct> listProducts = databaseManager.getListProducts(title);
 
+        for (int i = 0; i < listProducts.size(); i++){
+            Log.i(TAG, listProducts.get(i).getProduct());
+        }
+
         // Check if the adapter has been setup and checks for changes
         if(listAdapter == null){
             listAdapter = new ListAdapter(listProducts);
@@ -185,7 +189,7 @@ public class ListViewFragment extends Fragment {
             product.setText(listProduct.getProduct());
             price.setText(String.format(Locale.US, "%1$,.2f", listProduct.getPrice()));
             qty.setText(String.format(Locale.US, "%d", listProduct.getQty()));
-            // TODO: 5/19/17 add image here
+            iProduct.setImageResource(listProduct.getPicId());
 
         }
 

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import valdes.cindyslist.R;
+
 import static valdes.cindyslist.database.DatabaseSchema.*;
 
 /***************************************************************************************************
@@ -104,19 +106,26 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     private void insertProducts(SQLiteDatabase db){
 
         ContentValues apple = DatabaseManager.
-                setProductValues(new Product("Fruits", "Apple", .99, 123456, "123456"));
+                setProductValues(new Product("Fruits", "Apples", .99, R.drawable.apples, "123456"));
         ContentValues bannana = DatabaseManager.
-                setProductValues(new Product("Fruits", "Bannanas", 1.00, 123457, "123457"));
+                setProductValues(new Product("Fruits", "Bananas", 1.00, R.drawable.banana, "123457"));
 
         ContentValues carrots = DatabaseManager.
-                setProductValues(new Product("Vegetables", "Carrots", 1.99, 123458, "123458"));
+                setProductValues(new Product("Vegetables", "Carrots", 1.99, R.drawable.carrots, "123458"));
         ContentValues garlic = DatabaseManager.
-                setProductValues(new Product("Vegetables", "Garlic", 2.99, 123459, "123459"));
+                setProductValues(new Product("Vegetables", "Garlic", 2.99, R.drawable.garlic, "123459"));
 
         ContentValues ham = DatabaseManager.
-                setProductValues(new Product("Deli", "Ham", 6.99, 123451, "1234561"));
+                setProductValues(new Product("Deli", "Ham", 6.99, R.drawable.ham, "1234561"));
         ContentValues cheese = DatabaseManager.
-                setProductValues(new Product("Deli", "Cheese", 4.99, 123452, "1234562"));
+                setProductValues(new Product("Deli", "Cheese", 4.99, R.drawable.cheese, "1234562"));
+
+        db.insert(Products.NAME, null, apple);
+        db.insert(Products.NAME, null, bannana);
+        db.insert(Products.NAME, null, carrots);
+        db.insert(Products.NAME, null, garlic);
+        db.insert(Products.NAME, null, ham);
+        db.insert(Products.NAME, null, cheese);
 
         CreatedList list1 = new CreatedList("Test List One", 10, 23.52);
         CreatedList list2 = new CreatedList("Test List Two", 15, 50.63);
@@ -129,46 +138,43 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         ContentValues listThree = DatabaseManager.
                 setListValues(list3);
 
-        ContentValues product1 = DatabaseManager.setProductsInListValues(list1.getTitle(), "Apple", 2);
-        ContentValues product2 = DatabaseManager.setProductsInListValues(list1.getTitle(), "Bannanas", 4);
-        ContentValues product3 = DatabaseManager.setProductsInListValues(list1.getTitle(), "Ham", 1);
-        ContentValues product4 = DatabaseManager.setProductsInListValues(list1.getTitle(), "Carrots", 1);
-
-        ContentValues product5 = DatabaseManager.setProductsInListValues(list2.getTitle(), "Apple", 4);
-        ContentValues product6 = DatabaseManager.setProductsInListValues(list2.getTitle(), "Cheese", 1);
-        ContentValues product7 = DatabaseManager.setProductsInListValues(list2.getTitle(), "Garlic", 3);
-        ContentValues product8 = DatabaseManager.setProductsInListValues(list2.getTitle(), "Ham", 1);
-
-        ContentValues product9 = DatabaseManager.setProductsInListValues(list3.getTitle(), "Apple", 6);
-        ContentValues product10 = DatabaseManager.setProductsInListValues(list3.getTitle(), "Garlic", 2);
-        ContentValues product11 = DatabaseManager.setProductsInListValues(list3.getTitle(), "Carrots", 3);
-        ContentValues product12 = DatabaseManager.setProductsInListValues(list3.getTitle(), "Cheese", 1);
-
-
-
-        db.insert(Products.NAME, null, apple);
-        db.insert(Products.NAME, null, bannana);
-        db.insert(Products.NAME, null, carrots);
-        db.insert(Products.NAME, null, garlic);
-        db.insert(Products.NAME, null, ham);
-        db.insert(Products.NAME, null, cheese);
-
         db.insert(CreatedLists.NAME, null, listOne);
         db.insert(CreatedLists.NAME, null, listTwo);
         db.insert(CreatedLists.NAME, null, listThree);
+
+        ContentValues product2 = DatabaseManager.setProductsInListValues(list1.getTitle(), "Bananas", 4);
+        ContentValues product3 = DatabaseManager.setProductsInListValues(list1.getTitle(), "Ham", 1);
+        ContentValues product4 = DatabaseManager.setProductsInListValues(list1.getTitle(), "Carrots", 1);
+        ContentValues product1 = DatabaseManager.setProductsInListValues(list1.getTitle(), "Apples", 2);
 
         db.insert(Lists.NAME, null, product1);
         db.insert(Lists.NAME, null, product2);
         db.insert(Lists.NAME, null, product3);
         db.insert(Lists.NAME, null, product4);
+
+        ContentValues product5 = DatabaseManager.setProductsInListValues(list2.getTitle(), "Apples", 4);
+        ContentValues product6 = DatabaseManager.setProductsInListValues(list2.getTitle(), "Cheese", 1);
+        ContentValues product7 = DatabaseManager.setProductsInListValues(list2.getTitle(), "Garlic", 3);
+        ContentValues product8 = DatabaseManager.setProductsInListValues(list2.getTitle(), "Ham", 1);
+
         db.insert(Lists.NAME, null, product5);
         db.insert(Lists.NAME, null, product6);
         db.insert(Lists.NAME, null, product7);
         db.insert(Lists.NAME, null, product8);
+
+        ContentValues product9 = DatabaseManager.setProductsInListValues(list3.getTitle(), "Apples", 6);
+        ContentValues product10 = DatabaseManager.setProductsInListValues(list3.getTitle(), "Garlic", 2);
+        ContentValues product11 = DatabaseManager.setProductsInListValues(list3.getTitle(), "Carrots", 3);
+        ContentValues product12 = DatabaseManager.setProductsInListValues(list3.getTitle(), "Cheese", 1);
+        ContentValues product13 = DatabaseManager.setProductsInListValues(list3.getTitle(), "Bananas", 4);
+        ContentValues product14 = DatabaseManager.setProductsInListValues(list3.getTitle(), "Ham", 1);
+
         db.insert(Lists.NAME, null, product9);
         db.insert(Lists.NAME, null, product10);
         db.insert(Lists.NAME, null, product11);
         db.insert(Lists.NAME, null, product12);
+        db.insert(Lists.NAME, null, product13);
+        db.insert(Lists.NAME, null, product14);
 
     }
 
