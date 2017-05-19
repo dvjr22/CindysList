@@ -134,12 +134,6 @@ public class MainFragment extends Fragment {
 
     }
 
-    private void testDB(String title){
-
-        databaseManager.getListProducts(title);
-
-    }
-
     /***********************************************************************************************
      * Class that sets up the container for each instance of a view to be displayed in the
      * Recycler view.

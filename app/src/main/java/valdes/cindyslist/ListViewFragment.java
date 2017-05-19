@@ -94,8 +94,6 @@ public class ListViewFragment extends Fragment {
             Log.i(TAG, "data set changed");
         }
 
-        testDB(title);
-
     }
 
     /***********************************************************************************************
@@ -133,16 +131,6 @@ public class ListViewFragment extends Fragment {
 
         swipe.setLeftSwipeLable(getString(R.string.delete));
         swipe.setLeftcolorCode(ContextCompat.getColor(getActivity(), R.color.colorRed));
-
-    }
-
-    private void testDB(String title){
-
-        List<ListProduct> listProducts = databaseManager.getListProducts(title);
-
-        for (int i = 0; i < listProducts.size(); i++){
-            Log.i(TAG, listProducts.get(i).getProduct());
-        }
 
     }
 
