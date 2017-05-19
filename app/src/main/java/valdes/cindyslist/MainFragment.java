@@ -12,7 +12,6 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,7 +31,6 @@ public class MainFragment extends Fragment {
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
     private FloatingActionButton createNewList;
-
 
     private DatabaseManager databaseManager;
 
@@ -95,6 +93,8 @@ public class MainFragment extends Fragment {
         } else {
             listAdapter.notifyDataSetChanged();
         }
+
+        //testDB(createdLists.get(0).getTitle());
 
     }
 
@@ -252,8 +252,8 @@ public class MainFragment extends Fragment {
 
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
             // Set up swipe transition.
-            // view_swipe_transition includes the layouts view_created_lists and view_swipe_delete
-            View view = layoutInflater.inflate(R.layout.view_swipe_transition, parent, false);
+            // view_swipe_transition_lists includes the layouts view_created_lists and view_swipe_delete
+            View view = layoutInflater.inflate(R.layout.view_swipe_transition_lists, parent, false);
             return new ListHolder(view);
 
         }

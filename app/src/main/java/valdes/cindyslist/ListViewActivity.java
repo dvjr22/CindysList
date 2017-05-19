@@ -10,13 +10,18 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+
+import java.util.List;
+
+import valdes.cindyslist.database.DatabaseManager;
+import valdes.cindyslist.database.ListProduct;
 
 public class ListViewActivity extends AppCompatActivity {
 
     private static final String LIST_TITLE = "list_title";
 
     private Toolbar toolbar;
-
 
     /***********************************************************************************************
      *
@@ -37,29 +42,34 @@ public class ListViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
 
-        setUpToolBar();
+        setUpToolBar(getIntent().getStringExtra(LIST_TITLE));
         loadListViewFragment(getIntent().getStringExtra(LIST_TITLE));
 
     }
 
+    /***********************************************************************************************
+     *
+     * @param title
+     */
     private void loadListViewFragment(String title){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = ListViewFragment.newInstance(title);
         fragmentManager.beginTransaction().
-                replace(R.id.list_view_activity_fragment_container, fragment).commit();
+                add(R.id.list_view_activity_fragment_container, fragment).commit();
 
     }
 
     /***********************************************************************************************
      *
      */
-    private void setUpToolBar(){
+    private void setUpToolBar(String title){
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-        toolbar.setTitle("Your List");
+        toolbar.setTitle(title);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
+
 }
