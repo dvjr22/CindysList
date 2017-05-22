@@ -10,9 +10,33 @@
         android:layout_height="1dp"
         android:background="@color/colorGreen"/>
 
-    <TextView
-        android:id="@+id/textview_universal"
+    <!--  Add a title to the list  -->
+    <LinearLayout
+        android:id="@+id/univ_diag_add_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/univ_diag_edittext_add_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Add title"/>
+
+    </LinearLayout>
+
+    <!-- Add a product  -->
+    <LinearLayout
+        android:id="@+id/univ_diag_add_product"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/univ_diag_edittext_add_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Add product"/>
+
+    </LinearLayout>
 
 </LinearLayout>

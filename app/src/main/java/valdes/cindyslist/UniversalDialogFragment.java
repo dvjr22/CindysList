@@ -10,15 +10,26 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import valdes.cindyslist.Utilities.Magic;
+
 public class UniversalDialogFragment extends DialogFragment {
 
     // String used to get the id of the Activity/Fragment that is calling the dialog
     private static final String PARENT_ID = "parent_id";
+
+    private LinearLayout addTitle, addProduct;
+
+    private EditText listTitle;
+
+    private View view;
+    private int parentId;
 
     // Set up a listener in the event that methods from activity/fragment need to be called
     private UniversalDialogFragmentListener listener;
@@ -54,14 +65,21 @@ public class UniversalDialogFragment extends DialogFragment {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_universal, null);
 
         // Get the id of the parent Activity/Fragment
-        int parent_id = getArguments().getInt(PARENT_ID);
+        parentId = getArguments().getInt(PARENT_ID);
 
         // Get the id of the text to be displayed based on parent_id
-        int stringId = DataStructures.getString(parent_id);
+        int stringId = DataStructures.getString(parentId);
 
-        // Set TextView to desired text
-        TextView textView = (TextView) view.findViewById(R.id.textview_universal);
-        textView.setText(stringId);
+        // Add title layout
+        addTitle = (LinearLayout) view.findViewById(R.id.univ_diag_add_title);
+        listTitle = (EditText) view.findViewById(R.id.univ_diag_edittext_add_title);
+
+
+        // Add product layout
+        addProduct = (LinearLayout) view.findViewById(R.id.univ_diag_add_product);
+
+        // Set visibility of layouts
+        setDisplay();
 
         // Return Dialog
         return new AlertDialog.Builder(getActivity())
@@ -111,6 +129,26 @@ public class UniversalDialogFragment extends DialogFragment {
         getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, null);
     }
 
+
+    /***********************************************************************************************
+     *
+     */
+    private void setDisplay(){
+
+        switch (parentId){
+
+            case R.id.menu_add_item:
+                addTitle.setVisibility(View.GONE);
+                break;
+            case R.layout.fragment_categories:
+                addProduct.setVisibility(View.GONE);
+                listTitle.setText(getResources().
+                        getString(R.string.univ_diag_generic_title, Magic.getDate()));
+                break;
+        }
+
+    }
+
     /***********************************************************************************************
      * Creates a Map of parent ids and string ids
      * Each parent id corresponds to a parent Activity/Fragment
@@ -127,6 +165,7 @@ public class UniversalDialogFragment extends DialogFragment {
 
             dialogStrings = new HashMap<>();
             dialogStrings.put(R.id.menu_add_item, R.string.test);
+            dialogStrings.put(R.layout.fragment_categories, R.string.univ_diag_add);
 
         }
 

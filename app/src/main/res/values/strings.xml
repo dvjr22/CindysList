@@ -26,6 +26,8 @@
 
     <!-- dialog_universal  -->
     <string name="test">Add an item</string>
+    <string name="univ_diag_add">Add the title</string>
+    <string name="univ_diag_generic_title">List %1$s</string>
 
     <!-- generics -->
     <string name="holder">place holder</string>

@@ -3,7 +3,9 @@ package valdes.cindyslist;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,6 +26,9 @@ import valdes.cindyslist.database.ListProduct;
 public class CategoriesFragment extends Fragment {
 
     private static final String TAG = "trace";
+
+    private static final String LIST_TITLE = "list_title";
+    private static final int REQUEST_CODE = 0;
 
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
@@ -63,8 +68,17 @@ public class CategoriesFragment extends Fragment {
 
         updateUI();
 
+        getListTitle();
+
         return view;
 
+    }
+
+    private void getListTitle(){
+        FragmentManager fragmentManager = getFragmentManager();
+        DialogFragment dialogFragment = UniversalDialogFragment.newInstance(R.layout.fragment_categories);
+        dialogFragment.setTargetFragment(CategoriesFragment.this, REQUEST_CODE);
+        dialogFragment.show(fragmentManager, LIST_TITLE);
     }
 
     /***********************************************************************************************
