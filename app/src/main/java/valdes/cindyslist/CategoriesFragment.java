@@ -1,6 +1,7 @@
 package valdes.cindyslist;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,6 +29,13 @@ public class CategoriesFragment extends Fragment {
     private ListAdapter listAdapter;
 
     private DatabaseManager databaseManager;
+
+    private CategoriesFragmentListener listener;
+
+    public interface CategoriesFragmentListener{
+        void loadProductsFragment(String category);
+
+    }
 
     /***********************************************************************************************
      * Required empty constructor
@@ -68,10 +76,6 @@ public class CategoriesFragment extends Fragment {
         databaseManager = DatabaseManager.get(getActivity());
         List<String> categories = databaseManager.getCategories();
 
-        for (int i = 0; i < categories.size(); i++){
-            Log.i(TAG, categories.get(i));
-        }
-
         // Check if the adapter has been setup and checks for changes
         if(listAdapter == null){
             listAdapter = new ListAdapter(categories);
@@ -80,6 +84,16 @@ public class CategoriesFragment extends Fragment {
             listAdapter.notifyDataSetChanged();
         }
 
+    }
+
+    /***********************************************************************************************
+     *
+     * @param context
+     */
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        listener = (CategoriesFragmentListener) context;
     }
 
     /***********************************************************************************************
@@ -111,14 +125,13 @@ public class CategoriesFragment extends Fragment {
         }
 
         /*******************************************************************************************
-         * Sets the attributes of each ListProduct to the appropriate views
+         * Sets the attributes of each category to the appropriate view
          *
          * @param category      The ListProduct that will be displayed in the RecyclerView
          */
         private void bindList(String category){
 
             this.category = category;
-
             categoryTextView.setText(category);
 
         }
@@ -133,7 +146,9 @@ public class CategoriesFragment extends Fragment {
         @Override
         public void onClick(View view){
 
-            // TODO: 5/22/17 clicks will refresh ProductsFragment
+            Log.i(TAG, category);
+
+            listener.loadProductsFragment(category);
 
         }
 

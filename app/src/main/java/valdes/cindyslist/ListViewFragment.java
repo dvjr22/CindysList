@@ -81,10 +81,6 @@ public class ListViewFragment extends Fragment {
         databaseManager = DatabaseManager.get(getActivity());
         List<ListProduct> listProducts = databaseManager.getListProducts(title);
 
-        for (int i = 0; i < listProducts.size(); i++){
-            Log.i(TAG, listProducts.get(i).getProduct());
-        }
-
         // Check if the adapter has been setup and checks for changes
         if(listAdapter == null){
             listAdapter = new ListAdapter(listProducts);
@@ -122,8 +118,6 @@ public class ListViewFragment extends Fragment {
 
             }
         };
-
-        Log.i(TAG, "set swipe");
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipe);
         itemTouchHelper.attachToRecyclerView(recyclerView);
@@ -264,8 +258,6 @@ public class ListViewFragment extends Fragment {
         public void onBindViewHolder(ListHolder listHolder, int position){
 
             final ListProduct listProduct = listProducts.get(position);
-
-            Log.i(TAG, "onBindViewHolder: " + listProduct.getProduct());
 
             if(pendingRemoval.contains(listProduct.getProduct())){
 

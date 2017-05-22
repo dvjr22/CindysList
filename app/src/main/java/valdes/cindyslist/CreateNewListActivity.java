@@ -8,7 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
-public class CreateNewListActivity extends AppCompatActivity {
+public class CreateNewListActivity extends AppCompatActivity implements
+        CategoriesFragment.CategoriesFragmentListener{
 
     private Toolbar toolbar;
 
@@ -25,7 +26,6 @@ public class CreateNewListActivity extends AppCompatActivity {
         setUpToolBar();
 
         loadCategoryFragment();
-        loadProductsFragment();
         loadCompleteListFragment();
 
     }
@@ -51,10 +51,10 @@ public class CreateNewListActivity extends AppCompatActivity {
 
     }
 
-    private void loadProductsFragment(){
+    public void loadProductsFragment(String category){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = ProductsFragment.newInstance();
+        Fragment fragment = ProductsFragment.newInstance(category);
         fragmentManager.beginTransaction().
                 add(R.id.create_list_activity_container_products, fragment).commit();
 
@@ -65,7 +65,8 @@ public class CreateNewListActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = CompleteListFragment.newInstance();
         fragmentManager.beginTransaction().
-                add(R.id.create_list_activity_container_complete, fragment).commit();
+                replace(R.id.create_list_activity_container_complete, fragment).commit();
 
     }
+
 }

@@ -1,25 +1,28 @@
 package valdes.cindyslist;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ProductsFragment extends Fragment {
 
+    private static final String CATEGORY = "category";
 
-    public ProductsFragment() {
-        // Required empty public constructor
-    }
+    /***********************************************************************************************
+     * Required empty constructor
+     */
+    public ProductsFragment() {}
 
-    public static ProductsFragment newInstance(){
-        return new ProductsFragment();
+    public static ProductsFragment newInstance(String category){
+
+        ProductsFragment fragment = new ProductsFragment();
+        Bundle args = new Bundle();
+        args.putString(CATEGORY, category);
+        fragment.setArguments(args);
+        return fragment;
+
     }
 
 
