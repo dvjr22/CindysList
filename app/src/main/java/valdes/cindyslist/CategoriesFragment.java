@@ -27,9 +27,12 @@ public class CategoriesFragment extends Fragment {
 
     private static final String TAG = "trace";
 
+    // Variables to get name of the list from dialog
     private static final String REQUEST_TITLE = "request_title";
     private static final int REQUEST_CODE = 0;
     private static final String INTENT_TITLE = "intent_title";
+
+    private String listName;
 
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
@@ -39,8 +42,7 @@ public class CategoriesFragment extends Fragment {
     private CategoriesFragmentListener listener;
 
     public interface CategoriesFragmentListener{
-        void loadProductsFragment(String category);
-
+        void loadProductsFragment(String category, String listName);
     }
 
     /***********************************************************************************************
@@ -49,8 +51,9 @@ public class CategoriesFragment extends Fragment {
     public CategoriesFragment() {}
 
     /***********************************************************************************************
+     * Create a new instance of CategoriesFragment
      *
-     * @return
+     * @return      A new instance of CategoriesFragment
      */
     public static CategoriesFragment newInstance(){
         return new CategoriesFragment();
@@ -68,18 +71,23 @@ public class CategoriesFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         updateUI();
-
         getListTitle();
 
         return view;
 
     }
 
+    /***********************************************************************************************
+     * Get the name of the list from the user
+     */
     private void getListTitle(){
+
         FragmentManager fragmentManager = getFragmentManager();
-        DialogFragment dialogFragment = UniversalDialogFragment.newInstance(R.layout.fragment_categories);
+        DialogFragment dialogFragment =
+                UniversalDialogFragment.newInstance(R.layout.fragment_categories);
         dialogFragment.setTargetFragment(CategoriesFragment.this, REQUEST_CODE);
         dialogFragment.show(fragmentManager, REQUEST_TITLE);
+
     }
 
     /***********************************************************************************************
@@ -104,6 +112,8 @@ public class CategoriesFragment extends Fragment {
     /***********************************************************************************************
      * Android method
      *
+     * Called when a fragment is first attached to its context
+     *
      * @param context
      */
     @Override
@@ -117,9 +127,9 @@ public class CategoriesFragment extends Fragment {
      *
      * Gets the title of the list from UniversalDialogFragment
      *
-     * @param requestCode
-     * @param resultCode
-     * @param data
+     * @param requestCode       The code of the original request
+     * @param resultCode        The code of the result
+     * @param data              The data that is being sent between dialog and fragment
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -128,8 +138,9 @@ public class CategoriesFragment extends Fragment {
             return;
         }
         if (requestCode == REQUEST_CODE){
+            listName = data.getStringExtra(INTENT_TITLE);
             // Insert list name into
-            databaseManager.insertList(new CreatedList(data.getStringExtra(INTENT_TITLE)));
+            databaseManager.insertList(new CreatedList(listName));
         }
 
     }
@@ -184,9 +195,7 @@ public class CategoriesFragment extends Fragment {
         @Override
         public void onClick(View view){
 
-            Log.i(TAG, category);
-
-            listener.loadProductsFragment(category);
+            listener.loadProductsFragment(category, listName);
 
         }
 

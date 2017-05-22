@@ -13,6 +13,12 @@ public class CreateNewListActivity extends AppCompatActivity implements
 
     private Toolbar toolbar;
 
+    /***********************************************************************************************
+     * Creates a new intent to start CreateNewListActivity
+     *
+     * @param context
+     * @return          The Activity to be started
+     */
     public static Intent newIntent(Context context){
         return new Intent(context, CreateNewListActivity.class);
     }
@@ -31,7 +37,7 @@ public class CreateNewListActivity extends AppCompatActivity implements
     }
 
     /***********************************************************************************************
-     *
+     * Set up the Toolbar
      */
     private void setUpToolBar(){
 
@@ -42,6 +48,9 @@ public class CreateNewListActivity extends AppCompatActivity implements
 
     }
 
+    /***********************************************************************************************
+     *
+     */
     private void loadCategoryFragment(){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -51,15 +60,23 @@ public class CreateNewListActivity extends AppCompatActivity implements
 
     }
 
-    public void loadProductsFragment(String category){
+    /***********************************************************************************************
+     *
+     * @param category
+     * @param listName
+     */
+    public void loadProductsFragment(String category, String listName){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = ProductsFragment.newInstance(category);
+        Fragment fragment = ProductsFragment.newInstance(category ,listName);
         fragmentManager.beginTransaction().
                 replace(R.id.create_list_activity_container_products, fragment).commit();
 
     }
 
+    /***********************************************************************************************
+     *
+     */
     private void loadCompleteListFragment(){
 
         FragmentManager fragmentManager = getSupportFragmentManager();

@@ -21,7 +21,7 @@
             android:id="@+id/univ_diag_edittext_add_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Add title"/>
+            android:selectAllOnFocus="true" />
 
     </LinearLayout>
 

@@ -26,6 +26,9 @@ import valdes.cindyslist.database.Product;
 public class ProductsFragment extends Fragment {
 
     private static final String CATEGORY = "category";
+    private static final String LIST_NAME = "list_name";
+
+    private String listName;
 
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
@@ -43,11 +46,12 @@ public class ProductsFragment extends Fragment {
      * @param category
      * @return
      */
-    public static ProductsFragment newInstance(String category){
+    public static ProductsFragment newInstance(String category, String listName){
 
         ProductsFragment fragment = new ProductsFragment();
         Bundle args = new Bundle();
         args.putString(CATEGORY, category);
+        args.putString(LIST_NAME, listName);
         fragment.setArguments(args);
         return fragment;
 
@@ -59,6 +63,8 @@ public class ProductsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_products, container, false);
+
+        listName = getArguments().getString(LIST_NAME);
 
         // Setup RecyclerView
         recyclerView = (RecyclerView) view.findViewById(R.id.recylerview_products);
@@ -321,7 +327,8 @@ public class ProductsFragment extends Fragment {
             if(products.contains(product)){
                 products.remove(product);
                 notifyItemRemoved(position);
-                // TODO: 5/22/17 add item to database list here
+                // TODO: 5/22/2017 take care of qty total  
+                databaseManager.insertCreatedListItem(listName, product.getProductName(), 1);
             }
 
         }

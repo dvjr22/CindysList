@@ -307,8 +307,9 @@ public class DatabaseManager {
     }
 
     /***********************************************************************************************
+     * Insert a CreatedList into SQLite database
      *
-     * @param createdList
+     * @param createdList       The list to be placed in the database
      */
     public void insertList(CreatedList createdList){
 
@@ -317,8 +318,9 @@ public class DatabaseManager {
     }
 
     /***********************************************************************************************
+     * Insert a Product into SQLite database
      *
-     * @param product
+     * @param product       The product to be placed in the database
      */
     public void insertProduct(Product product){
 
@@ -327,10 +329,11 @@ public class DatabaseManager {
     }
 
     /***********************************************************************************************
+     * Insert a ListProduct into SQLite database
      *
-     * @param listName
-     * @param product
-     * @param qty
+     * @param listName      The list the product belongs to
+     * @param product       The name of the product that is in the list
+     * @param qty           The number of the product in the list
      */
     public void insertCreatedListItem(String listName, String product, int qty){
 
