@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -23,6 +24,8 @@ public class UniversalDialogFragment extends DialogFragment {
 
     // String used to get the id of the Activity/Fragment that is calling the dialog
     private static final String PARENT_ID = "parent_id";
+
+    private static final String INTENT_TITLE = "intent_title";
 
     private LinearLayout addTitle, addProduct;
 
@@ -90,7 +93,7 @@ public class UniversalDialogFragment extends DialogFragment {
                     // Different onClick events can be set up here depending on parent_id
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        sendResult(Activity.RESULT_OK);
+                        sendResult(Activity.RESULT_OK, listTitle.getText().toString());
                     }
                 }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
 
@@ -120,13 +123,16 @@ public class UniversalDialogFragment extends DialogFragment {
      *
      * @param resultCode        Result code used to identify user response
      */
-    private void sendResult(int resultCode){
+    private void sendResult(int resultCode, String title){
         if(getTargetFragment() == null){
             return;
         }
 
+        Intent intent = new Intent();
+        intent.putExtra(INTENT_TITLE, title);
+
         // returning to fragment
-        getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, null);
+        getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
 
 

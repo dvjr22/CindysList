@@ -1,34 +1,35 @@
 package valdes.cindyslist;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
+import valdes.cindyslist.database.CreatedList;
 import valdes.cindyslist.database.DatabaseManager;
-import valdes.cindyslist.database.ListProduct;
 
 public class CategoriesFragment extends Fragment {
 
     private static final String TAG = "trace";
 
-    private static final String LIST_TITLE = "list_title";
+    private static final String REQUEST_TITLE = "request_title";
     private static final int REQUEST_CODE = 0;
+    private static final String INTENT_TITLE = "intent_title";
 
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
@@ -78,7 +79,7 @@ public class CategoriesFragment extends Fragment {
         FragmentManager fragmentManager = getFragmentManager();
         DialogFragment dialogFragment = UniversalDialogFragment.newInstance(R.layout.fragment_categories);
         dialogFragment.setTargetFragment(CategoriesFragment.this, REQUEST_CODE);
-        dialogFragment.show(fragmentManager, LIST_TITLE);
+        dialogFragment.show(fragmentManager, REQUEST_TITLE);
     }
 
     /***********************************************************************************************
@@ -101,6 +102,7 @@ public class CategoriesFragment extends Fragment {
     }
 
     /***********************************************************************************************
+     * Android method
      *
      * @param context
      */
@@ -108,6 +110,28 @@ public class CategoriesFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         listener = (CategoriesFragmentListener) context;
+    }
+
+    /***********************************************************************************************
+     * Android method
+     *
+     * Gets the title of the list from UniversalDialogFragment
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode != Activity.RESULT_OK){
+            return;
+        }
+        if (requestCode == REQUEST_CODE){
+            // Insert list name into
+            databaseManager.insertList(new CreatedList(data.getStringExtra(INTENT_TITLE)));
+        }
+
     }
 
     /***********************************************************************************************

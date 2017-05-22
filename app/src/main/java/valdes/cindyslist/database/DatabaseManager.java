@@ -307,6 +307,38 @@ public class DatabaseManager {
     }
 
     /***********************************************************************************************
+     *
+     * @param createdList
+     */
+    public void insertList(CreatedList createdList){
+
+        database.insert(CreatedLists.NAME ,null, setListValues(createdList));
+
+    }
+
+    /***********************************************************************************************
+     *
+     * @param product
+     */
+    public void insertProduct(Product product){
+
+        database.insert(Products.NAME, null, setProductValues(product));
+
+    }
+
+    /***********************************************************************************************
+     *
+     * @param listName
+     * @param product
+     * @param qty
+     */
+    public void insertCreatedListItem(String listName, String product, int qty){
+
+        database.insert(Lists.NAME, null, setProductsInListValues(listName, product, qty));
+
+    }
+
+    /***********************************************************************************************
      * Delete the list from the SQLite database
      *
      * @param listName      The CreatedList to be deleted

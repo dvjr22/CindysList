@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import valdes.cindyslist.Utilities.Magic;
+
 /***************************************************************************************************
  * Object Class that creates an instance of a CreatedList
  * A CreatedList is not a list, it is a label for a list of products that have been created
@@ -39,7 +41,6 @@ public class CreatedList {
         // Format timestamp to String for TextView display
         date = new SimpleDateFormat("MM/dd/yyyy HH:mm", Locale.US).format(timeStamp);
 
-
     }
 
     /***********************************************************************************************
@@ -59,6 +60,23 @@ public class CreatedList {
         this.items = items;
         this.cost = cost;
         this.date = date;
+
+    }
+
+    /***********************************************************************************************
+     * Constructor
+     *
+     * Creates an instance of a list
+     * Used in the initial creation of a list before items have been inserted
+     *
+     * @param title     Title of the list
+     */
+    public CreatedList(String title){
+
+        this.title = title;
+        this.items = 0;
+        this.cost = 0;
+        date = Magic.getDate();
 
     }
 
