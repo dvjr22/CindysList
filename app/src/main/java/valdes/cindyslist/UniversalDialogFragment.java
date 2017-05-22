@@ -85,8 +85,10 @@ public class UniversalDialogFragment extends DialogFragment {
 
     }
 
-    // Android onAttach method
-    // Used to attach listener if implemented
+    /***********************************************************************************************
+     *
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
