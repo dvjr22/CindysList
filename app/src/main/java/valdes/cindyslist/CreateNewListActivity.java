@@ -26,6 +26,7 @@ public class CreateNewListActivity extends AppCompatActivity {
 
         loadCategoryFragment();
         loadProductsFragment();
+        loadCompleteListFragment();
 
     }
 
@@ -56,6 +57,15 @@ public class CreateNewListActivity extends AppCompatActivity {
         Fragment fragment = ProductsFragment.newInstance();
         fragmentManager.beginTransaction().
                 add(R.id.create_list_activity_container_products, fragment).commit();
+
+    }
+
+    private void loadCompleteListFragment(){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = CompleteListFragment.newInstance();
+        fragmentManager.beginTransaction().
+                add(R.id.create_list_activity_container_complete, fragment).commit();
 
     }
 }

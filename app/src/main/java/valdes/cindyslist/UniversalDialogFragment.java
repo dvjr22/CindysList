@@ -123,7 +123,7 @@ public class UniversalDialogFragment extends DialogFragment {
 
         static {
 
-            dialogStrings = new HashMap();
+            dialogStrings = new HashMap<>();
             dialogStrings.put(R.id.menu_add_item, R.string.test);
 
         }

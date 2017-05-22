@@ -89,13 +89,8 @@ public class ListViewFragment extends Fragment {
         if(listAdapter == null){
             listAdapter = new ListAdapter(listProducts);
             recyclerView.setAdapter(listAdapter);
-
-            Log.i(TAG, "null adapter set up");
-
         } else {
             listAdapter.notifyDataSetChanged();
-
-            Log.i(TAG, "data set changed");
         }
 
     }
@@ -144,7 +139,7 @@ public class ListViewFragment extends Fragment {
      */
     private class ListHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        //
+        // Views to be bound
         private TextView product, price, qty, undo;
         private ImageView iProduct;
         private LinearLayout itemLayout, swipeLayout;
@@ -234,8 +229,6 @@ public class ListViewFragment extends Fragment {
 
             this.listProducts = listProducts;
             pendingRemoval = new ArrayList<>();
-
-            Log.i(TAG, "ListAdapter: " + listProducts.size());
 
         }
 
