@@ -210,7 +210,8 @@ public class DatabaseManager {
                         Products.Attributes.UPC,
                         Lists.Attributes.QTY },
                 Lists.Attributes.LIST_NAME + " = ?",
-                new String[] {listName}, null);
+                new String[] {listName},
+                null);
 
         try {
             // Move to the first returned result
@@ -221,7 +222,6 @@ public class DatabaseManager {
                 listProducts.add(cursor.getListProduct());
                 // Move to next result
                 cursor.moveToNext();
-
             }
         } finally {
             // Close cursor
@@ -229,6 +229,81 @@ public class DatabaseManager {
         }
         return listProducts;
 
+    }
+
+    /***********************************************************************************************
+     * Get all the categories
+     *
+     * @return      A List of the categories
+     */
+    public List<String> getCategories(){
+
+        List<String> categories = new ArrayList<>();
+
+        // Cursor to go over results of the query
+        // select distinct category from products;
+        DatabaseCursorWrapper cursor = queryDatabase(true,
+                Products.NAME,
+                new String[] {
+                        Products.Attributes.CATEGORY
+                },
+                null,
+                null,
+                null);
+
+        try{
+            // Move to the first returned result
+            cursor.moveToFirst();
+            // Continue until all results have been read
+            while(!cursor.isAfterLast()){
+                // Add results to categories
+                categories.add(cursor.getCategories());
+                // Move to next result
+                cursor.moveToNext();
+            }
+        } finally {
+            // Close cursor
+            cursor.close();
+        }
+
+        return categories;
+    }
+
+    /***********************************************************************************************
+     * Get all the products that belong to the category
+     *
+     * @param category      The category of products
+     * @return              A list of the products within the category
+     */
+    public List<Product> getProducts(String category){
+
+        List<Product> products = new ArrayList<>();
+
+        // Cursor to go over results of the query
+        // select * from products where category = category;
+        DatabaseCursorWrapper cursor = queryDatabase(false,
+                Products.NAME,
+                null,
+                Products.Attributes.CATEGORY + " = ?",
+                new String[] { category },
+                null);
+
+        try{
+            // Move to the first returned result
+            cursor.moveToFirst();
+            // Continue until all results have been read
+            while(!cursor.isAfterLast()){
+                // Add results to categories
+                products.add(cursor.getProduct());
+                // Move to next result
+                cursor.moveToNext();
+            }
+        } finally {
+            // Close cursor
+            cursor.close();
+        }
+
+        return products;
     }
 
     /***********************************************************************************************
@@ -246,6 +321,5 @@ public class DatabaseManager {
         // TODO: 5/16/17 delete all the items in the lists table
 
     }
-
 
 }

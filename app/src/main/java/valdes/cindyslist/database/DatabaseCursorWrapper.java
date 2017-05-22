@@ -75,4 +75,15 @@ public class DatabaseCursorWrapper extends CursorWrapper{
 
     }
 
+    /***********************************************************************************************
+     * Gets the category of a product
+     *
+     * @return      The category of a product
+     */
+    public String getCategories(){
+
+        return getString(getColumnIndex(Products.Attributes.CATEGORY));
+
+    }
+
 }
