@@ -16,6 +16,9 @@
     <string name="delete">Delete</string>
     <string name="undo">Undo</string>
 
+    <!--  view_item_create -->
+    <string name="item_pic">Item Picture</string>
+
     <!-- menu_main  -->
     <string name="add_item">Add Product</string>
     <string name="action_settings">Settings</string>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- Swipe Layout-->
+    <include layout="@layout/view_swipe_added_list" />
+
+    <!-- Regular Layout-->
+    <include layout="@layout/view_item_create" />
+
+</FrameLayout>
