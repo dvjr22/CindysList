@@ -12,6 +12,7 @@ public class CreateNewListActivity extends AppCompatActivity implements
         CategoriesFragment.CategoriesFragmentListener{
 
     private Toolbar toolbar;
+    private Fragment fragment;
 
     /***********************************************************************************************
      * Creates a new intent to start CreateNewListActivity
@@ -30,9 +31,19 @@ public class CreateNewListActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_create_new_list);
 
         setUpToolBar();
-
-        loadCategoryFragment();
         loadCompleteListFragment();
+
+        if (savedInstanceState != null) {
+            //Restore the fragment's instance
+            fragment = getSupportFragmentManager().getFragment(savedInstanceState, "myFragmentName");
+
+        } else {
+            fragment = CategoriesFragment.newInstance();
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().
+                replace(R.id.create_list_activity_container_categories, fragment).commit();
 
     }
 
@@ -84,6 +95,14 @@ public class CreateNewListActivity extends AppCompatActivity implements
         fragmentManager.beginTransaction().
                 replace(R.id.create_list_activity_container_complete, fragment).commit();
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //Save the fragment's instance
+        getSupportFragmentManager().putFragment(outState, "myFragmentName", fragment);
     }
 
 }
