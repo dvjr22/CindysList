@@ -247,9 +247,9 @@ public class DatabaseManager {
      *
      * @return      A List of the categories
      */
-    public List<String> getCategories(){
+    public ArrayList<String> getCategories(){
 
-        List<String> categories = new ArrayList<>();
+        ArrayList<String> categories = new ArrayList<>();
 
         // Cursor to go over results of the query
         // select distinct category from products;

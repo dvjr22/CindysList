@@ -1,6 +1,8 @@
 package valdes.cindyslist;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -29,12 +31,17 @@ import java.util.Locale;
 import valdes.cindyslist.Utilities.SwipeUtility;
 import valdes.cindyslist.database.CreatedList;
 import valdes.cindyslist.database.DatabaseManager;
+import valdes.cindyslist.database.Product;
 
 public class MainFragment extends Fragment {
 
     private static final String TAG = "trace";
 
-    private static final String DIALOG_CONFIRM = "dialog_confirm";
+    // Dialog variables
+    private static final String REQUEST_NEW_PRODUCT = "request_new_product";
+    private static final int REQUEST_CODE = 0;
+    private static final String INTENT_CATEGORY = "intent_category";
+    private static final String INTENT_PRODUCT = "intent_product";
 
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
@@ -178,8 +185,10 @@ public class MainFragment extends Fragment {
 
             case R.id.menu_add_item:
                 FragmentManager fragmentManager = getFragmentManager();
-                DialogFragment dialogFragment = UniversalDialogFragment.newInstance(R.id.menu_add_item);
-                dialogFragment.show(fragmentManager, DIALOG_CONFIRM);
+                DialogFragment dialogFragment =
+                        UniversalDialogFragment.newInstance(R.id.menu_add_item, databaseManager.getCategories());
+                dialogFragment.setTargetFragment(MainFragment.this, REQUEST_CODE);
+                dialogFragment.show(fragmentManager, REQUEST_NEW_PRODUCT);
                 return true;
 
             case R.id.action_settings:
@@ -194,6 +203,29 @@ public class MainFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    /***********************************************************************************************
+     * Android method
+     *
+     * Gets the title of the list from UniversalDialogFragment
+     *
+     * @param requestCode       The code of the original request
+     * @param resultCode        The code of the result
+     * @param data              The data that is being sent between dialog and fragment
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode != Activity.RESULT_OK){
+            return;
+        }
+        if (requestCode == REQUEST_CODE){
+
+            databaseManager.insertProduct(new Product(data.getStringExtra(INTENT_CATEGORY),
+                    data.getStringExtra(INTENT_PRODUCT)));
+        }
+
     }
 
     /***********************************************************************************************

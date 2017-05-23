@@ -27,11 +27,12 @@ public class CategoriesFragment extends Fragment {
 
     private static final String TAG = "trace";
 
-    // Variables to get name of the list from dialog
+    // Dialog variables
     private static final String REQUEST_TITLE = "request_title";
     private static final int REQUEST_CODE = 0;
     private static final String INTENT_TITLE = "intent_title";
 
+    // Saved state variables
     private static final String OUTSTATE_LIST_NAME = "saved_instance_state_title";
 
     private String listName;
@@ -90,10 +91,9 @@ public class CategoriesFragment extends Fragment {
 
         FragmentManager fragmentManager = getFragmentManager();
         DialogFragment dialogFragment =
-                UniversalDialogFragment.newInstance(R.layout.fragment_categories);
+                UniversalDialogFragment.newInstance(R.layout.fragment_categories, null);
         dialogFragment.setTargetFragment(CategoriesFragment.this, REQUEST_CODE);
         dialogFragment.show(fragmentManager, REQUEST_TITLE);
-
     }
 
     /***********************************************************************************************

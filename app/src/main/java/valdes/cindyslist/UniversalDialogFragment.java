@@ -16,10 +16,11 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import valdes.cindyslist.Utilities.Magic;
@@ -28,15 +29,22 @@ public class UniversalDialogFragment extends DialogFragment {
 
     // String used to get the id of the Activity/Fragment that is calling the dialog
     private static final String PARENT_ID = "parent_id";
+    private static final String CATEGORY_LIST = "category_list";
 
+    // sendResult variables
     private static final String INTENT_TITLE = "intent_title";
+    private static final String INTENT_CATEGORY = "intent_category";
+    private static final String INTENT_PRODUCT = "intent_product";
 
-    private LinearLayout addTitle, addProduct;
-
+    // widgets and layouts
+    private LinearLayout addTitleLayout, addProductLayout;
     private EditText listTitle, productName;
     private Spinner categorySpinner;
 
+    // variables
     private int parentId;
+    private List<String> categories;
+    String addedCategory, addedProduct;
 
     // Set up a listener in the event that methods from activity/fragment need to be called
     private UniversalDialogFragmentListener listener;
@@ -51,11 +59,12 @@ public class UniversalDialogFragment extends DialogFragment {
      * @param parent_id     the R_id of the layout being used by the parent Activity/Fragment
      * @return              New instance of Dialog Fragment
      */
-    public static UniversalDialogFragment newInstance(int parent_id){
+    public static UniversalDialogFragment newInstance(int parent_id, ArrayList<String> categories){
 
         UniversalDialogFragment fragment = new UniversalDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(PARENT_ID, parent_id);
+        bundle.putStringArrayList(CATEGORY_LIST, categories);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -77,32 +86,13 @@ public class UniversalDialogFragment extends DialogFragment {
         int stringId = DataStructures.getString(parentId);
 
         // Add title layout
-        addTitle = (LinearLayout) view.findViewById(R.id.univ_diag_add_title);
+        addTitleLayout = (LinearLayout) view.findViewById(R.id.univ_diag_add_title);
         listTitle = (EditText) view.findViewById(R.id.univ_diag_edittext_add_title);
 
         // Add product layout
-        addProduct = (LinearLayout) view.findViewById(R.id.univ_diag_add_product);
+        addProductLayout = (LinearLayout) view.findViewById(R.id.univ_diag_add_product);
         productName = (EditText) view.findViewById(R.id.univ_diag_edittext_add_product);
         categorySpinner = (Spinner) view.findViewById(R.id.univ_diag_spinner_category);
-        String[] test=new String[]{"test1","test2"};
-        ArrayAdapter <String> adapter =
-                new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, test);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        categorySpinner.setAdapter(adapter);
-        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String Text = adapterView.getSelectedItem().toString();
-                Toast.makeText(getContext(), Text, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-
 
         // Set visibility of layouts
         setDisplay();
@@ -116,7 +106,11 @@ public class UniversalDialogFragment extends DialogFragment {
                     // Different onClick events can be set up here depending on parent_id
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        sendResult(Activity.RESULT_OK, listTitle.getText().toString());
+
+                        sendResult(Activity.RESULT_OK, parentId, listTitle.getText().toString(),
+                                addedCategory, addedProduct);
+
+
                     }
                 }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
 
@@ -146,14 +140,26 @@ public class UniversalDialogFragment extends DialogFragment {
      *
      * @param resultCode        Result code used to identify user response
      */
-    private void sendResult(int resultCode, String title){
+    private void sendResult(int resultCode, int parentId, String title, String category,
+                            String product){
+
         if(getTargetFragment() == null){
             return;
         }
 
         Intent intent = new Intent();
-        intent.putExtra(INTENT_TITLE, title);
 
+        switch (parentId){
+
+            case R.id.menu_add_item:
+                intent.putExtra(INTENT_CATEGORY, category);
+                intent.putExtra(INTENT_PRODUCT, product);
+                break;
+
+            case R.layout.fragment_categories:
+                intent.putExtra(INTENT_TITLE, title);
+                break;
+        }
         // returning to fragment
         getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
@@ -167,11 +173,37 @@ public class UniversalDialogFragment extends DialogFragment {
         switch (parentId){
 
             case R.id.menu_add_item:
-                addTitle.setVisibility(View.GONE);
+                addTitleLayout.setVisibility(View.GONE);
                 productName.setVisibility(View.GONE);
+                categories = getArguments().getStringArrayList(CATEGORY_LIST);
+                categories.add(getResources().getString(R.string.other));
+                ArrayAdapter <String> adapter =
+                        new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, categories);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                categorySpinner.setAdapter(adapter);
+                categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        String other = getResources().getString(R.string.other);
+                        addedCategory = "";
+                        if (addedCategory.equals(other)){
+                            addedCategory = "";
+                        } else {
+                            addedCategory = adapterView.getSelectedItem().toString();
+                        }
+
+                        Toast.makeText(getContext(), addedCategory, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
                 break;
             case R.layout.fragment_categories:
-                addProduct.setVisibility(View.GONE);
+                addProductLayout.setVisibility(View.GONE);
                 listTitle.setText(getResources().
                         getString(R.string.univ_diag_generic_title, Magic.getDate()));
                 break;
@@ -192,11 +224,9 @@ public class UniversalDialogFragment extends DialogFragment {
         private static Map <Integer, Integer> dialogStrings;
 
         static {
-
-            dialogStrings = new HashMap<>();
+            dialogStrings = new HashMap();
             dialogStrings.put(R.id.menu_add_item, R.string.test);
             dialogStrings.put(R.layout.fragment_categories, R.string.univ_diag_add);
-
         }
 
         /*******************************************************************************************
