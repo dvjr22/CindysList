@@ -75,10 +75,8 @@ public class CategoriesFragment extends Fragment {
 
         if (savedInstanceState != null) {
             listName = savedInstanceState.getString(OUTSTATE_LIST_NAME);
-            Toast.makeText(getContext(), "!= " + listName, Toast.LENGTH_SHORT).show();
         } else {
             getListTitle();
-            Toast.makeText(getContext(), "== " + listName, Toast.LENGTH_SHORT).show();
         }
 
         return view;
@@ -117,6 +115,10 @@ public class CategoriesFragment extends Fragment {
 
     }
 
+    /***********************************************************************************************
+     *
+     * @param outState
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
 

@@ -31,7 +31,6 @@ public class UniversalDialogFragment extends DialogFragment {
 
     private EditText listTitle;
 
-    private View view;
     private int parentId;
 
     // Set up a listener in the event that methods from activity/fragment need to be called
@@ -77,7 +76,6 @@ public class UniversalDialogFragment extends DialogFragment {
         addTitle = (LinearLayout) view.findViewById(R.id.univ_diag_add_title);
         listTitle = (EditText) view.findViewById(R.id.univ_diag_edittext_add_title);
 
-
         // Add product layout
         addProduct = (LinearLayout) view.findViewById(R.id.univ_diag_add_product);
 
@@ -100,7 +98,7 @@ public class UniversalDialogFragment extends DialogFragment {
                     // Different onClick events can be set up here depending on parent_id
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        startActivity(MainActivity.newIntent(getContext()));
                     }
                 }).create();
 

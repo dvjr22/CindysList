@@ -20,7 +20,7 @@ import valdes.cindyslist.R;
 public abstract class SwipeUtility extends ItemTouchHelper.SimpleCallback {
 
     private Drawable background;
-    private Drawable deleteIcon;
+    // private Drawable deleteIcon;
 
     private int xMarkMargin;
 
@@ -48,8 +48,8 @@ public abstract class SwipeUtility extends ItemTouchHelper.SimpleCallback {
     private void init() {
         background = new ColorDrawable();
         xMarkMargin = (int) context.getResources().getDimension(R.dimen.ic_clear_margin);
-        deleteIcon = ContextCompat.getDrawable(context, android.R.drawable.ic_menu_delete);
-        deleteIcon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        // deleteIcon = ContextCompat.getDrawable(context, android.R.drawable.ic_menu_delete);
+        // deleteIcon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         initiated = true;
     }
 
@@ -125,7 +125,7 @@ public abstract class SwipeUtility extends ItemTouchHelper.SimpleCallback {
         ((ColorDrawable) background).setColor(getLeftcolorCode());
         background.setBounds(itemView.getRight() + (int) dX, itemView.getTop(), itemView.getRight(), itemView.getBottom());
         background.draw(c);
-
+/*
         int intrinsicWidth = deleteIcon.getIntrinsicWidth();
         int intrinsicHeight = deleteIcon.getIntrinsicWidth();
 
@@ -138,14 +138,13 @@ public abstract class SwipeUtility extends ItemTouchHelper.SimpleCallback {
         //Setting Swipe Icon
         deleteIcon.setBounds(xMarkLeft, xMarkTop + 16, xMarkRight, xMarkBottom);
         deleteIcon.draw(c);
-
+*/
         //Setting Swipe Text
         Paint paint = new Paint();
         paint.setColor(Color.WHITE);
         paint.setTextSize(48);
         paint.setTextAlign(Paint.Align.CENTER);
-        c.drawText(getLeftSwipeLable(), xMarkLeft + 40, xMarkTop + 10, paint);
-
+        //c.drawText(getLeftSwipeLable(), xMarkLeft + 40, xMarkTop + 10, paint);
 
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
     }
