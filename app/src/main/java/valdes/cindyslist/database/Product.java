@@ -1,5 +1,7 @@
 package valdes.cindyslist.database;
 
+import valdes.cindyslist.R;
+
 /***************************************************************************************************
  * Object Class that defines an instance of a product
  * A product is any item that can be purchased at a store
@@ -32,7 +34,24 @@ public class Product {
         this.price = price;
         this.picId = picId;
         this.upc = upc;
+    }
 
+    /***********************************************************************************************
+     * Constructor
+     *
+     * Creates one instance of a product.
+     *
+     * @param category          Category that product falls under
+     * @param productName      Name of the product
+     */
+    public Product(String category, String productName){
+
+        this.category = category;
+        this.productName = productName;
+        // This info below can be pulled from the server at a later date to increase functunality
+        this.price = 1.00;
+        this.picId = R.mipmap.ic_launcher;
+        this.upc = "0000000001";
     }
 
     /***********************************************************************************************

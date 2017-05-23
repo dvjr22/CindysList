@@ -4,16 +4,22 @@ package valdes.cindyslist;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +33,8 @@ import valdes.cindyslist.database.DatabaseManager;
 public class MainFragment extends Fragment {
 
     private static final String TAG = "trace";
+
+    private static final String DIALOG_CONFIRM = "dialog_confirm";
 
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
@@ -56,6 +64,8 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
+
+        setHasOptionsMenu(true);
 
         // Setup Button
         createNewList = (FloatingActionButton) view.findViewById(R.id.button_create_list);
@@ -131,6 +141,59 @@ public class MainFragment extends Fragment {
 
         swipe.setLeftSwipeLable(getString(R.string.delete));
         swipe.setLeftcolorCode(ContextCompat.getColor(getActivity(), R.color.colorRed));
+
+    }
+
+
+    /***********************************************************************************************
+     * Android method
+     *
+     * Adds menu icons to Toolbar if one is present
+     *
+     * @param menu          The options menu to display items
+     * @param inflater      Places menu times into menu
+     * @return              True for the menu to be displayed, false if not shown
+     */
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    /***********************************************************************************************
+     * Android method
+     *
+     * Called when items on the Toolbar are clicked
+     *
+     * @param item      The item clicked on the Toolbar
+     * @return          True if the item was clicked
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        Toast toast = Toast.makeText(getContext(), "Fragment", Toast.LENGTH_SHORT);
+
+        switch (item.getItemId()){
+
+            case R.id.menu_add_item:
+                FragmentManager fragmentManager = getFragmentManager();
+                DialogFragment dialogFragment = UniversalDialogFragment.newInstance(R.id.menu_add_item);
+                dialogFragment.show(fragmentManager, DIALOG_CONFIRM);
+                return true;
+
+            case R.id.action_settings:
+                toast.show();
+                return true;
+
+            case R.id.action_report:
+                toast.show();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
 
     }
 
