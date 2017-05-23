@@ -35,7 +35,6 @@ public class DatabaseManager {
             databaseManager = new DatabaseManager(context);
         }
         return databaseManager;
-
     }
 
     /***********************************************************************************************
@@ -47,7 +46,6 @@ public class DatabaseManager {
 
         context = context.getApplicationContext();
         database = new DatabaseHelper(context).getWritableDatabase();
-
     }
 
     /***********************************************************************************************
@@ -63,14 +61,14 @@ public class DatabaseManager {
      *                          Can be null
      * @param groupBy           How results should be grouped
      *                          Can be null
-     * @return                  An instance of the cursor with the query
+     * @return                  An instance of the cursor over the results of the query
      */
     private DatabaseCursorWrapper queryDatabase(boolean distinct, String tableName, String[] columns,
                                                 String whereClause, String[] whereArgs,
                                                 String groupBy){
 
-        // query(String table, String[] columns, String selection, String[] selectionArgs,
-        //      String groupBy, String having, String orderBy)
+        // query(boolean distinct, String table, String[] columns, String selection,
+        // String[] selectionArgs, String groupBy, String having, String orderBy)
         // Cursor is closed in the calling method
         Cursor cursor = database.query(
                 distinct,
@@ -83,9 +81,25 @@ public class DatabaseManager {
                 null, // order by
                 null // limit
         );
-
         return new DatabaseCursorWrapper(cursor);
+    }
 
+    /***********************************************************************************************
+     * Gets the results of a query with a cursor over the result
+     *
+     * @param query         The SQLite query
+     * @param whereArgs     Arguements for where clause
+     * @return              An instance of the cursor over the results of the query
+     */
+    private DatabaseCursorWrapper rawQuery(String query, String[] whereArgs){
+
+        // rawQuery(String query, String[] selectionArgs)
+        // Cursor is closed in the calling method
+        Cursor cursor = database.rawQuery(
+                query,
+                whereArgs
+        );
+        return new DatabaseCursorWrapper(cursor);
     }
 
     /***********************************************************************************************
@@ -99,6 +113,7 @@ public class DatabaseManager {
 
         ContentValues values = new ContentValues();
 
+        // Place Product values into ContentValues object
         values.put(Products.Attributes.CATEGORY, product.getCategory());
         values.put(Products.Attributes.PRODUCT, product.getProductName());
         values.put(Products.Attributes.PRICE, product.getPrice());
@@ -106,7 +121,6 @@ public class DatabaseManager {
         values.put(Products.Attributes.UPC, product.getUpc());
 
         return values;
-
     }
 
     /***********************************************************************************************
@@ -127,7 +141,6 @@ public class DatabaseManager {
         values.put(CreatedLists.Attributes.TOTAL_COST, createdList.getCost());
 
         return values;
-
     }
 
     /***********************************************************************************************
@@ -178,7 +191,6 @@ public class DatabaseManager {
             cursor.close();
         }
         return createdLists;
-
     }
 
     /***********************************************************************************************
@@ -228,7 +240,6 @@ public class DatabaseManager {
             cursor.close();
         }
         return listProducts;
-
     }
 
     /***********************************************************************************************
@@ -265,7 +276,6 @@ public class DatabaseManager {
             // Close cursor
             cursor.close();
         }
-
         return categories;
     }
 
@@ -302,7 +312,45 @@ public class DatabaseManager {
             // Close cursor
             cursor.close();
         }
+        return products;
+    }
 
+    /***********************************************************************************************
+     * Get all the products in a category that have not been added to a list
+     *
+     * @param category      The category of products
+     * @param listName      The list where products are being added
+     * @return              A List of Products that have not been added to the list
+     */
+    public List<Product> getProducts(String category, String listName){
+
+        List<Product> products = new ArrayList<>();
+
+        // select * from products where category = 'category' and product not in
+        // (select product from lists where list = 'listName');
+        String query =
+                "select * from " + Products.NAME + " where " + Products.Attributes.CATEGORY +
+                        " = '" + category + "' and " + Products.Attributes.PRODUCT +
+                        " not in (select " + Lists.Attributes.PRODUCT + " from " + Lists.NAME +
+                        " where " + Lists.Attributes.LIST_NAME + " = '" + listName + "');";
+
+        // Cursor to go over results
+        DatabaseCursorWrapper cursor = rawQuery(query, null);
+
+        try{
+            // Move to the first returned result
+            cursor.moveToFirst();
+            // Continue until all results have been read
+            while(!cursor.isAfterLast()){
+                // Add results to products
+                products.add(cursor.getProduct());
+                // Move to next result
+                cursor.moveToNext();
+            }
+        } finally {
+            // Close cursor
+            cursor.close();
+        }
         return products;
     }
 
@@ -314,7 +362,6 @@ public class DatabaseManager {
     public void insertList(CreatedList createdList){
 
         database.insert(CreatedLists.NAME ,null, setListValues(createdList));
-
     }
 
     /***********************************************************************************************
@@ -325,7 +372,6 @@ public class DatabaseManager {
     public void insertProduct(Product product){
 
         database.insert(Products.NAME, null, setProductValues(product));
-
     }
 
     /***********************************************************************************************
@@ -338,7 +384,6 @@ public class DatabaseManager {
     public void insertCreatedListItem(String listName, String product, int qty){
 
         database.insert(Lists.NAME, null, setProductsInListValues(listName, product, qty));
-
     }
 
     /***********************************************************************************************
@@ -349,12 +394,15 @@ public class DatabaseManager {
     public void deleteList(String listName){
 
         // delete(String table, String whereClause, String[] whereArgs)
+        // delete from created_lists where list_name = listName;
         database.delete(CreatedLists.NAME,
                 CreatedLists.Attributes.LIST_NAME + " = ?",
                 new String[] {listName});
 
-        // TODO: 5/16/17 delete all the items in the lists table
-
+        // delete from lists where list_name = listName;
+        database.delete(Lists.NAME,
+                Lists.Attributes.LIST_NAME + " = ?",
+                new String[] {listName});
     }
 
 }

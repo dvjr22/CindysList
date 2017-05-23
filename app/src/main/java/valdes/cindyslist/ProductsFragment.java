@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,8 @@ import valdes.cindyslist.database.DatabaseManager;
 import valdes.cindyslist.database.Product;
 
 public class ProductsFragment extends Fragment {
+
+    private static final String TAG = "trace";
 
     private static final String CATEGORY = "category";
     private static final String LIST_NAME = "list_name";
@@ -84,7 +87,7 @@ public class ProductsFragment extends Fragment {
 
         // Get the database
         databaseManager = DatabaseManager.get(getActivity());
-        List<Product> products = databaseManager.getProducts(category);
+        List<Product> products = databaseManager.getProducts(category, listName);
 
         // Check if the adapter has been setup and checks for changes
         if(listAdapter == null){
@@ -207,8 +210,8 @@ public class ProductsFragment extends Fragment {
         // List of CreatedList titles to track removal
         private List<String> pendingRemoval;
 
-        // 1 sec time until delete
-        private static final int TIMEOUT = 1000;
+        // .5 sec time for adding to database
+        private static final int TIMEOUT = 100;
         // Handler class to handle time delay
         private Handler handler = new Handler();
         // Map pending runnables. Allows cancelation if necessary

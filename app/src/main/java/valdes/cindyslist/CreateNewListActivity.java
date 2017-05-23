@@ -12,7 +12,6 @@ public class CreateNewListActivity extends AppCompatActivity implements
         CategoriesFragment.CategoriesFragmentListener{
 
     private static final String OUTSTATE_CATEGORY = "category_fragment";
-    private static final String OUTSTATE_PRODUCT = "product_fragment";
 
     private Toolbar toolbar;
     private Fragment categoryFragment;
@@ -45,11 +44,6 @@ public class CreateNewListActivity extends AppCompatActivity implements
                     getFragment(savedInstanceState, OUTSTATE_CATEGORY);
             fragmentManager.beginTransaction().
                     replace(R.id.create_list_activity_container_categories, categoryFragment).commit();
-            // Restore ProductsFragment if one was saved
-            productFragment = getSupportFragmentManager().
-                    getFragment(savedInstanceState, OUTSTATE_PRODUCT);
-            if (productFragment != null) fragmentManager.beginTransaction().
-                    replace(R.id.create_list_activity_container_products, productFragment).commit();
         } else {
             // Initial load of Fragments
             loadCategoryFragment();
@@ -66,7 +60,6 @@ public class CreateNewListActivity extends AppCompatActivity implements
         toolbar.setTitle("Create A List");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
     /***********************************************************************************************
@@ -78,7 +71,6 @@ public class CreateNewListActivity extends AppCompatActivity implements
         categoryFragment = CategoriesFragment.newInstance();
         fragmentManager.beginTransaction().
                 add(R.id.create_list_activity_container_categories, categoryFragment).commit();
-
     }
 
     /***********************************************************************************************
@@ -92,7 +84,6 @@ public class CreateNewListActivity extends AppCompatActivity implements
         productFragment = ProductsFragment.newInstance(category ,listName);
         fragmentManager.beginTransaction().
                 replace(R.id.create_list_activity_container_products, productFragment).commit();
-
     }
 
     /***********************************************************************************************
@@ -104,19 +95,21 @@ public class CreateNewListActivity extends AppCompatActivity implements
         Fragment fragment = CompleteListFragment.newInstance();
         fragmentManager.beginTransaction().
                 replace(R.id.create_list_activity_container_complete, fragment).commit();
-
     }
 
+    /***********************************************************************************************
+     * Android method
+     *
+     * Saves the state of Activity in order to be restored
+     *
+     * @param outState      Bundle to save state
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
 
+        super.onSaveInstanceState(outState);
         // Save Fragment instance
         getSupportFragmentManager().putFragment(outState, OUTSTATE_CATEGORY, categoryFragment);
-        if (productFragment != null){
-            getSupportFragmentManager().putFragment(outState, OUTSTATE_PRODUCT, productFragment);
-        }
-
     }
 
 }
