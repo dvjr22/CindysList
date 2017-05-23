@@ -79,9 +79,7 @@ public class CategoriesFragment extends Fragment {
         } else {
             getListTitle();
         }
-
         return view;
-
     }
 
     /***********************************************************************************************
@@ -112,7 +110,6 @@ public class CategoriesFragment extends Fragment {
         } else {
             listAdapter.notifyDataSetChanged();
         }
-
     }
 
     /***********************************************************************************************
@@ -124,7 +121,6 @@ public class CategoriesFragment extends Fragment {
 
         super.onSaveInstanceState(outState);
         outState.putString(OUTSTATE_LIST_NAME, listName);
-
     }
 
     /***********************************************************************************************
@@ -136,6 +132,7 @@ public class CategoriesFragment extends Fragment {
      */
     @Override
     public void onAttach(Context context) {
+
         super.onAttach(context);
         listener = (CategoriesFragmentListener) context;
     }
@@ -185,10 +182,8 @@ public class CategoriesFragment extends Fragment {
             super(view);
             // attach listener for onClick events
             view.setOnClickListener(this);
-
             // view_category.xml
             categoryTextView = (TextView) view.findViewById(R.id.textview_category);
-
         }
 
         /*******************************************************************************************
@@ -200,7 +195,6 @@ public class CategoriesFragment extends Fragment {
 
             this.category = category;
             categoryTextView.setText(category);
-
         }
 
         /*******************************************************************************************
@@ -214,7 +208,6 @@ public class CategoriesFragment extends Fragment {
         public void onClick(View view){
 
             listener.loadProductsFragment(category, listName);
-
         }
 
     }
@@ -236,7 +229,6 @@ public class CategoriesFragment extends Fragment {
         private ListAdapter(List<String> categories){
 
             this.categories = categories;
-
         }
 
         /*******************************************************************************************
@@ -255,7 +247,6 @@ public class CategoriesFragment extends Fragment {
             // Setup the view that will be in the RecyclerView
             View view = layoutInflater.inflate(R.layout.view_category, parent, false);
             return new ListHolder(view);
-
         }
 
         /*******************************************************************************************
@@ -271,7 +262,6 @@ public class CategoriesFragment extends Fragment {
 
             String category  = categories.get(position);
             listHolder.bindList(category);
-
         }
 
 

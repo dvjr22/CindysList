@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,7 +28,12 @@ import java.util.Map;
 
 import valdes.cindyslist.Utilities.Magic;
 
+/***************************************************************************************************
+ * Dialog that handles all requirements based on calling parent Fragment/Activity
+ */
 public class UniversalDialogFragment extends DialogFragment {
+
+    private static final String TAG = "trace";
 
     // String used to get the id of the Activity/Fragment that is calling the dialog
     private static final String PARENT_ID = "parent_id";
@@ -44,14 +52,12 @@ public class UniversalDialogFragment extends DialogFragment {
     // variables
     private int parentId;
     private List<String> categories;
-    String addedCategory;
+    private String addedCategory;
 
-    // Set up a listener in the event that methods from activity/fragment need to be called
+    // Listener setup in case I need to set it up
     private UniversalDialogFragmentListener listener;
 
-    public interface UniversalDialogFragmentListener{
-        // Methods to be called go here
-    }
+    public interface UniversalDialogFragmentListener{}
 
     /***********************************************************************************************
      * Creates a new instance of a dialog fragment
@@ -114,20 +120,21 @@ public class UniversalDialogFragment extends DialogFragment {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
+                        // TODO: 5/23/2017 need method to handle negative clicks
                         startActivity(MainActivity.newIntent(getContext()));
                     }
                 }).create();
-
     }
 
     /***********************************************************************************************
+     *  Here in case listener is set up
      *
      * @param context
      */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
     }
 
     /***********************************************************************************************
@@ -144,6 +151,7 @@ public class UniversalDialogFragment extends DialogFragment {
             return;
         }
 
+        // Set data according to parent Fragment
         Intent intent = new Intent();
 
         switch (parentId){
@@ -157,13 +165,13 @@ public class UniversalDialogFragment extends DialogFragment {
                 intent.putExtra(INTENT_TITLE, title);
                 break;
         }
-        // returning to fragment
+        // Return to parent Fragment with results
         getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
 
 
     /***********************************************************************************************
-     *
+     * Sets the visibility and listeners of Views based on the parent that called Fragment
      */
     private void setDisplay(){
 
@@ -171,36 +179,57 @@ public class UniversalDialogFragment extends DialogFragment {
 
             case R.id.menu_add_item:
                 addTitleLayout.setVisibility(View.GONE);
+
+                // EditText Listener
+                categoryName.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        addedCategory = categoryName.getText().toString();
+                    }
+                });
+                // Invisible on start up
                 categoryName.setVisibility(View.GONE);
+
+                // Setup Spinner
                 categories = getArguments().getStringArrayList(CATEGORY_LIST);
                 categories.add(getResources().getString(R.string.other));
-                ArrayAdapter <String> adapter =
-                        new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, categories);
+
+                ArrayAdapter <String> adapter = new ArrayAdapter<>
+                        (getContext(),android.R.layout.simple_spinner_item, categories);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 categorySpinner.setAdapter(adapter);
+
+                // Spinner Listener
                 categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
+                        // Check selection, handle "Other" by making EditText visible
+                        // If standard category selected, set EditText to GONE
                         if (categories.size() - 1 == i){
                             categoryName.setVisibility(View.VISIBLE);
-                            Toast.makeText(getContext(), addedCategory, Toast.LENGTH_SHORT).show();
-                            addedCategory = "";
-                            Toast.makeText(getContext(), addedCategory, Toast.LENGTH_SHORT).show();
+                            categoryName.setText(getResources().
+                                    getText(R.string.univ_diag_new_category));
+                            addedCategory = categoryName.getText().toString();
                         } else {
-                            categoryName.setVisibility(View.INVISIBLE);
+                            categoryName.setVisibility(View.GONE);
                             addedCategory = adapterView.getSelectedItem().toString();
-                            Toast.makeText(getContext(), addedCategory, Toast.LENGTH_SHORT).show();
                         }
                     }
-
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
 
                     }
                 });
-
                 break;
+
             case R.layout.fragment_categories:
                 addProductLayout.setVisibility(View.GONE);
                 listTitle.setText(getResources().
