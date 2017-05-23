@@ -38,13 +38,13 @@ public class UniversalDialogFragment extends DialogFragment {
 
     // widgets and layouts
     private LinearLayout addTitleLayout, addProductLayout;
-    private EditText listTitle, productName;
+    private EditText listTitle, productName, categoryName;
     private Spinner categorySpinner;
 
     // variables
     private int parentId;
     private List<String> categories;
-    String addedCategory, addedProduct;
+    String addedCategory;
 
     // Set up a listener in the event that methods from activity/fragment need to be called
     private UniversalDialogFragmentListener listener;
@@ -92,6 +92,7 @@ public class UniversalDialogFragment extends DialogFragment {
         // Add product layout
         addProductLayout = (LinearLayout) view.findViewById(R.id.univ_diag_add_product);
         productName = (EditText) view.findViewById(R.id.univ_diag_edittext_add_product);
+        categoryName = (EditText) view.findViewById(R.id.univ_diag_edittext_add_category);
         categorySpinner = (Spinner) view.findViewById(R.id.univ_diag_spinner_category);
 
         // Set visibility of layouts
@@ -103,18 +104,14 @@ public class UniversalDialogFragment extends DialogFragment {
                 .setTitle(stringId)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 
-                    // Different onClick events can be set up here depending on parent_id
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                         sendResult(Activity.RESULT_OK, parentId, listTitle.getText().toString(),
-                                addedCategory, addedProduct);
-
-
+                                addedCategory, productName.getText().toString());
                     }
                 }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
 
-                    // Different onClick events can be set up here depending on parent_id
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         startActivity(MainActivity.newIntent(getContext()));
@@ -174,7 +171,7 @@ public class UniversalDialogFragment extends DialogFragment {
 
             case R.id.menu_add_item:
                 addTitleLayout.setVisibility(View.GONE);
-                productName.setVisibility(View.GONE);
+                categoryName.setVisibility(View.GONE);
                 categories = getArguments().getStringArrayList(CATEGORY_LIST);
                 categories.add(getResources().getString(R.string.other));
                 ArrayAdapter <String> adapter =
@@ -184,15 +181,17 @@ public class UniversalDialogFragment extends DialogFragment {
                 categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        String other = getResources().getString(R.string.other);
-                        addedCategory = "";
-                        if (addedCategory.equals(other)){
-                            addedCategory = "";
-                        } else {
-                            addedCategory = adapterView.getSelectedItem().toString();
-                        }
 
-                        Toast.makeText(getContext(), addedCategory, Toast.LENGTH_SHORT).show();
+                        if (categories.size() - 1 == i){
+                            categoryName.setVisibility(View.VISIBLE);
+                            Toast.makeText(getContext(), addedCategory, Toast.LENGTH_SHORT).show();
+                            addedCategory = "";
+                            Toast.makeText(getContext(), addedCategory, Toast.LENGTH_SHORT).show();
+                        } else {
+                            categoryName.setVisibility(View.INVISIBLE);
+                            addedCategory = adapterView.getSelectedItem().toString();
+                            Toast.makeText(getContext(), addedCategory, Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
