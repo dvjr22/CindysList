@@ -194,7 +194,6 @@ public class MainFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
 
         }
-
     }
 
     /***********************************************************************************************
@@ -231,7 +230,6 @@ public class MainFragment extends Fragment {
             // view_swipe_delete.xml
             swipeLayout = (LinearLayout) view.findViewById(R.id.view_swipe_delete);
             undo = (TextView) view.findViewById(R.id.undo);
-
         }
 
         /*******************************************************************************************
@@ -247,7 +245,6 @@ public class MainFragment extends Fragment {
             dateCreated.setText(createdList.getDate());
             items.setText(String.format(Locale.US," %d", createdList.getItems()));
             total.setText(String.format(Locale.US, "%1$,.2f", createdList.getCost()));
-
         }
 
         /*******************************************************************************************
@@ -261,7 +258,6 @@ public class MainFragment extends Fragment {
         public void onClick(View view){
 
             startActivity(ListViewActivity.newIntent(getContext(), createdList.getTitle()));
-
         }
 
     }
@@ -292,7 +288,6 @@ public class MainFragment extends Fragment {
 
             this.createdLists = createdLists;
             pendingRemoval = new ArrayList<>();
-
         }
 
         /*******************************************************************************************
@@ -312,7 +307,6 @@ public class MainFragment extends Fragment {
             // view_swipe_transition_lists includes the layouts view_created_lists and view_swipe_delete
             View view = layoutInflater.inflate(R.layout.view_swipe_transition_lists, parent, false);
             return new ListHolder(view);
-
         }
 
         /*******************************************************************************************
@@ -344,7 +338,6 @@ public class MainFragment extends Fragment {
                 listHolder.swipeLayout.setVisibility(View.GONE);
                 listHolder.bindList(createdList);
             }
-
         }
 
         /*******************************************************************************************
@@ -373,7 +366,6 @@ public class MainFragment extends Fragment {
                 handler.removeCallbacks(pendingRemovalRunnable);
             pendingRemoval.remove(createdList.getTitle());
             notifyItemChanged(createdLists.indexOf(createdList));
-
         }
 
         /*******************************************************************************************
@@ -399,7 +391,6 @@ public class MainFragment extends Fragment {
                 handler.postDelayed(pendingRemovalRunnable, TIMEOUT);
                 pendingRunnables.put(createdList.getTitle(), pendingRemovalRunnable);
             }
-
         }
 
         /*******************************************************************************************
@@ -420,7 +411,6 @@ public class MainFragment extends Fragment {
                 notifyItemRemoved(position);
                 databaseManager.deleteList(createdList.getTitle());
             }
-
         }
 
         /*******************************************************************************************
@@ -433,7 +423,6 @@ public class MainFragment extends Fragment {
 
             CreatedList createdList = createdLists.get(position);
             return pendingRemoval.contains(createdList.getTitle());
-
         }
 
     }

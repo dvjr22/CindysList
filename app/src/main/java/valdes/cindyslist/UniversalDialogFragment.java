@@ -11,9 +11,13 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +33,8 @@ public class UniversalDialogFragment extends DialogFragment {
 
     private LinearLayout addTitle, addProduct;
 
-    private EditText listTitle;
+    private EditText listTitle, productName;
+    private Spinner categorySpinner;
 
     private int parentId;
 
@@ -53,7 +58,6 @@ public class UniversalDialogFragment extends DialogFragment {
         bundle.putInt(PARENT_ID, parent_id);
         fragment.setArguments(bundle);
         return fragment;
-
     }
 
     // Required empty constructor
@@ -78,6 +82,27 @@ public class UniversalDialogFragment extends DialogFragment {
 
         // Add product layout
         addProduct = (LinearLayout) view.findViewById(R.id.univ_diag_add_product);
+        productName = (EditText) view.findViewById(R.id.univ_diag_edittext_add_product);
+        categorySpinner = (Spinner) view.findViewById(R.id.univ_diag_spinner_category);
+        String[] test=new String[]{"test1","test2"};
+        ArrayAdapter <String> adapter =
+                new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, test);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(adapter);
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String Text = adapterView.getSelectedItem().toString();
+                Toast.makeText(getContext(), Text, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
 
         // Set visibility of layouts
         setDisplay();
@@ -143,6 +168,7 @@ public class UniversalDialogFragment extends DialogFragment {
 
             case R.id.menu_add_item:
                 addTitle.setVisibility(View.GONE);
+                productName.setVisibility(View.GONE);
                 break;
             case R.layout.fragment_categories:
                 addProduct.setVisibility(View.GONE);
