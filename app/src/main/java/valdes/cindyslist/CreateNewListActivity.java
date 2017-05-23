@@ -56,7 +56,7 @@ public class CreateNewListActivity extends AppCompatActivity implements
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = CategoriesFragment.newInstance();
         fragmentManager.beginTransaction().
-                add(R.id.create_list_activity_container_categories, fragment).commit();
+                replace(R.id.create_list_activity_container_categories, fragment).commit();
 
     }
 

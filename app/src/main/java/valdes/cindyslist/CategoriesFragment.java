@@ -32,6 +32,8 @@ public class CategoriesFragment extends Fragment {
     private static final int REQUEST_CODE = 0;
     private static final String INTENT_TITLE = "intent_title";
 
+    private static final String OUTSTATE_LIST_NAME = "saved_instance_state_title";
+
     private String listName;
 
     private RecyclerView recyclerView;
@@ -59,7 +61,6 @@ public class CategoriesFragment extends Fragment {
         return new CategoriesFragment();
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,7 +72,14 @@ public class CategoriesFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         updateUI();
-        getListTitle();
+
+        if (savedInstanceState != null) {
+            listName = savedInstanceState.getString(OUTSTATE_LIST_NAME);
+            Toast.makeText(getContext(), "!= " + listName, Toast.LENGTH_SHORT).show();
+        } else {
+            getListTitle();
+            Toast.makeText(getContext(), "== " + listName, Toast.LENGTH_SHORT).show();
+        }
 
         return view;
 
@@ -106,6 +114,14 @@ public class CategoriesFragment extends Fragment {
         } else {
             listAdapter.notifyDataSetChanged();
         }
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        super.onSaveInstanceState(outState);
+        outState.putString(OUTSTATE_LIST_NAME, listName);
 
     }
 
