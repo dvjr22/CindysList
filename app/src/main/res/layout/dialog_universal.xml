@@ -42,13 +42,14 @@
             android:id="@+id/univ_diag_edittext_add_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Add category"/>
+            android:selectAllOnFocus="true"
+            android:hint="@string/univ_diag_hin_category"/>
 
         <EditText
             android:id="@+id/univ_diag_edittext_add_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Add product"/>
+            android:hint="@string/univ_diag_hint_item"/>
 
     </LinearLayout>
 

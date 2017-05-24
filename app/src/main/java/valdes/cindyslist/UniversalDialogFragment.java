@@ -253,8 +253,8 @@ public class UniversalDialogFragment extends DialogFragment {
 
         static {
             dialogStrings = new HashMap();
-            dialogStrings.put(R.id.menu_add_item, R.string.test);
-            dialogStrings.put(R.layout.fragment_categories, R.string.univ_diag_add);
+            dialogStrings.put(R.id.menu_add_item, R.string.univ_diag_add_item);
+            dialogStrings.put(R.layout.fragment_categories, R.string.univ_diag_add_list);
         }
 
         /*******************************************************************************************

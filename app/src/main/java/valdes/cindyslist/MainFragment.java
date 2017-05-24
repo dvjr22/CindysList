@@ -63,7 +63,6 @@ public class MainFragment extends Fragment {
     public static MainFragment newInstance(){
 
         return new MainFragment();
-
     }
 
     @Override
@@ -110,9 +109,6 @@ public class MainFragment extends Fragment {
         } else {
             listAdapter.notifyDataSetChanged();
         }
-
-        //testDB(createdLists.get(0).getTitle());
-
     }
 
     /***********************************************************************************************
@@ -180,7 +176,6 @@ public class MainFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         Toast toast = Toast.makeText(getContext(), "Fragment", Toast.LENGTH_SHORT);
-
         switch (item.getItemId()){
 
             case R.id.menu_add_item:
@@ -201,7 +196,6 @@ public class MainFragment extends Fragment {
 
             default:
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
@@ -221,11 +215,9 @@ public class MainFragment extends Fragment {
             return;
         }
         if (requestCode == REQUEST_CODE){
-
             databaseManager.insertProduct(new Product(data.getStringExtra(INTENT_CATEGORY),
                     data.getStringExtra(INTENT_PRODUCT)));
         }
-
     }
 
     /***********************************************************************************************

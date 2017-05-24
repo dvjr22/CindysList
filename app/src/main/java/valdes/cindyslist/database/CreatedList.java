@@ -77,7 +77,6 @@ public class CreatedList {
         this.items = 0;
         this.cost = 0;
         date = Magic.getDate();
-
     }
 
     /***********************************************************************************************

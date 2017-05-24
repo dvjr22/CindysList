@@ -157,7 +157,6 @@ public class CategoriesFragment extends Fragment {
             // Insert list name into
             databaseManager.insertList(new CreatedList(listName));
         }
-
     }
 
     /***********************************************************************************************

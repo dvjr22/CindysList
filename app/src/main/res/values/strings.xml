@@ -25,10 +25,13 @@
     <string name="action_report">Report</string>
 
     <!-- dialog_universal  -->
-    <string name="test">Add an item</string>
     <string name="other">Other</string>
+    <string name="univ_diag_hint_item">Product name</string>
+    <string name="univ_diag_hint_list">List name</string>
+    <string name="univ_diag_hin_category">Category name</string>
     <string name="univ_diag_new_category">New Category</string>
-    <string name="univ_diag_add">Add the title</string>
+    <string name="univ_diag_add_item">Add a product</string>
+    <string name="univ_diag_add_list">Give the list a name</string>
     <string name="univ_diag_generic_title">List %1$s</string>
 
     <!-- generics -->

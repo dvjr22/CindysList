@@ -326,14 +326,14 @@ public class ProductsFragment extends Fragment {
             if(pendingRemoval.contains(product.getProductName())){
                 pendingRemoval.remove(product.getProductName());
             }
-
             if(products.contains(product)){
                 products.remove(product);
                 notifyItemRemoved(position);
                 // TODO: 5/22/2017 take care of qty total  
                 databaseManager.insertCreatedListItem(listName, product.getProductName(), 1);
+                databaseManager.addOneToList(listName);
+                //databaseManager.updateTwo(listName);
             }
-
         }
 
         /*******************************************************************************************
@@ -346,7 +346,6 @@ public class ProductsFragment extends Fragment {
 
             Product product = products.get(position);
             return pendingRemoval.contains(product.getProductName());
-
         }
 
     }

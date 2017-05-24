@@ -315,6 +315,68 @@ public class DatabaseManager {
         return products;
     }
 
+    // TODO: 5/23/2017 finish count methods for database and tie into ProductsFragment 
+    public void updateTwo(String listName){
+
+        int count = 0;
+        // Cursor to go over results of the query
+        // select count(*)
+        // from list_name a inner join products b on a.product = b.product
+        // where list_name = listName
+        DatabaseCursorWrapper cursor = queryDatabase(
+                false,
+                //tables,
+                Lists.NAME,
+                new String[]  { "count(*)" },
+                Lists.Attributes.LIST_NAME + " = ?",
+                new String[] {listName},
+                null);
+
+        cursor.moveToFirst();
+        count = cursor.getInt(0);
+        cursor.close();
+
+        Log.i(TAG, "Count of the list: " + count);
+    }
+
+    public void addOneToList(String listName){
+
+        CreatedList createdList = new CreatedList(listName);
+
+        // Cursor to go over results of the query
+        // select * from created_lists where list_name = listName;
+        DatabaseCursorWrapper cursor = queryDatabase(
+                false,
+                CreatedLists.NAME,
+                null,
+                CreatedLists.Attributes.LIST_NAME + " = ?",
+                new String[] { listName },
+                null);
+
+        if (cursor.moveToFirst() && cursor.getCount() > 0){
+            try{
+                // Move to the first returned result, there should only be one
+                cursor.moveToFirst();
+                // Continue until all results have been read
+                while(!cursor.isAfterLast()){
+                    // Add results to categories
+                    createdList = cursor.getList();
+                }
+            } finally {
+                // Close cursor
+                cursor.close();
+            }
+
+            createdList.setItems(createdList.getItems() + 1);
+
+            database.update(
+                    CreatedLists.NAME,
+                    setListValues(createdList),
+                    CreatedLists.Attributes.LIST_NAME + " = ?",
+                    new String[] { listName });
+        }
+    }
+
     /***********************************************************************************************
      * Get all the products in a category that have not been added to a list
      *
