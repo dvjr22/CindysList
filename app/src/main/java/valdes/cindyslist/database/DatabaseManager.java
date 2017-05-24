@@ -220,9 +220,10 @@ public class DatabaseManager {
                         Products.Attributes.PRICE,
                         Products.Attributes.PIC_ID,
                         Products.Attributes.UPC,
-                        Lists.Attributes.QTY },
+                        Lists.Attributes.QTY
+                },
                 Lists.Attributes.LIST_NAME + " = ?",
-                new String[] {listName},
+                new String[] { listName },
                 null);
 
         try {
@@ -255,9 +256,7 @@ public class DatabaseManager {
         // select distinct category from products;
         DatabaseCursorWrapper cursor = queryDatabase(true,
                 Products.NAME,
-                new String[] {
-                        Products.Attributes.CATEGORY
-                },
+                new String[] { Products.Attributes.CATEGORY },
                 null,
                 null,
                 null);
@@ -313,68 +312,6 @@ public class DatabaseManager {
             cursor.close();
         }
         return products;
-    }
-
-    // TODO: 5/23/2017 finish count methods for database and tie into ProductsFragment 
-    public void updateTwo(String listName){
-
-        int count = 0;
-        // Cursor to go over results of the query
-        // select count(*)
-        // from list_name a inner join products b on a.product = b.product
-        // where list_name = listName
-        DatabaseCursorWrapper cursor = queryDatabase(
-                false,
-                //tables,
-                Lists.NAME,
-                new String[]  { "count(*)" },
-                Lists.Attributes.LIST_NAME + " = ?",
-                new String[] {listName},
-                null);
-
-        cursor.moveToFirst();
-        count = cursor.getInt(0);
-        cursor.close();
-
-        Log.i(TAG, "Count of the list: " + count);
-    }
-
-    public void addOneToList(String listName){
-
-        CreatedList createdList = new CreatedList(listName);
-
-        // Cursor to go over results of the query
-        // select * from created_lists where list_name = listName;
-        DatabaseCursorWrapper cursor = queryDatabase(
-                false,
-                CreatedLists.NAME,
-                null,
-                CreatedLists.Attributes.LIST_NAME + " = ?",
-                new String[] { listName },
-                null);
-
-        if (cursor.moveToFirst() && cursor.getCount() > 0){
-            try{
-                // Move to the first returned result, there should only be one
-                cursor.moveToFirst();
-                // Continue until all results have been read
-                while(!cursor.isAfterLast()){
-                    // Add results to categories
-                    createdList = cursor.getList();
-                }
-            } finally {
-                // Close cursor
-                cursor.close();
-            }
-
-            createdList.setItems(createdList.getItems() + 1);
-
-            database.update(
-                    CreatedLists.NAME,
-                    setListValues(createdList),
-                    CreatedLists.Attributes.LIST_NAME + " = ?",
-                    new String[] { listName });
-        }
     }
 
     /***********************************************************************************************
@@ -449,6 +386,43 @@ public class DatabaseManager {
     }
 
     /***********************************************************************************************
+     * Updates the total number of items in the selected list
+     *
+     * @param listName      The list to have number of items updated
+     */
+    public void updateListItemTotal(String listName){
+
+        int count = 0;
+        // Cursor to go over results of the query
+        // select count(*) from list_name where list_name = listName
+        DatabaseCursorWrapper cursor = queryDatabase(
+                false,
+                //tables,
+                Lists.NAME,
+                new String[] { COUNT },
+                //new String[]  { "count(*)" },
+                Lists.Attributes.LIST_NAME + " = ?",
+                new String[] { listName },
+                null);
+
+        // Retrieve results
+        cursor.moveToFirst();
+        count = cursor.getInt(0);
+        cursor.close();
+
+        // Set ContentValue to update item_count
+        ContentValues values = new ContentValues();
+        values.put(CreatedLists.Attributes.NUM_OF_ITEMS, count);
+
+        // Update database
+        database.update(
+                CreatedLists.NAME,
+                values,
+                CreatedLists.Attributes.LIST_NAME + " = ?",
+                new String[] { listName });
+    }
+
+    /***********************************************************************************************
      * Delete the list from the SQLite database
      *
      * @param listName      The CreatedList to be deleted
@@ -459,12 +433,46 @@ public class DatabaseManager {
         // delete from created_lists where list_name = listName;
         database.delete(CreatedLists.NAME,
                 CreatedLists.Attributes.LIST_NAME + " = ?",
-                new String[] {listName});
+                new String[] { listName });
 
         // delete from lists where list_name = listName;
         database.delete(Lists.NAME,
                 Lists.Attributes.LIST_NAME + " = ?",
-                new String[] {listName});
+                new String[] { listName });
     }
 
 }
+
+/*
+
+// One way to update the list count
+public void addOneToList(String listName){
+
+        CreatedList createdList = new CreatedList(listName);
+
+        // Cursor to go over results of the query
+        // select * from created_lists where list_name = listName;
+        DatabaseCursorWrapper cursor = queryDatabase(
+                false,
+                CreatedLists.NAME,
+                null,
+                CreatedLists.Attributes.LIST_NAME + " = ?",
+                new String[] { listName },
+                null);
+
+        // Move to the first returned result, there should only be one
+        cursor.moveToFirst();
+        createdList = cursor.getList();
+        // Close cursor
+        cursor.close();
+
+        createdList.setItems(createdList.getItems() + 1);
+
+        database.update(
+                CreatedLists.NAME,
+                setListValues(createdList),
+                CreatedLists.Attributes.LIST_NAME + " = ?",
+                new String[] { listName });
+    }
+
+ */

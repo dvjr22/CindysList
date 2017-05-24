@@ -5,6 +5,8 @@ package valdes.cindyslist.database;
  */
 public class DatabaseSchema {
 
+    public static final String COUNT = "count(*)";
+
     /***********************************************************************************************
      * Class for the products table
      */

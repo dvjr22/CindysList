@@ -329,10 +329,10 @@ public class ProductsFragment extends Fragment {
             if(products.contains(product)){
                 products.remove(product);
                 notifyItemRemoved(position);
-                // TODO: 5/22/2017 take care of qty total  
+                // Insert item into list
                 databaseManager.insertCreatedListItem(listName, product.getProductName(), 1);
-                databaseManager.addOneToList(listName);
-                //databaseManager.updateTwo(listName);
+                // Update list item count
+                databaseManager.updateListItemTotal(listName);
             }
         }
 
