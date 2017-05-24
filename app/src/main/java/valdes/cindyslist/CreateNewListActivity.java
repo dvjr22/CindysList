@@ -11,8 +11,10 @@ import android.support.v7.widget.Toolbar;
 public class CreateNewListActivity extends AppCompatActivity implements
         CategoriesFragment.CategoriesFragmentListener{
 
+    // Save state variables
     private static final String OUTSTATE_CATEGORY = "category_fragment";
 
+    // widgets
     private Toolbar toolbar;
     private Fragment categoryFragment;
     private Fragment productFragment;
@@ -20,13 +22,21 @@ public class CreateNewListActivity extends AppCompatActivity implements
     /***********************************************************************************************
      * Creates a new intent to start CreateNewListActivity
      *
-     * @param context
-     * @return          The Activity to be started
+     * @param context       The context to use
+     * @return              The Activity to be started
      */
     public static Intent newIntent(Context context){
         return new Intent(context, CreateNewListActivity.class);
     }
 
+    /***********************************************************************************************
+     * Android method
+     *
+     * Called when Activity is starting
+     * Inflate Activity UI, programmatically interact with widgets, restore saved states
+     *
+     * @param savedInstanceState        Bundle containing the data most recently supplied
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -48,7 +58,6 @@ public class CreateNewListActivity extends AppCompatActivity implements
             // Initial load of Fragments
             loadCategoryFragment();
         }
-
     }
 
     /***********************************************************************************************
@@ -63,7 +72,7 @@ public class CreateNewListActivity extends AppCompatActivity implements
     }
 
     /***********************************************************************************************
-     *
+     * Load CategoryFragment in container
      */
     private void loadCategoryFragment(){
 
@@ -74,9 +83,10 @@ public class CreateNewListActivity extends AppCompatActivity implements
     }
 
     /***********************************************************************************************
+     * Loads ProductFragment with items in a category that have not been selected in the list
      *
-     * @param category
-     * @param listName
+     * @param category      The category of products to display
+     * @param listName      The name of the current list being created
      */
     public void loadProductsFragment(String category, String listName){
 

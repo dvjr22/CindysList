@@ -20,17 +20,27 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Widgets
     private Toolbar toolbar;
 
     /***********************************************************************************************
+     * Creates a new intent to start MainActivity
      *
-     * @param context
-     * @return
+     * @param context       The context to use
+     * @return              The Activity to be started
      */
     public static Intent newIntent(Context context){
         return new Intent(context, MainActivity.class);
     }
 
+    /***********************************************************************************************
+     * Android method
+     *
+     * Called when Activity is starting
+     * Inflate Activity UI, programmatically interact with widgets, restore saved states
+     *
+     * @param savedInstanceState        Bundle containing the data most recently supplied
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -42,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /***********************************************************************************************
-     *
+     * Loads MainFragment in container
      */
     private void loadMain(){
 
@@ -53,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /***********************************************************************************************
-     *
+     * Setup the Toolbar
      */
     private void setUpToolBar(){
 
