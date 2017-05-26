@@ -24,7 +24,6 @@ public class DatabaseSchema {
             public static final String PIC_ID = "pic_id";
             public static final String UPC = "upc";
             public static final String SELECTIONS = "selections";
-
         }
     }
 
@@ -43,7 +42,6 @@ public class DatabaseSchema {
             public static final String DATE_CREATED = "date";
             public static final String NUM_OF_ITEMS = "items";
             public static final String TOTAL_COST = "cost";
-
         }
     }
 
@@ -61,7 +59,6 @@ public class DatabaseSchema {
             public static final String LIST_NAME = "list_name";
             public static final String PRODUCT = "product";
             public static final String QTY = "qty";
-
         }
     }
 

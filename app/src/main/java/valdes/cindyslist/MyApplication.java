@@ -16,7 +16,7 @@ public class God extends Application {
     public void onCreate(){
 
         setUpDatabaseManager();
-        Log.i("trace", "Appliation called");
+        Log.i("trace", "Application called");
 
         super.onCreate();
     }
