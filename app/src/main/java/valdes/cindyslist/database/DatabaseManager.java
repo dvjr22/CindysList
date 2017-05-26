@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +47,26 @@ public class DatabaseManager {
     private DatabaseManager(Context context){
 
         context = context.getApplicationContext();
-        database = new DatabaseHelper(context).getWritableDatabase();
+        //database = new DatabaseHelper(context).getWritableDatabase();
+
+
+        // below is to load database from file
+        DBHelper dbHelper = new DBHelper(context);
+
+        try {
+            dbHelper.createdatabase();
+        } catch (IOException ioe) {
+            throw new Error ("Unable to create database");
+        }
+/*
+        try {
+            dbHelper.openDatabBase();
+        } catch (SQLException sqle) {
+
+        }
+*/
+        database = new DBHelper(context).getWritableDatabase();
+
     }
 
     /***********************************************************************************************

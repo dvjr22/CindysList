@@ -4,15 +4,20 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import valdes.cindyslist.R;
 
 import static valdes.cindyslist.database.DatabaseSchema.*;
 
+
+
 /***************************************************************************************************
  * Class that creates and updates SQLite database
  */
 public class DatabaseHelper extends SQLiteOpenHelper{
+
+    private static final String TAG = "trace";
 
     private static final int VERSION = 1;
     private static final String DATABASE_NAME = "cindys_list.db";
@@ -29,6 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         super(context, DATABASE_NAME, null, VERSION);
     }
 
+
     /***********************************************************************************************
      * Creates a SQLite database if one doesn't exist
      *
@@ -36,6 +42,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
      */
     @Override
     public void onCreate(SQLiteDatabase db){
+
+        Log.i(TAG, "onCreate");
 
         // Create products table
         // execSQL(String sql)
@@ -71,7 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         );
 
         // For testing purposes
-        insertProducts(db);
+        // insertProducts(db);
     }
 
     /***********************************************************************************************
@@ -85,6 +93,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
 
     }
+
 
     /***********************************************************************************************
      * Checks versions of SQLite databvase and performs downgrades as required
