@@ -100,7 +100,7 @@ public class CategoriesFragment extends Fragment {
     private void updateUI(){
 
         // Get the database
-        databaseManager = DatabaseManager.get(getActivity());
+        databaseManager = DatabaseManager.get(getContext());
         List<String> categories = databaseManager.getCategories();
 
         // Check if the adapter has been setup and checks for changes

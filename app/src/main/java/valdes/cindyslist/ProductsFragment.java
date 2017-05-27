@@ -86,7 +86,7 @@ public class ProductsFragment extends Fragment {
     private void updateUI(String category){
 
         // Get the database
-        databaseManager = DatabaseManager.get(getActivity());
+        databaseManager = DatabaseManager.get(getContext());
         List<Product> products = databaseManager.getProducts(category, listName);
 
         // Check if the adapter has been setup and checks for changes

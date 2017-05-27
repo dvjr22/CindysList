@@ -78,7 +78,7 @@ public class ListViewFragment extends Fragment {
     private void updateUI(String title){
 
         // Get the database
-        databaseManager = DatabaseManager.get(getActivity());
+        databaseManager = DatabaseManager.get(getContext());
         List<ListProduct> listProducts = databaseManager.getListProducts(title);
 
         // Check if the adapter has been setup and checks for changes
