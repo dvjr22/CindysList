@@ -3,8 +3,16 @@ package valdes.cindyslist.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.SQLException;
 
 import valdes.cindyslist.R;
 
@@ -20,7 +28,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     private static final String TAG = "trace";
 
     private static final int VERSION = 1;
-    private static final String DATABASE_NAME = "cindys_list.db";
+    private static String DATABASE_PATH = "/data/data/valdes.cindyslist/databases/";
+    private static String DATABASE_NAME = "cindys_list.db";
+    private SQLiteDatabase database;
+    private final Context context;
 
 
     /***********************************************************************************************
@@ -31,9 +42,92 @@ public class DatabaseHelper extends SQLiteOpenHelper{
      * If not the first time, check the version number and call onUpgrade for any required updates
      */
     public DatabaseHelper(Context context){
+
         super(context, DATABASE_NAME, null, VERSION);
+        this.context = context;
+
+        if (!checkDatabase()) {
+            try {
+                createDatabase();
+            } catch (Exception e) {
+
+            }
+        }
     }
 
+    /**
+     * Creates a empty database on the system and rewrites it with your own database.
+     * */
+    public void createDatabase() throws IOException{
+
+            //By calling this method and empty database will be created into the default system path
+            //of your application so we are gonna be able to overwrite that database with our database.
+            this.getReadableDatabase();
+
+            try {
+                copyDatabase();
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new Error("Error copying database");
+            }
+    }
+
+    /**
+     * Check if the database already exist to avoid re-copying the file each time you open the application.
+     * @return true if it exists, false if it doesn't
+     */
+    private boolean checkDatabase(){
+
+        boolean checkDB = false;
+
+        try{
+            String myPath = DATABASE_PATH + DATABASE_NAME;
+            //checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+            File dbfile = new File(myPath);
+            checkDB = dbfile.exists();
+
+        }catch(SQLiteException e){
+            //database does't exist yet.
+        }
+        return checkDB;
+    }
+
+    /**
+     * Copies your database from your local assets-folder to the just created empty database in the
+     * system folder, from where it can be accessed and handled.
+     * This is done by transfering bytestream.
+     * */
+    private void copyDatabase() throws IOException {
+
+        //Open your local db as the input stream
+        InputStream myInput = context.getAssets().open(DATABASE_NAME);
+
+        // Path to the just created empty db
+        String outFileName = DATABASE_PATH + DATABASE_NAME;
+
+        //Open the empty db as the output stream
+        OutputStream myOutput = new FileOutputStream(outFileName);
+
+        //transfer bytes from the inputfile to the outputfile
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = myInput.read(buffer)) > 0){
+            myOutput.write(buffer, 0, length);
+        }
+
+        //Close the streams
+        myOutput.flush();
+        myOutput.close();
+        myInput.close();
+    }
+
+    @Override
+    public  synchronized void close(){
+
+        if(database != null)
+            database.close();
+        super.close();
+    }
 
     /***********************************************************************************************
      * Creates a SQLite database if one doesn't exist
@@ -42,9 +136,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
      */
     @Override
     public void onCreate(SQLiteDatabase db){
-
-        Log.i(TAG, "onCreate");
-
+/*
         // Create products table
         // execSQL(String sql)
         db.execSQL(
@@ -77,7 +169,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 Lists.Attributes.PRODUCT + ", " +
                 Lists.Attributes.QTY + ")"
         );
-
+*/
         // For testing purposes
         // insertProducts(db);
     }
@@ -112,6 +204,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
      *
      * @param db        SQLite database that data will receive data
      */
+    /*
     private void insertProducts(SQLiteDatabase db){
 
         ContentValues apple = DatabaseManager.
@@ -186,5 +279,5 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.insert(Lists.NAME, null, product14);
 
     }
-
+*/
 }

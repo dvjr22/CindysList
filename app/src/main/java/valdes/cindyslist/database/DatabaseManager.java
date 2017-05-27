@@ -47,26 +47,7 @@ public class DatabaseManager {
     private DatabaseManager(Context context){
 
         context = context.getApplicationContext();
-        //database = new DatabaseHelper(context).getWritableDatabase();
-
-
-        // below is to load database from file
-        DBHelper dbHelper = new DBHelper(context);
-
-        try {
-            dbHelper.createdatabase();
-        } catch (IOException ioe) {
-            throw new Error ("Unable to create database");
-        }
-/*
-        try {
-            dbHelper.openDatabBase();
-        } catch (SQLException sqle) {
-
-        }
-*/
-        database = new DBHelper(context).getWritableDatabase();
-
+        database = new DatabaseHelper(context).getWritableDatabase();
     }
 
     /***********************************************************************************************
@@ -129,8 +110,7 @@ public class DatabaseManager {
      * @param product       Product to be inserted into the SQLite database
      * @return              The values to be inserted in a ContentValues object
      */
-    // TODO: 5/12/17 return to private after testing - DVJ
-    public static ContentValues setProductValues(Product product){
+    private static ContentValues setProductValues(Product product){
 
         ContentValues values = new ContentValues();
 
@@ -150,8 +130,7 @@ public class DatabaseManager {
      * @param createdList       CreatedList to be inserted into the SQLite database
      * @return                  The values to be inserted in a ContentValues object
      */
-    // TODO: 5/15/17 return to private after testing - DVJ
-    public static ContentValues setListValues(CreatedList createdList){
+    private static ContentValues setListValues(CreatedList createdList){
 
         ContentValues values = new ContentValues();
 
@@ -173,7 +152,7 @@ public class DatabaseManager {
      * @param qty           The quantity of this item in the list
      * @return              The values to be inserted in a ContentValues object
      */
-    public static ContentValues setProductsInListValues(String listName, String product, int qty){
+    private static ContentValues setProductsInListValues(String listName, String product, int qty){
 
         ContentValues values = new ContentValues();
 
