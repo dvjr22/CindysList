@@ -91,7 +91,6 @@ public class MainFragment extends Fragment {
         setSwipe();
 
         return view;
-
     }
 
     /***********************************************************************************************

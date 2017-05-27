@@ -22,6 +22,7 @@ import static valdes.cindyslist.database.DatabaseSchema.*;
 
 /***************************************************************************************************
  * Class that creates and updates SQLite database
+ * SQLite database stored in assets folder and copied to device on initial startup
  */
 public class DatabaseHelper extends SQLiteOpenHelper{
 
@@ -38,56 +39,55 @@ public class DatabaseHelper extends SQLiteOpenHelper{
      * Constructor
      *
      * Creates a new database if one doesn't exist
-     * If no database exists, onCreate is called to create the database
      * If not the first time, check the version number and call onUpgrade for any required updates
      */
     public DatabaseHelper(Context context){
 
         super(context, DATABASE_NAME, null, VERSION);
         this.context = context;
-
-        if (!checkDatabase()) {
+        // Check if the database exists
+        if (!checkDatabase()){
             try {
                 createDatabase();
-            } catch (Exception e) {
+            } catch (Exception e){
 
             }
         }
     }
 
-    /**
-     * Creates a empty database on the system and rewrites it with your own database.
-     * */
-    public void createDatabase() throws IOException{
+    /***********************************************************************************************
+     * Creates the database in Android file structure
+     *
+     * @throws IOException      Exception in the event no SQLite database found to copy
+     */
+    private void createDatabase() throws IOException{
 
-            //By calling this method and empty database will be created into the default system path
-            //of your application so we are gonna be able to overwrite that database with our database.
-            this.getReadableDatabase();
-
-            try {
-                copyDatabase();
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new Error("Error copying database");
-            }
+        // Database created in file path
+        this.getReadableDatabase();
+        // Copy database from assets folder to Android file path
+        try {
+            copyDatabase();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new Error("Error copying database");
+        }
     }
 
-    /**
-     * Check if the database already exist to avoid re-copying the file each time you open the application.
-     * @return true if it exists, false if it doesn't
+    /***********************************************************************************************
+     * Checks if a SQLite database exits
+     *
+     * @return      True if it exits, false otherwise
      */
     private boolean checkDatabase(){
 
         boolean checkDB = false;
-
         try{
-            String myPath = DATABASE_PATH + DATABASE_NAME;
-            //checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
-            File dbfile = new File(myPath);
-            checkDB = dbfile.exists();
-
+            // Check if a database file exists
+            File file = new File(DATABASE_PATH + DATABASE_NAME);
+            // File file = new File(context.getFilesDir().getPath() + DATABASE_NAME);
+            checkDB = file.exists();
         }catch(SQLiteException e){
-            //database does't exist yet.
+            // Database does't exist
         }
         return checkDB;
     }
@@ -97,32 +97,38 @@ public class DatabaseHelper extends SQLiteOpenHelper{
      * system folder, from where it can be accessed and handled.
      * This is done by transfering bytestream.
      * */
+
+    /***********************************************************************************************
+     * Copies the database stored in the assets folder and copies it over to the Android file path
+     *
+     * @throws IOException      Exception in the event no SQLite database found to copy
+     */
     private void copyDatabase() throws IOException {
 
-        //Open your local db as the input stream
-        InputStream myInput = context.getAssets().open(DATABASE_NAME);
-
-        // Path to the just created empty db
-        String outFileName = DATABASE_PATH + DATABASE_NAME;
-
-        //Open the empty db as the output stream
-        OutputStream myOutput = new FileOutputStream(outFileName);
-
-        //transfer bytes from the inputfile to the outputfile
+        // Open database in assets folder
+        InputStream inputStream = context.getAssets().open(DATABASE_NAME);
+        // Path to Android database
+        String outFile = DATABASE_PATH + DATABASE_NAME;
+        // Open outFile as output stream
+        OutputStream outputStream = new FileOutputStream(outFile);
+        // Transfer bytes from the inputStream to the outputStream
         byte[] buffer = new byte[1024];
         int length;
-        while ((length = myInput.read(buffer)) > 0){
-            myOutput.write(buffer, 0, length);
+        while ((length = inputStream.read(buffer)) > 0){
+            outputStream.write(buffer, 0, length);
         }
-
-        //Close the streams
-        myOutput.flush();
-        myOutput.close();
-        myInput.close();
+        // Close streams
+        outputStream.flush();
+        outputStream.close();
+        inputStream.close();
     }
 
+    /***********************************************************************************************
+     * Android method
+     *
+     */
     @Override
-    public  synchronized void close(){
+    public synchronized void close(){
 
         if(database != null)
             database.close();
@@ -130,6 +136,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     /***********************************************************************************************
+     * Android method
      * Creates a SQLite database if one doesn't exist
      *
      * @param db        The database to be created
@@ -175,6 +182,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     /***********************************************************************************************
+     * Android method
      * Checks versions of SQLite database and performs updates as required
      *
      * @param db            The SQLite database to receive updates
@@ -188,7 +196,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 
     /***********************************************************************************************
-     * Checks versions of SQLite databvase and performs downgrades as required
+     * Android method
+     * Checks versions of SQLite database and performs downgrades as required
      *
      * @param db            The SQLite database to receive downgrades
      * @param oldVersion    Previous version of the database
