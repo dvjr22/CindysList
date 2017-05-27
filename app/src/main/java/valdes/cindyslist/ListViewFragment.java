@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import valdes.cindyslist.Utilities.SwipeUtility;
+import valdes.cindyslist.utilities.SwipeUtility;
 import valdes.cindyslist.database.DatabaseManager;
 import valdes.cindyslist.database.ListProduct;
 
@@ -103,7 +102,6 @@ public class ListViewFragment extends Fragment {
                 int swipedPosition = viewHolder.getAdapterPosition();
                 ListAdapter adapter = (ListAdapter) recyclerView.getAdapter();
                 adapter.pendingRemoval(swipedPosition);
-
             }
 
             @Override
@@ -115,7 +113,6 @@ public class ListViewFragment extends Fragment {
                     return 0;
                 }
                 return super.getSwipeDirs(recyclerView, viewHolder);
-
             }
         };
 
@@ -124,7 +121,6 @@ public class ListViewFragment extends Fragment {
 
         swipe.setLeftSwipeLable(getString(R.string.delete));
         swipe.setLeftcolorCode(ContextCompat.getColor(getActivity(), R.color.colorRed));
-
     }
 
     /***********************************************************************************************
@@ -184,7 +180,6 @@ public class ListViewFragment extends Fragment {
 
         /*******************************************************************************************
          * Android method
-         *
          * Handles all onClick events for the view
          *
          * @param view      The view being clicked
@@ -228,7 +223,6 @@ public class ListViewFragment extends Fragment {
 
         /*******************************************************************************************
          * Android method
-         *
          * Creates the ViewHolder for the RecyclerView
          *
          * @param parent        ViewGroup to which view will be added
@@ -248,7 +242,6 @@ public class ListViewFragment extends Fragment {
 
         /*******************************************************************************************
          * Android method
-         *
          * Displays data in the specified position
          *
          * @param listHolder        ViewHolder with the data to be displayed
@@ -275,12 +268,10 @@ public class ListViewFragment extends Fragment {
                 listHolder.swipeLayout.setVisibility(View.GONE);
                 listHolder.bindList(listProduct);
             }
-
         }
 
         /*******************************************************************************************
          * Android method
-         *
          * Get the size of the list of objects to be displayed
          *
          * @return      The size of the list
@@ -330,7 +321,6 @@ public class ListViewFragment extends Fragment {
                 handler.postDelayed(pendingRemovalRunnable, TIMEOUT);
                 pendingRunnables.put(listProduct.getProduct(), pendingRemovalRunnable);
             }
-
         }
 
         /*******************************************************************************************
@@ -351,7 +341,6 @@ public class ListViewFragment extends Fragment {
                 notifyItemRemoved(position);
                 databaseManager.deleteList(createdList.getProduct());
             }
-
         }
 
         /*******************************************************************************************
@@ -364,10 +353,8 @@ public class ListViewFragment extends Fragment {
 
             ListProduct listProduct = listProducts.get(position);
             return pendingRemoval.contains(listProduct.getProduct());
-
         }
 
     }
-
 
 }

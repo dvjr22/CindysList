@@ -1,4 +1,4 @@
-package valdes.cindyslist.Utilities;
+package valdes.cindyslist.utilities;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;

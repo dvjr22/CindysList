@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import valdes.cindyslist.Utilities.SwipeUtility;
+import valdes.cindyslist.utilities.SwipeUtility;
 import valdes.cindyslist.database.CreatedList;
 import valdes.cindyslist.database.DatabaseManager;
 import valdes.cindyslist.database.Product;
@@ -122,7 +122,6 @@ public class MainFragment extends Fragment {
                 int swipedPosition = viewHolder.getAdapterPosition();
                 ListAdapter adapter = (ListAdapter) recyclerView.getAdapter();
                 adapter.pendingRemoval(swipedPosition);
-
             }
 
             @Override
@@ -134,7 +133,6 @@ public class MainFragment extends Fragment {
                     return 0;
                 }
                 return super.getSwipeDirs(recyclerView, viewHolder);
-
             }
         };
 
@@ -143,13 +141,11 @@ public class MainFragment extends Fragment {
 
         swipe.setLeftSwipeLable(getString(R.string.delete));
         swipe.setLeftcolorCode(ContextCompat.getColor(getActivity(), R.color.colorRed));
-
     }
 
 
     /***********************************************************************************************
      * Android method
-     *
      * Adds menu icons to Toolbar if one is present
      *
      * @param menu          The options menu to display items
@@ -165,7 +161,6 @@ public class MainFragment extends Fragment {
 
     /***********************************************************************************************
      * Android method
-     *
      * Called when items on the Toolbar are clicked
      *
      * @param item      The item clicked on the Toolbar
@@ -200,7 +195,6 @@ public class MainFragment extends Fragment {
 
     /***********************************************************************************************
      * Android method
-     *
      * Gets the title of the list from UniversalDialogFragment
      *
      * @param requestCode       The code of the original request
@@ -225,7 +219,7 @@ public class MainFragment extends Fragment {
      */
     private class ListHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        //
+        // Widgets
         private TextView listName, dateCreated, items, total, undo;
         private LinearLayout listLayout, swipeLayout;
         private CreatedList createdList;
@@ -272,7 +266,6 @@ public class MainFragment extends Fragment {
 
         /*******************************************************************************************
          * Android method
-         *
          * Handles all onClick events for the view
          *
          * @param view      The view being clicked
@@ -315,7 +308,6 @@ public class MainFragment extends Fragment {
 
         /*******************************************************************************************
          * Android method
-         *
          * Creates the ViewHolder for the RecyclerView
          *
          * @param parent        ViewGroup to which view will be added
@@ -334,7 +326,6 @@ public class MainFragment extends Fragment {
 
         /*******************************************************************************************
          * Android method
-         *
          * Displays data in the specified position
          *
          * @param listHolder        ViewHolder with the data to be displayed
@@ -365,7 +356,6 @@ public class MainFragment extends Fragment {
 
         /*******************************************************************************************
          * Android method
-         *
          * Get the size of the list of objects to be displayed
          *
          * @return      The size of the list

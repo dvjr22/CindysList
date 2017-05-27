@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-import valdes.cindyslist.Utilities.SwipeUtility;
+import valdes.cindyslist.utilities.SwipeUtility;
 import valdes.cindyslist.database.DatabaseManager;
 import valdes.cindyslist.database.Product;
 
@@ -57,7 +56,6 @@ public class ProductsFragment extends Fragment {
         args.putString(LIST_NAME, listName);
         fragment.setArguments(args);
         return fragment;
-
     }
 
 
@@ -77,7 +75,6 @@ public class ProductsFragment extends Fragment {
         setSwipe();
 
         return view;
-
     }
 
     /***********************************************************************************************
@@ -96,7 +93,6 @@ public class ProductsFragment extends Fragment {
         } else {
             listAdapter.notifyDataSetChanged();
         }
-
     }
 
     /***********************************************************************************************
@@ -111,7 +107,6 @@ public class ProductsFragment extends Fragment {
                 int swipedPosition = viewHolder.getAdapterPosition();
                 ListAdapter adapter = (ListAdapter) recyclerView.getAdapter();
                 adapter.pendingRemoval(swipedPosition);
-
             }
 
             @Override
@@ -123,7 +118,6 @@ public class ProductsFragment extends Fragment {
                     return 0;
                 }
                 return super.getSwipeDirs(recyclerView, viewHolder);
-
             }
         };
 
@@ -132,7 +126,6 @@ public class ProductsFragment extends Fragment {
 
         swipe.setLeftSwipeLable(getString(R.string.delete));
         swipe.setLeftcolorCode(ContextCompat.getColor(getActivity(), R.color.colorGreen));
-
     }
 
     /***********************************************************************************************
@@ -169,7 +162,6 @@ public class ProductsFragment extends Fragment {
 
             // view_swipe_added.xml
             swipeLayout = (LinearLayout) view.findViewById(R.id.view_swipe_add);
-
         }
 
         /*******************************************************************************************
@@ -183,12 +175,10 @@ public class ProductsFragment extends Fragment {
 
             productTextView.setText(product.getProductName());
             iProduct.setImageResource(product.getPicId());
-
         }
 
         /*******************************************************************************************
          * Android method
-         *
          * Handles all onClick events for the view
          *
          * @param view      The view being clicked
@@ -231,7 +221,6 @@ public class ProductsFragment extends Fragment {
 
         /*******************************************************************************************
          * Android method
-         *
          * Creates the ViewHolder for the RecyclerView
          *
          * @param parent        ViewGroup to which view will be added
@@ -246,12 +235,10 @@ public class ProductsFragment extends Fragment {
             // view_swipe_transition_lists includes the layouts view_item_create and view_swipe_added
             View view = layoutInflater.inflate(R.layout.view_swipe_transition_add, parent, false);
             return new ListHolder(view);
-
         }
 
         /*******************************************************************************************
          * Android method
-         *
          * Displays data in the specified position
          *
          * @param listHolder        ViewHolder with the data to be displayed
@@ -272,12 +259,10 @@ public class ProductsFragment extends Fragment {
                 listHolder.swipeLayout.setVisibility(View.GONE);
                 listHolder.bindList(product);
             }
-
         }
 
         /*******************************************************************************************
          * Android method
-         *
          * Get the size of the list of objects to be displayed
          *
          * @return      The size of the list
@@ -311,7 +296,6 @@ public class ProductsFragment extends Fragment {
                 handler.postDelayed(pendingRemovalRunnable, TIMEOUT);
                 pendingRunnables.put(product.getProductName(), pendingRemovalRunnable);
             }
-
         }
 
         /*******************************************************************************************

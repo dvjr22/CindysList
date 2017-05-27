@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import valdes.cindyslist.Utilities.Magic;
+import valdes.cindyslist.utilities.Magic;
 
 /***************************************************************************************************
  * Object Class that creates an instance of a CreatedList

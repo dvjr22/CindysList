@@ -10,13 +10,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -125,7 +122,6 @@ public class CategoriesFragment extends Fragment {
 
     /***********************************************************************************************
      * Android method
-     *
      * Called when a fragment is first attached to its context
      *
      * @param context
@@ -139,7 +135,6 @@ public class CategoriesFragment extends Fragment {
 
     /***********************************************************************************************
      * Android method
-     *
      * Gets the title of the list from UniversalDialogFragment
      *
      * @param requestCode       The code of the original request
@@ -198,7 +193,6 @@ public class CategoriesFragment extends Fragment {
 
         /*******************************************************************************************
          * Android method
-         *
          * Handles all onClick events for the view
          *
          * @param view      The view being clicked
@@ -232,7 +226,6 @@ public class CategoriesFragment extends Fragment {
 
         /*******************************************************************************************
          * Android method
-         *
          * Creates the ViewHolder for the RecyclerView
          *
          * @param parent        ViewGroup to which view will be added
@@ -250,7 +243,6 @@ public class CategoriesFragment extends Fragment {
 
         /*******************************************************************************************
          * Android method
-         *
          * Displays data in the specified position
          *
          * @param listHolder        ViewHolder with the data to be displayed
@@ -266,7 +258,6 @@ public class CategoriesFragment extends Fragment {
 
         /*******************************************************************************************
          * Android method
-         *
          * Get the size of the list of objects to be displayed
          *
          * @return      The size of the list
