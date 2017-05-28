@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 public class CreateNewListActivity extends AppCompatActivity implements
         CategoriesFragment.CategoriesFragmentListener{
 
-    // Instent variables
+    // Intent variables
     private static final String LIST_NAME = "list_name";
 
     // Save state variables
@@ -64,13 +64,7 @@ public class CreateNewListActivity extends AppCompatActivity implements
                     replace(R.id.create_list_activity_container_categories, categoryFragment).commit();
         } else {
             // Initial load of Fragments
-            loadCategoryFragment();
-        }
-
-        // Load ProductsFragment if user requested to update a list
-        if (getIntent().getStringExtra(LIST_NAME) != null){
-            loadProductsFragment(getResources().getString(R.string.default_category),
-                    getIntent().getStringExtra(LIST_NAME));
+            loadCategoryFragment(getIntent().getStringExtra(LIST_NAME));
         }
     }
 
@@ -88,10 +82,10 @@ public class CreateNewListActivity extends AppCompatActivity implements
     /***********************************************************************************************
      * Load CategoryFragment in container
      */
-    private void loadCategoryFragment(){
+    private void loadCategoryFragment(String listName){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        categoryFragment = CategoriesFragment.newInstance();
+        categoryFragment = CategoriesFragment.newInstance(listName);
         fragmentManager.beginTransaction().
                 add(R.id.create_list_activity_container_categories, categoryFragment).commit();
     }

@@ -83,7 +83,6 @@ public class ListViewFragment extends Fragment {
         // Get list name in the event user needs to update
         listName = getArguments().getString(LIST_TITLE);
 
-        Log.i(TAG, listName);
         // Set menu
         setHasOptionsMenu(true);
 
@@ -171,7 +170,6 @@ public class ListViewFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        Toast toast = Toast.makeText(getContext(), "Update", Toast.LENGTH_SHORT);
         switch (item.getItemId()){
 
             case R.id.menu_add_item:

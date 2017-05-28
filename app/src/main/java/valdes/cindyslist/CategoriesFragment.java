@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,9 @@ public class CategoriesFragment extends Fragment {
     // Saved state variables
     private static final String OUTSTATE_LIST_NAME = "saved_instance_state_title";
 
+    // Bundle variables
+    private static final String LIST_NAME = "list_name";
+
     private String listName;
 
     private RecyclerView recyclerView;
@@ -53,10 +57,16 @@ public class CategoriesFragment extends Fragment {
     /***********************************************************************************************
      * Create a new instance of CategoriesFragment
      *
-     * @return      A new instance of CategoriesFragment
+     * @param listName      The name of the list
+     *                      This is used when the user wants to update a list
+     * @return              A new instance of CategoriesFragment
      */
-    public static CategoriesFragment newInstance(){
-        return new CategoriesFragment();
+    public static CategoriesFragment newInstance(String listName){
+        CategoriesFragment fragment = new CategoriesFragment();
+        Bundle args = new Bundle();
+        args.putString(LIST_NAME, listName);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -68,14 +78,20 @@ public class CategoriesFragment extends Fragment {
         // Setup RecyclerView
         recyclerView = (RecyclerView) view.findViewById(R.id.recylerview_category);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         updateUI();
 
+        // Check whether updating or creating a list
+        // Check if a list is being updated
+        if (getArguments().getString(LIST_NAME) != null){
+            listName = getArguments().getString(LIST_NAME);
+        }
+        // Check for save state
         if (savedInstanceState != null) {
             listName = savedInstanceState.getString(OUTSTATE_LIST_NAME);
-        } else {
-            getListTitle();
         }
+        // Get a list name for a new list
+        if (listName == null) getListTitle();
+
         return view;
     }
 
