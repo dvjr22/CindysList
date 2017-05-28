@@ -150,7 +150,7 @@ public class ListViewFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.menu_list_view, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -164,7 +164,7 @@ public class ListViewFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        Toast toast = Toast.makeText(getContext(), "Fragment", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(getContext(), "Update", Toast.LENGTH_SHORT);
         switch (item.getItemId()){
 
             case R.id.menu_add_item:
@@ -175,11 +175,7 @@ public class ListViewFragment extends Fragment {
                 dialogFragment.show(fragmentManager, REQUEST_NEW_PRODUCT);
                 return true;
 
-            case R.id.action_settings:
-                toast.show();
-                return true;
-
-            case R.id.action_report:
+            case R.id.menu_update_list:
                 toast.show();
                 return true;
 

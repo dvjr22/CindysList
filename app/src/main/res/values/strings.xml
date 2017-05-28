@@ -21,6 +21,7 @@
 
     <!-- menu_main  -->
     <string name="add_item">Add Product</string>
+    <string name="update_list">Update List</string>
     <string name="action_settings">Settings</string>
     <string name="action_report">Report</string>
 
