@@ -70,7 +70,7 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-
+        // Set menu
         setHasOptionsMenu(true);
 
         // Setup Button

@@ -16,6 +16,12 @@
     <string name="delete">Delete</string>
     <string name="undo">Undo</string>
 
+    <!-- view_swipe_added_list-->
+    <string name="added_to_list">Added to list</string>
+
+    <!-- view_swipe_transition_items -->
+    <string name="check_from_list">Checked</string>
+
     <!--  view_item_create -->
     <string name="item_pic">Item Picture</string>
 

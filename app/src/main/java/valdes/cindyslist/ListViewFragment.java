@@ -77,12 +77,11 @@ public class ListViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_list_view, container, false);
 
         // Get list name in the event user needs to update
         listName = getArguments().getString(LIST_TITLE);
-
         // Set menu
         setHasOptionsMenu(true);
 
@@ -90,6 +89,7 @@ public class ListViewFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recylerview_items);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         updateUI(listName);
+        setSwipe();
 
         return view;
     }
@@ -142,7 +142,7 @@ public class ListViewFragment extends Fragment {
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
         swipe.setLeftSwipeLable(getString(R.string.delete));
-        swipe.setLeftcolorCode(ContextCompat.getColor(getActivity(), R.color.colorRed));
+        swipe.setLeftcolorCode(ContextCompat.getColor(getActivity(), R.color.colorGreen));
     }
 
     /***********************************************************************************************
@@ -242,10 +242,8 @@ public class ListViewFragment extends Fragment {
             
             iProduct = (ImageView) view.findViewById(R.id.imageview_product); 
 
-            // view_swipe_delete.xml
-            swipeLayout = (LinearLayout) view.findViewById(R.id.view_swipe_delete);
-            undo = (TextView) view.findViewById(R.id.undo);
-
+            // view_swipe_remove_list.xml
+            swipeLayout = (LinearLayout) view.findViewById(R.id.view_swipe_remove);
         }
 
         /*******************************************************************************************
@@ -342,12 +340,6 @@ public class ListViewFragment extends Fragment {
 
                 listHolder.itemLayout.setVisibility(View.GONE);
                 listHolder.swipeLayout.setVisibility(View.VISIBLE);
-                listHolder.undo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        undoDelete(listProduct);
-                    }
-                });
             } else {
 
                 listHolder.itemLayout.setVisibility(View.VISIBLE);
