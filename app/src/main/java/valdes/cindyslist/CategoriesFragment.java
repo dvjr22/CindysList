@@ -62,6 +62,7 @@ public class CategoriesFragment extends Fragment {
      * @return              A new instance of CategoriesFragment
      */
     public static CategoriesFragment newInstance(String listName){
+
         CategoriesFragment fragment = new CategoriesFragment();
         Bundle args = new Bundle();
         args.putString(LIST_NAME, listName);

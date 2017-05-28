@@ -31,6 +31,7 @@ public class CreateNewListActivity extends AppCompatActivity implements
      * @return              The Activity to be started
      */
     public static Intent newIntent(Context context, String listName){
+
         Intent intent = new Intent(context, CreateNewListActivity.class);
         intent.putExtra(LIST_NAME, listName);
         return intent;

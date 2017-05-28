@@ -174,8 +174,8 @@ public class MainFragment extends Fragment {
 
             case R.id.menu_add_item:
                 FragmentManager fragmentManager = getFragmentManager();
-                DialogFragment dialogFragment =
-                        UniversalDialogFragment.newInstance(R.id.menu_add_item, databaseManager.getCategories());
+                DialogFragment dialogFragment = UniversalDialogFragment.
+                        newInstance(R.id.menu_add_item, databaseManager.getCategories());
                 dialogFragment.setTargetFragment(MainFragment.this, REQUEST_CODE);
                 dialogFragment.show(fragmentManager, REQUEST_NEW_PRODUCT);
                 return true;
