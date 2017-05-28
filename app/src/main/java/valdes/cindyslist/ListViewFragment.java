@@ -1,24 +1,33 @@
 package valdes.cindyslist;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import valdes.cindyslist.database.Product;
 import valdes.cindyslist.utilities.SwipeUtility;
 import valdes.cindyslist.database.DatabaseManager;
 import valdes.cindyslist.database.ListProduct;
@@ -27,6 +36,13 @@ public class ListViewFragment extends Fragment {
 
     private static final String TAG = "trace";
 
+    // Dialog variables
+    private static final String REQUEST_NEW_PRODUCT = "request_new_product";
+    private static final int REQUEST_CODE = 0;
+    private static final String INTENT_CATEGORY = "intent_category";
+    private static final String INTENT_PRODUCT = "intent_product";
+
+    // Bundle variables
     private static final String LIST_TITLE = "list_title";
 
     private RecyclerView recyclerView;
@@ -51,7 +67,6 @@ public class ListViewFragment extends Fragment {
         ListViewFragment fragment = new ListViewFragment();
         fragment.setArguments(args);
         return fragment;
-
     }
 
 
@@ -60,6 +75,8 @@ public class ListViewFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_view, container, false);
+
+        setHasOptionsMenu(true);
 
         // Setup RecyclerView
         recyclerView = (RecyclerView) view.findViewById(R.id.recylerview_items);
@@ -87,7 +104,6 @@ public class ListViewFragment extends Fragment {
         } else {
             listAdapter.notifyDataSetChanged();
         }
-
     }
 
     /***********************************************************************************************
@@ -121,6 +137,75 @@ public class ListViewFragment extends Fragment {
 
         swipe.setLeftSwipeLable(getString(R.string.delete));
         swipe.setLeftcolorCode(ContextCompat.getColor(getActivity(), R.color.colorRed));
+    }
+
+    /***********************************************************************************************
+     * Android method
+     * Adds menu icons to Toolbar if one is present
+     *
+     * @param menu          The options menu to display items
+     * @param inflater      Places menu times into menu
+     * @return              True for the menu to be displayed, false if not shown
+     */
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    /***********************************************************************************************
+     * Android method
+     * Called when items on the Toolbar are clicked
+     *
+     * @param item      The item clicked on the Toolbar
+     * @return          True if the item was clicked
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        Toast toast = Toast.makeText(getContext(), "Fragment", Toast.LENGTH_SHORT);
+        switch (item.getItemId()){
+
+            case R.id.menu_add_item:
+                FragmentManager fragmentManager = getFragmentManager();
+                DialogFragment dialogFragment =
+                        UniversalDialogFragment.newInstance(R.id.menu_add_item, databaseManager.getCategories());
+                dialogFragment.setTargetFragment(ListViewFragment.this, REQUEST_CODE);
+                dialogFragment.show(fragmentManager, REQUEST_NEW_PRODUCT);
+                return true;
+
+            case R.id.action_settings:
+                toast.show();
+                return true;
+
+            case R.id.action_report:
+                toast.show();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /***********************************************************************************************
+     * Android method
+     * Gets the title of the list from UniversalDialogFragment
+     *
+     * @param requestCode       The code of the original request
+     * @param resultCode        The code of the result
+     * @param data              The data that is being sent between dialog and fragment
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode != Activity.RESULT_OK){
+            return;
+        }
+        if (requestCode == REQUEST_CODE){
+            databaseManager.insertProduct(new Product(data.getStringExtra(INTENT_CATEGORY),
+                    data.getStringExtra(INTENT_PRODUCT)));
+        }
     }
 
     /***********************************************************************************************
