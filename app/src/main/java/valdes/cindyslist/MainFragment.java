@@ -79,7 +79,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                startActivity(CreateNewListActivity.newIntent(getContext()));
+                startActivity(CreateNewListActivity.newIntent(getContext(), null));
 
             }
         });

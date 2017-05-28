@@ -35,6 +35,10 @@
     <string name="univ_diag_add_list">Give the list a name</string>
     <string name="univ_diag_generic_title">List %1$s</string>
 
+    <!--  Activity Strings  -->
+    <string name="create_list">Create A List</string>
+    <string name="default_category">Fruits</string>
+
     <!-- generics -->
     <string name="holder">place holder</string>
 

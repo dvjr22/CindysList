@@ -11,6 +11,9 @@ import android.support.v7.widget.Toolbar;
 public class CreateNewListActivity extends AppCompatActivity implements
         CategoriesFragment.CategoriesFragmentListener{
 
+    // Instent variables
+    private static final String LIST_NAME = "list_name";
+
     // Save state variables
     private static final String OUTSTATE_CATEGORY = "category_fragment";
 
@@ -23,10 +26,14 @@ public class CreateNewListActivity extends AppCompatActivity implements
      * Creates a new intent to start CreateNewListActivity
      *
      * @param context       The context to use
+     * @param listName      The name of the list if there is one
+     *                      This is used if a list is being updated
      * @return              The Activity to be started
      */
-    public static Intent newIntent(Context context){
-        return new Intent(context, CreateNewListActivity.class);
+    public static Intent newIntent(Context context, String listName){
+        Intent intent = new Intent(context, CreateNewListActivity.class);
+        intent.putExtra(LIST_NAME, listName);
+        return intent;
     }
 
     /***********************************************************************************************
@@ -43,6 +50,7 @@ public class CreateNewListActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_list);
 
+        // Setup Toolbar
         setUpToolBar();
         loadCompleteListFragment();
 
@@ -58,6 +66,12 @@ public class CreateNewListActivity extends AppCompatActivity implements
             // Initial load of Fragments
             loadCategoryFragment();
         }
+
+        // Load ProductsFragment if user requested to update a list
+        if (getIntent().getStringExtra(LIST_NAME) != null){
+            loadProductsFragment(getResources().getString(R.string.default_category),
+                    getIntent().getStringExtra(LIST_NAME));
+        }
     }
 
     /***********************************************************************************************
@@ -66,7 +80,7 @@ public class CreateNewListActivity extends AppCompatActivity implements
     private void setUpToolBar(){
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-        toolbar.setTitle("Create A List");
+        toolbar.setTitle(R.string.create_list);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

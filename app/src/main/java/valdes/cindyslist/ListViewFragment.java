@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,6 +46,9 @@ public class ListViewFragment extends Fragment {
     // Bundle variables
     private static final String LIST_TITLE = "list_title";
 
+    // Update variables
+    private String listName;
+
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
 
@@ -76,14 +80,17 @@ public class ListViewFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_view, container, false);
 
+        // Get list name in the event user needs to update
+        listName = getArguments().getString(LIST_TITLE);
+
+        Log.i(TAG, listName);
+        // Set menu
         setHasOptionsMenu(true);
 
         // Setup RecyclerView
         recyclerView = (RecyclerView) view.findViewById(R.id.recylerview_items);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        updateUI(getArguments().getString(LIST_TITLE));
-        setSwipe();
+        updateUI(listName);
 
         return view;
     }
@@ -176,7 +183,7 @@ public class ListViewFragment extends Fragment {
                 return true;
 
             case R.id.menu_update_list:
-                toast.show();
+                startActivity(CreateNewListActivity.newIntent(getContext(), listName));
                 return true;
 
             default:
