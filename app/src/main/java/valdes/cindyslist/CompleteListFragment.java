@@ -22,6 +22,15 @@ public class CompleteListFragment extends Fragment {
 
     public CompleteListFragment() {}
 
+    /***********************************************************************************************
+     * Creates a new instance of CompleteListFragment
+     *
+     * @param listName      The name of the list
+     * @param date          The date the list was created
+     * @param items         The number of items in the list
+     * @param total         The total cost of the list
+     * @return              A new instance of CompleteListFragment
+     */
     public static CompleteListFragment newInstance(String listName, String date, int items, double total){
 
         CompleteListFragment fragment = new CompleteListFragment();

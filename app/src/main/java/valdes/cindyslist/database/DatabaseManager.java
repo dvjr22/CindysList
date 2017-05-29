@@ -386,6 +386,7 @@ public class DatabaseManager {
      * Updates the total number of items in the selected list
      *
      * @param listName      The list to have number of items updated
+     * @return              The number of items in the list
      */
     public int updateListItemTotal(String listName){
 
@@ -425,6 +426,7 @@ public class DatabaseManager {
      * Updates the total sum of a list
      *
      * @param listName      The list to have the sum updated
+     * @return              The sum of all the items in the list
      */
     public double updateListSum(String listName){
 

@@ -147,7 +147,7 @@ public class CategoriesFragment extends Fragment {
      * Android method
      * Called when a fragment is first attached to its context
      *
-     * @param context
+     * @param context       The context to use
      */
     @Override
     public void onAttach(Context context) {

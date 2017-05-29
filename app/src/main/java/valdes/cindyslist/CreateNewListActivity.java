@@ -40,7 +40,6 @@ public class CreateNewListActivity extends AppCompatActivity implements
 
     /***********************************************************************************************
      * Android method
-     *
      * Called when Activity is starting
      * Inflate Activity UI, programmatically interact with widgets, restore saved states
      *
@@ -83,6 +82,8 @@ public class CreateNewListActivity extends AppCompatActivity implements
 
     /***********************************************************************************************
      * Load CategoryFragment in container
+     *
+     * @param listName      The name of the list
      */
     private void loadCategoryFragment(String listName){
 
@@ -108,7 +109,12 @@ public class CreateNewListActivity extends AppCompatActivity implements
     }
 
     /***********************************************************************************************
+     * Loads CompleteListFragment with name, date created, number of items, and the cost of the list
      *
+     * @param listName      The name of the list
+     * @param date          The date the list was created
+     * @param items         The number of items in the list
+     * @param cost          The total cost of the list
      */
     public void loadCompleteListFragment(String listName, String date, int items, double cost){
 
@@ -120,7 +126,6 @@ public class CreateNewListActivity extends AppCompatActivity implements
 
     /***********************************************************************************************
      * Android method
-     *
      * Saves the state of Activity in order to be restored
      *
      * @param outState      Bundle to save state

@@ -58,10 +58,13 @@ public class ProductsFragment extends Fragment {
     public ProductsFragment() {}
 
     /***********************************************************************************************
+     * Create a new instance of ProductsFragment
      *
-     *
-     * @param category
-     * @return
+     * @param category      The category of products to be displayed
+     * @param listName      The list items are being added to
+     *                      Used to compare so duplicate items aren't displayed
+     * @param date          The date the list was created
+     * @return              A new instance of ProductsFragment
      */
     public static ProductsFragment newInstance(String category, String listName, String date){
 
@@ -339,14 +342,13 @@ public class ProductsFragment extends Fragment {
                 notifyItemRemoved(position);
                 // Insert item into list
                 databaseManager.insertCreatedListItem(listName, product.getProductName(), 1);
-
-                // Update list item count
-                // Update sum of list
                 // Load CompleteListFragment with updated list stats
                 listener.loadCompleteListFragment(
                         listName,
                         date,
+                        // Update list item count
                         databaseManager.updateListItemTotal(listName),
+                        // Update sum of list
                         databaseManager.updateListSum(listName));
             }
         }
