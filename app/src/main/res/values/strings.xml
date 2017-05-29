@@ -7,6 +7,7 @@
     <string name="date_created">Created: %1$s</string>
     <string name="total_cost">Total: $ %1$s</string>
     <string name="total_num_items">Items: %1$s</string>
+    <string name="finalize_list">Complete List</string>
 
     <!-- view_item  -->
     <string name="product">Product: </string>
