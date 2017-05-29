@@ -93,7 +93,8 @@ public class CategoriesFragment extends Fragment {
         if (getArguments().getString(LIST_NAME) != null){
             listName = getArguments().getString(LIST_NAME);
             date = getArguments().getString(DATE);
-            // TODO: 5/29/2017 CompleteListFragment can be loaded here if I want
+            CreatedList createdList = databaseManager.getOneCreatedList(listName);
+            listener.loadCompleteListFragment(listName, date, createdList.getItems(), createdList.getCost());
         }
         // Check for save state
         if (savedInstanceState != null) {

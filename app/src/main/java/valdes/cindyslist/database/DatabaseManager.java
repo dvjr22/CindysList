@@ -191,6 +191,35 @@ public class DatabaseManager {
     }
 
 
+    public CreatedList getOneCreatedList(String listName){
+
+        CreatedList createdList = new CreatedList(null);
+
+        // select * from created_lists where list_name - listName;
+        DatabaseCursorWrapper cursor = queryDatabase(false,
+                CreatedLists.NAME,
+                null,
+                Lists.Attributes.LIST_NAME + " = ?",
+                new String[] { listName },
+                null);
+
+        try{
+            // Move to the first returned result
+            cursor.moveToFirst();
+            // There should only be one
+            while(!cursor.isAfterLast()){
+                // Add results to createdLists
+                createdList = cursor.getList();
+                // Move to the next result
+                cursor.moveToNext();
+            }
+        } finally {
+            // Close cursor once all results have been retrieved
+            cursor.close();
+        }
+
+        return createdList;
+    }
 
     /***********************************************************************************************
      * Get all the items from a specific list
