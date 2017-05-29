@@ -30,15 +30,12 @@ public class CreateNewListActivity extends AppCompatActivity implements
      * @param context       The context to use
      * @param listName      The name of the list if there is one
      *                      This is used if a list is being updated
-     * @param date          The date the list was created
-     *                      This is used if a list is being updated
      * @return              The Activity to be started
      */
-    public static Intent newIntent(Context context, String listName, String date){
+    public static Intent newIntent(Context context, String listName){
 
         Intent intent = new Intent(context, CreateNewListActivity.class);
         intent.putExtra(LIST_NAME, listName);
-        intent.putExtra(DATE, date);
         return intent;
     }
 
@@ -69,8 +66,7 @@ public class CreateNewListActivity extends AppCompatActivity implements
                     replace(R.id.create_list_activity_container_categories, categoryFragment).commit();
         } else {
             // Initial load of Fragments
-            loadCategoryFragment(getIntent().getStringExtra(LIST_NAME),
-                    getIntent().getStringExtra(DATE));
+            loadCategoryFragment(getIntent().getStringExtra(LIST_NAME));
         }
     }
 
@@ -89,12 +85,11 @@ public class CreateNewListActivity extends AppCompatActivity implements
      * Load CategoryFragment in container
      *
      * @param listName      The name of the list
-     * @param date          The date the list was created
      */
-    private void loadCategoryFragment(String listName, String date){
+    private void loadCategoryFragment(String listName){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        categoryFragment = CategoriesFragment.newInstance(listName, date);
+        categoryFragment = CategoriesFragment.newInstance(listName);
         fragmentManager.beginTransaction().
                 add(R.id.create_list_activity_container_categories, categoryFragment).commit();
     }

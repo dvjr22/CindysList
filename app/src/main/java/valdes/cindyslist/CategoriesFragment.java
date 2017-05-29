@@ -36,7 +36,6 @@ public class CategoriesFragment extends Fragment {
 
     // Bundle variables
     private static final String LIST_NAME = "list_name";
-    private static final String DATE = "date";
 
     private String listName;
     private String date;
@@ -63,16 +62,13 @@ public class CategoriesFragment extends Fragment {
      *
      * @param listName      The name of the list
      *                      This is used when the user wants to update a list
-     * @param date          The date the list was created
-     *                      This is used when a list is being updated
      * @return              A new instance of CategoriesFragment
      */
-    public static CategoriesFragment newInstance(String listName, String date){
+    public static CategoriesFragment newInstance(String listName){
 
         CategoriesFragment fragment = new CategoriesFragment();
         Bundle args = new Bundle();
         args.putString(LIST_NAME, listName);
-        args.putString(DATE, date);
         fragment.setArguments(args);
         return fragment;
     }
@@ -92,9 +88,9 @@ public class CategoriesFragment extends Fragment {
         // Check if a list is being updated
         if (getArguments().getString(LIST_NAME) != null){
             listName = getArguments().getString(LIST_NAME);
-            date = getArguments().getString(DATE);
             CreatedList createdList = databaseManager.getOneCreatedList(listName);
-            listener.loadCompleteListFragment(listName, date, createdList.getItems(), createdList.getCost());
+            listener.loadCompleteListFragment(listName,
+                    createdList.getDate(), createdList.getItems(), createdList.getCost());
         }
         // Check for save state
         if (savedInstanceState != null) {

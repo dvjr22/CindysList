@@ -191,6 +191,12 @@ public class DatabaseManager {
     }
 
 
+    /***********************************************************************************************
+     * Gets the named CreatedList
+     *
+     * @param listName      The name of the list
+     * @return              The named CreatedList
+     */
     public CreatedList getOneCreatedList(String listName){
 
         CreatedList createdList = new CreatedList(null);
