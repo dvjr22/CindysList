@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 public class CompleteListFragment extends Fragment {
 
     // Bundle variables
@@ -44,8 +46,14 @@ public class CompleteListFragment extends Fragment {
         items = (TextView) view.findViewById(R.id.textview_items);
         total = (TextView) view.findViewById(R.id.textview_total);
 
-
-
+        listName.setText(getResources().getString(R.string.list_name,
+                getArguments().getString(LIST_NAME)));
+        date.setText(getResources().getString(R.string.date_created,
+                getArguments().getString(DATE)));
+        items.setText(getResources().getString(R.string.total_num_items,
+                String.format(Locale.US," %d", getArguments().getInt(ITEMS))));
+        total.setText(getResources().getString(R.string.total_cost,
+                String.format(Locale.US, "%1$,.2f", getArguments().getDouble(TOTAL))));
 
         return view;
     }

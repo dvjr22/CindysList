@@ -257,7 +257,6 @@ public class MainFragment extends Fragment {
         private void bindList(CreatedList createdList){
 
             this.createdList = createdList;
-
             listName.setText(getResources().getString(R.string.list_name, createdList.getTitle()));
             dateCreated.setText(getResources().
                     getString(R.string.date_created, createdList.getDate()));

@@ -108,10 +108,10 @@ public class CreateNewListActivity extends AppCompatActivity implements
     /***********************************************************************************************
      *
      */
-    private void loadCompleteListFragment(){
+    public void loadCompleteListFragment(String listName, String date, int items, double cost){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = CompleteListFragment.newInstance(null, null, 0, 0);
+        Fragment fragment = CompleteListFragment.newInstance(listName, date, items, cost);
         fragmentManager.beginTransaction().
                 replace(R.id.create_list_activity_container_complete, fragment).commit();
     }

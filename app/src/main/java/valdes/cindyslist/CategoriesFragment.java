@@ -47,6 +47,7 @@ public class CategoriesFragment extends Fragment {
 
     public interface CategoriesFragmentListener{
         void loadProductsFragment(String category, String listName);
+        void loadCompleteListFragment(String listName, String date, int items, double cost);
     }
 
     /***********************************************************************************************
@@ -166,8 +167,12 @@ public class CategoriesFragment extends Fragment {
         }
         if (requestCode == REQUEST_CODE){
             listName = data.getStringExtra(INTENT_TITLE);
-            // Insert list name into
-            databaseManager.insertList(new CreatedList(listName));
+            CreatedList createdList = new CreatedList(listName);
+            // Insert list name into database
+            databaseManager.insertList(createdList);
+            //load situation fragment
+            listener.loadCompleteListFragment(listName, createdList.getDate(),
+                    createdList.getItems(), createdList.getCost());
         }
     }
 
