@@ -14,6 +14,7 @@ public class ListViewActivity extends AppCompatActivity {
 
     // Intent variables
     private static final String LIST_TITLE = "list_title";
+    private static final String DATE = "date";
 
     // Widgets
     private Toolbar toolbar;
@@ -23,12 +24,14 @@ public class ListViewActivity extends AppCompatActivity {
      *
      * @param context       The context to use
      * @param listName      The name of the list to be displayed
+     * @param date          The date the list was created
      * @return              The Activity to be started
      */
-    public static Intent newIntent(Context context, String listName){
+    public static Intent newIntent(Context context, String listName, String date){
 
         Intent intent = new Intent(context, ListViewActivity.class);
         intent.putExtra(LIST_TITLE, listName);
+        intent.putExtra(DATE, date);
         return intent;
     }
 
@@ -47,18 +50,20 @@ public class ListViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_view);
 
         setUpToolBar(getIntent().getStringExtra(LIST_TITLE));
-        loadListViewFragment(getIntent().getStringExtra(LIST_TITLE));
+        loadListViewFragment(getIntent().getStringExtra(LIST_TITLE),
+                getIntent().getStringExtra(DATE));
     }
 
     /***********************************************************************************************
      * Load ListViewFragment in container
      *
      * @param title     The title of the list to be displayed
+     * @param date      The date the list was created
      */
-    private void loadListViewFragment(String title){
+    private void loadListViewFragment(String title, String date){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = ListViewFragment.newInstance(title);
+        Fragment fragment = ListViewFragment.newInstance(title, date);
         fragmentManager.beginTransaction().
                 add(R.id.list_view_activity_fragment_container, fragment).commit();
     }

@@ -63,13 +63,16 @@ public class CategoriesFragment extends Fragment {
      *
      * @param listName      The name of the list
      *                      This is used when the user wants to update a list
+     * @param date          The date the list was created
+     *                      This is used when a list is being updated
      * @return              A new instance of CategoriesFragment
      */
-    public static CategoriesFragment newInstance(String listName){
+    public static CategoriesFragment newInstance(String listName, String date){
 
         CategoriesFragment fragment = new CategoriesFragment();
         Bundle args = new Bundle();
         args.putString(LIST_NAME, listName);
+        args.putString(DATE, date);
         fragment.setArguments(args);
         return fragment;
     }
@@ -89,6 +92,8 @@ public class CategoriesFragment extends Fragment {
         // Check if a list is being updated
         if (getArguments().getString(LIST_NAME) != null){
             listName = getArguments().getString(LIST_NAME);
+            date = getArguments().getString(DATE);
+            // TODO: 5/29/2017 CompleteListFragment can be loaded here if I want
         }
         // Check for save state
         if (savedInstanceState != null) {

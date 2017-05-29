@@ -14,6 +14,7 @@ public class CreateNewListActivity extends AppCompatActivity implements
 
     // Intent variables
     private static final String LIST_NAME = "list_name";
+    private static final String DATE = "date";
 
     // Save state variables
     private static final String OUTSTATE_CATEGORY = "category_fragment";
@@ -29,12 +30,15 @@ public class CreateNewListActivity extends AppCompatActivity implements
      * @param context       The context to use
      * @param listName      The name of the list if there is one
      *                      This is used if a list is being updated
+     * @param date          The date the list was created
+     *                      This is used if a list is being updated
      * @return              The Activity to be started
      */
-    public static Intent newIntent(Context context, String listName){
+    public static Intent newIntent(Context context, String listName, String date){
 
         Intent intent = new Intent(context, CreateNewListActivity.class);
         intent.putExtra(LIST_NAME, listName);
+        intent.putExtra(DATE, date);
         return intent;
     }
 
@@ -65,7 +69,8 @@ public class CreateNewListActivity extends AppCompatActivity implements
                     replace(R.id.create_list_activity_container_categories, categoryFragment).commit();
         } else {
             // Initial load of Fragments
-            loadCategoryFragment(getIntent().getStringExtra(LIST_NAME));
+            loadCategoryFragment(getIntent().getStringExtra(LIST_NAME),
+                    getIntent().getStringExtra(DATE));
         }
     }
 
@@ -84,11 +89,12 @@ public class CreateNewListActivity extends AppCompatActivity implements
      * Load CategoryFragment in container
      *
      * @param listName      The name of the list
+     * @param date          The date the list was created
      */
-    private void loadCategoryFragment(String listName){
+    private void loadCategoryFragment(String listName, String date){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        categoryFragment = CategoriesFragment.newInstance(listName);
+        categoryFragment = CategoriesFragment.newInstance(listName, date);
         fragmentManager.beginTransaction().
                 add(R.id.create_list_activity_container_categories, categoryFragment).commit();
     }

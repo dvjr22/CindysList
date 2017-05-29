@@ -190,6 +190,8 @@ public class DatabaseManager {
         return createdLists;
     }
 
+
+
     /***********************************************************************************************
      * Get all the items from a specific list
      *

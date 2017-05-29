@@ -45,9 +45,11 @@ public class ListViewFragment extends Fragment {
 
     // Bundle variables
     private static final String LIST_TITLE = "list_title";
+    private static final String DATE = "date";
 
     // Update variables
     private String listName;
+    private String date;
 
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
@@ -60,15 +62,18 @@ public class ListViewFragment extends Fragment {
     public ListViewFragment() {}
 
     /***********************************************************************************************
+     * Creates a new instance of ListViewFragment
      *
-     * @param listName
-     * @return
+     * @param listName      The name of the list
+     * @param date          The date the list was created
+     * @return              A new instance of ListViewFragment
      */
-    public static ListViewFragment newInstance(String listName){
+    public static ListViewFragment newInstance(String listName, String date){
 
+        ListViewFragment fragment = new ListViewFragment();
         Bundle args = new Bundle();
         args.putString(LIST_TITLE, listName);
-        ListViewFragment fragment = new ListViewFragment();
+        args.putString(DATE, date);
         fragment.setArguments(args);
         return fragment;
     }
@@ -80,8 +85,9 @@ public class ListViewFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_list_view, container, false);
 
-        // Get list name in the event user needs to update
+        // Get list name and date in the event user needs to update
         listName = getArguments().getString(LIST_TITLE);
+        date = getArguments().getString(DATE);
         // Set menu
         setHasOptionsMenu(true);
 
@@ -181,7 +187,7 @@ public class ListViewFragment extends Fragment {
                 return true;
 
             case R.id.menu_update_list:
-                startActivity(CreateNewListActivity.newIntent(getContext(), listName));
+                startActivity(CreateNewListActivity.newIntent(getContext(), listName, date));
                 return true;
 
             default:

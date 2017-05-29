@@ -43,6 +43,7 @@ public class MainFragment extends Fragment {
     private static final String INTENT_CATEGORY = "intent_category";
     private static final String INTENT_PRODUCT = "intent_product";
 
+    // Widgets
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
     private FloatingActionButton createNewList;
@@ -79,8 +80,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                startActivity(CreateNewListActivity.newIntent(getContext(), null));
-
+                startActivity(CreateNewListActivity.newIntent(getContext(), null, null));
             }
         });
 
@@ -226,7 +226,6 @@ public class MainFragment extends Fragment {
 
         /*******************************************************************************************
          * Constructor
-         *
          * Creates one instance of the view that will be displayed within the RecyclerView
          *
          * @param view      The view that will be used within the RecyclerView
@@ -275,7 +274,8 @@ public class MainFragment extends Fragment {
         @Override
         public void onClick(View view){
 
-            startActivity(ListViewActivity.newIntent(getContext(), createdList.getTitle()));
+            startActivity(ListViewActivity.
+                    newIntent(getContext(), createdList.getTitle(), createdList.getDate()));
         }
 
     }
