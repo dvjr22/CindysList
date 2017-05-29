@@ -419,6 +419,45 @@ public class DatabaseManager {
                 new String[] { listName });
     }
 
+    // TODO: 5/29/2017 modify updateListSum to return an integer to be displayed in CompleteListActivity
+    /***********************************************************************************************
+     * Updates the total sum of a list
+     *
+     * @param listName      The list to have the sum updated
+     */
+    public void updateListSum(String listName){
+
+        String tables = Lists.NAME + " a inner join " + Products.NAME + " b on a." +
+                Lists.Attributes.PRODUCT + " = b." + Products.Attributes.PRODUCT;
+
+        // select sum(price)
+        // from list_name a inner join products b on a.product = b.product
+        // where list_name = listName
+        DatabaseCursorWrapper cursor = queryDatabase(false,
+                tables,
+                new String[]  { "sum(" + Products.Attributes.PRICE + ")" },
+                Lists.Attributes.LIST_NAME + " = ?",
+                new String[] { listName },
+                null);
+
+        // Move to the first returned result
+        cursor.moveToFirst();
+        int sum = cursor.getInt(0);
+        cursor.close();
+
+        // Set ContentValue to update cost
+        ContentValues values = new ContentValues();
+        values.put(CreatedLists.Attributes.TOTAL_COST, sum);
+
+        // Update database
+        database.update(
+                CreatedLists.NAME,
+                values,
+                CreatedLists.Attributes.LIST_NAME + " = ?",
+                new String[] { listName });
+    }
+
+
     /***********************************************************************************************
      * Delete the list from the SQLite database
      *

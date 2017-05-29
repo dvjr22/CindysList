@@ -313,6 +313,8 @@ public class ProductsFragment extends Fragment {
                 databaseManager.insertCreatedListItem(listName, product.getProductName(), 1);
                 // Update list item count
                 databaseManager.updateListItemTotal(listName);
+                // Update sum of list
+                databaseManager.updateListSum(listName);
             }
         }
 
