@@ -24,6 +24,12 @@
             android:layout_weight="1">
         </FrameLayout>
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".01"
+            android:background="@color/colorYellow"/>
+
         <FrameLayout
             android:id="@+id/create_list_activity_container_products"
             android:layout_width="0dp"
@@ -32,6 +38,11 @@
         </FrameLayout>
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorYellow"/>
 
     <FrameLayout
         android:id="@+id/create_list_activity_container_complete"

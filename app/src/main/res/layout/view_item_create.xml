@@ -25,16 +25,10 @@
             android:id="@+id/textview_product_create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+
             android:text="@string/product"
             android:textSize="@dimen/text_size_medium" />
-<!--
-        <NumberPicker
-            android:id="@+id/number_picker_item"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-        </NumberPicker>
--->
+
     </LinearLayout>
 
         <View

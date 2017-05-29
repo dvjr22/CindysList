@@ -7,11 +7,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -58,19 +60,16 @@ public class ProductsFragment extends Fragment {
         return fragment;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_products, container, false);
 
+        View view = inflater.inflate(R.layout.fragment_products, container, false);
         listName = getArguments().getString(LIST_NAME);
 
         // Setup RecyclerView
         recyclerView = (RecyclerView) view.findViewById(R.id.recylerview_products);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         updateUI(getArguments().getString(CATEGORY));
         setSwipe();
 
@@ -137,7 +136,6 @@ public class ProductsFragment extends Fragment {
         // Views to be bound
         private TextView productTextView;
         private ImageView iProduct;
-
         private LinearLayout itemLayout, swipeLayout;
 
         private Product product;
@@ -172,7 +170,6 @@ public class ProductsFragment extends Fragment {
         private void bindList(Product product){
 
             this.product = product;
-
             productTextView.setText(product.getProductName());
             iProduct.setImageResource(product.getPicId());
         }
@@ -216,7 +213,6 @@ public class ProductsFragment extends Fragment {
 
             this.products = products;
             pendingRemoval = new ArrayList<>();
-
         }
 
         /*******************************************************************************************
