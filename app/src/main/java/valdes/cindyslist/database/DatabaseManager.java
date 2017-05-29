@@ -382,6 +382,7 @@ public class DatabaseManager {
         database.insert(Lists.NAME, null, setProductsInListValues(listName, product, qty));
     }
 
+    // TODO: 5/29/2017 modify updateListItemTotal to return item total to be displayed in CompleteListFragment
     /***********************************************************************************************
      * Updates the total number of items in the selected list
      *

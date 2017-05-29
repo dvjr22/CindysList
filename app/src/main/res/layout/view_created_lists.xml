@@ -13,30 +13,19 @@
         android:padding="@dimen/view_list_margin">
 
         <TextView
+            android:id="@+id/textview_list_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/list_name"/>
 
-        <TextView
-            android:id="@+id/textview_list_name"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/holder"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/date_created"/>
 
         <TextView
             android:id="@+id/textview_date_created"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/holder"/>
+            android:text="@string/date_created"/>
 
     </LinearLayout>
 
@@ -47,30 +36,18 @@
         android:padding="@dimen/view_list_margin">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/num_items"/>
-
-        <TextView
             android:id="@+id/textview_items"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/holder"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/total"/>
+            android:text="@string/total_num_items"/>
 
         <TextView
             android:id="@+id/textview_total"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/holder"/>
+            android:text="@string/total_cost"/>
 
     </LinearLayout>
 

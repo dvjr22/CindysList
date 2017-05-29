@@ -258,10 +258,13 @@ public class MainFragment extends Fragment {
 
             this.createdList = createdList;
 
-            listName.setText(createdList.getTitle());
-            dateCreated.setText(createdList.getDate());
-            items.setText(String.format(Locale.US," %d", createdList.getItems()));
-            total.setText(String.format(Locale.US, "%1$,.2f", createdList.getCost()));
+            listName.setText(getResources().getString(R.string.list_name, createdList.getTitle()));
+            dateCreated.setText(getResources().
+                    getString(R.string.date_created, createdList.getDate()));
+            items.setText(getResources().getString(R.string.total_num_items,
+                    String.format(Locale.US," %d", createdList.getItems())));
+            total.setText(getResources().getString(R.string.total_cost,
+                    String.format(Locale.US, "%1$,.2f", createdList.getCost())));
         }
 
         /*******************************************************************************************
