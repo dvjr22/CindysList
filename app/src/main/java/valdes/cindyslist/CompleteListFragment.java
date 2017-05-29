@@ -5,24 +5,47 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class CompleteListFragment extends Fragment {
 
+    // Bundle variables
+    private static final String LIST_NAME = "list_name";
+    private static final String DATE = "date";
+    private static final String ITEMS = "items";
+    private static final String TOTAL = "total";
 
-    public CompleteListFragment() {
-        // Required empty public constructor
-    }
+    // Widgets
+    private TextView listName, date, items, total;
 
-    public static CompleteListFragment newInstance(){
-        return new CompleteListFragment();
+    public CompleteListFragment() {}
+
+    public static CompleteListFragment newInstance(String listName, String date, int items, double total){
+
+        CompleteListFragment fragment = new CompleteListFragment();
+        Bundle args = new Bundle();
+        args.putString(LIST_NAME, listName);
+        args.putString(DATE, date);
+        args.putInt(ITEMS, items);
+        args.putDouble(TOTAL, total);
+        fragment.setArguments(args);
+        return fragment;
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_complete_list, container, false);
+
+        listName = (TextView) view.findViewById(R.id.textview_list_name);
+        date = (TextView) view.findViewById(R.id.textview_date_created);
+        items = (TextView) view.findViewById(R.id.textview_items);
+        total = (TextView) view.findViewById(R.id.textview_total);
+
+
+
 
         return view;
     }
