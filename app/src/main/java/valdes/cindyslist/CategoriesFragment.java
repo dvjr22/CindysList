@@ -32,11 +32,14 @@ public class CategoriesFragment extends Fragment {
 
     // Saved state variables
     private static final String OUTSTATE_LIST_NAME = "saved_instance_state_title";
+    private static final String OUTSTATE_DATE = "saved_instance_date";
 
     // Bundle variables
     private static final String LIST_NAME = "list_name";
+    private static final String DATE = "date";
 
     private String listName;
+    private String date;
 
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
@@ -46,7 +49,7 @@ public class CategoriesFragment extends Fragment {
     private CategoriesFragmentListener listener;
 
     public interface CategoriesFragmentListener{
-        void loadProductsFragment(String category, String listName);
+        void loadProductsFragment(String category, String listName, String date);
         void loadCompleteListFragment(String listName, String date, int items, double cost);
     }
 
@@ -90,6 +93,7 @@ public class CategoriesFragment extends Fragment {
         // Check for save state
         if (savedInstanceState != null) {
             listName = savedInstanceState.getString(OUTSTATE_LIST_NAME);
+            date = savedInstanceState.getString(OUTSTATE_DATE);
         }
         // Get a list name for a new list
         if (listName == null) getListTitle();
@@ -136,6 +140,7 @@ public class CategoriesFragment extends Fragment {
 
         super.onSaveInstanceState(outState);
         outState.putString(OUTSTATE_LIST_NAME, listName);
+        outState.putString(OUTSTATE_DATE, date);
     }
 
     /***********************************************************************************************
@@ -168,10 +173,11 @@ public class CategoriesFragment extends Fragment {
         if (requestCode == REQUEST_CODE){
             listName = data.getStringExtra(INTENT_TITLE);
             CreatedList createdList = new CreatedList(listName);
+            date = createdList.getDate();
             // Insert list name into database
             databaseManager.insertList(createdList);
             //load situation fragment
-            listener.loadCompleteListFragment(listName, createdList.getDate(),
+            listener.loadCompleteListFragment(listName, date,
                     createdList.getItems(), createdList.getCost());
         }
     }
@@ -222,7 +228,7 @@ public class CategoriesFragment extends Fragment {
         @Override
         public void onClick(View view){
 
-            listener.loadProductsFragment(category, listName);
+            listener.loadProductsFragment(category, listName, date);
         }
 
     }

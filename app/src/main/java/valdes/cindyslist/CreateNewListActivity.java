@@ -9,7 +9,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 public class CreateNewListActivity extends AppCompatActivity implements
-        CategoriesFragment.CategoriesFragmentListener{
+        CategoriesFragment.CategoriesFragmentListener,
+        ProductsFragment.ProductsFragmentListener{
 
     // Intent variables
     private static final String LIST_NAME = "list_name";
@@ -96,11 +97,12 @@ public class CreateNewListActivity extends AppCompatActivity implements
      *
      * @param category      The category of products to display
      * @param listName      The name of the current list being created
+     * @param date          The date the list was created
      */
-    public void loadProductsFragment(String category, String listName){
+    public void loadProductsFragment(String category, String listName, String date){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        productFragment = ProductsFragment.newInstance(category ,listName);
+        productFragment = ProductsFragment.newInstance(category ,listName, date);
         fragmentManager.beginTransaction().
                 replace(R.id.create_list_activity_container_products, productFragment).commit();
     }

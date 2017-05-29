@@ -382,13 +382,12 @@ public class DatabaseManager {
         database.insert(Lists.NAME, null, setProductsInListValues(listName, product, qty));
     }
 
-    // TODO: 5/29/2017 modify updateListItemTotal to return item total to be displayed in CompleteListFragment
     /***********************************************************************************************
      * Updates the total number of items in the selected list
      *
      * @param listName      The list to have number of items updated
      */
-    public void updateListItemTotal(String listName){
+    public int updateListItemTotal(String listName){
 
         int count = 0;
         // Cursor to go over results of the query
@@ -418,15 +417,16 @@ public class DatabaseManager {
                 values,
                 CreatedLists.Attributes.LIST_NAME + " = ?",
                 new String[] { listName });
+
+        return count;
     }
 
-    // TODO: 5/29/2017 modify updateListSum to return an integer to be displayed in CompleteListActivity
     /***********************************************************************************************
      * Updates the total sum of a list
      *
      * @param listName      The list to have the sum updated
      */
-    public void updateListSum(String listName){
+    public double updateListSum(String listName){
 
         String tables = Lists.NAME + " a inner join " + Products.NAME + " b on a." +
                 Lists.Attributes.PRODUCT + " = b." + Products.Attributes.PRODUCT;
@@ -443,7 +443,7 @@ public class DatabaseManager {
 
         // Move to the first returned result
         cursor.moveToFirst();
-        int sum = cursor.getInt(0);
+        double sum = cursor.getDouble(0);
         cursor.close();
 
         // Set ContentValue to update cost
@@ -456,6 +456,8 @@ public class DatabaseManager {
                 values,
                 CreatedLists.Attributes.LIST_NAME + " = ?",
                 new String[] { listName });
+
+        return sum;
     }
 
 

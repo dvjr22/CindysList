@@ -1,5 +1,6 @@
 package valdes.cindyslist;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
+import valdes.cindyslist.database.CreatedList;
 import valdes.cindyslist.utilities.SwipeUtility;
 import valdes.cindyslist.database.DatabaseManager;
 import valdes.cindyslist.database.Product;
@@ -29,15 +31,26 @@ public class ProductsFragment extends Fragment {
 
     private static final String TAG = "trace";
 
+    // Bundle variables
     private static final String CATEGORY = "category";
     private static final String LIST_NAME = "list_name";
+    private static final String DATE = "date";
 
+    // List variables
     private String listName;
+    private String date;
 
+    // Widgets
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
 
     private DatabaseManager databaseManager;
+
+    private ProductsFragmentListener listener;
+
+    public interface ProductsFragmentListener{
+        void loadCompleteListFragment(String listName, String date, int items, double cost);
+    }
 
     /***********************************************************************************************
      * Required empty constructor
@@ -50,12 +63,13 @@ public class ProductsFragment extends Fragment {
      * @param category
      * @return
      */
-    public static ProductsFragment newInstance(String category, String listName){
+    public static ProductsFragment newInstance(String category, String listName, String date){
 
         ProductsFragment fragment = new ProductsFragment();
         Bundle args = new Bundle();
         args.putString(CATEGORY, category);
         args.putString(LIST_NAME, listName);
+        args.putString(DATE, date);
         fragment.setArguments(args);
         return fragment;
     }
@@ -66,6 +80,7 @@ public class ProductsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_products, container, false);
         listName = getArguments().getString(LIST_NAME);
+        date = getArguments().getString(DATE);
 
         // Setup RecyclerView
         recyclerView = (RecyclerView) view.findViewById(R.id.recylerview_products);
@@ -125,6 +140,19 @@ public class ProductsFragment extends Fragment {
 
         swipe.setLeftSwipeLable(getString(R.string.delete));
         swipe.setLeftcolorCode(ContextCompat.getColor(getActivity(), R.color.colorGreen));
+    }
+
+    /***********************************************************************************************
+     * Android method
+     * Called when a fragment is first attached to its context
+     *
+     * @param context
+     */
+    @Override
+    public void onAttach(Context context) {
+
+        super.onAttach(context);
+        listener = (ProductsFragmentListener) context;
     }
 
     /***********************************************************************************************
@@ -311,10 +339,15 @@ public class ProductsFragment extends Fragment {
                 notifyItemRemoved(position);
                 // Insert item into list
                 databaseManager.insertCreatedListItem(listName, product.getProductName(), 1);
+
                 // Update list item count
-                databaseManager.updateListItemTotal(listName);
                 // Update sum of list
-                databaseManager.updateListSum(listName);
+                // Load CompleteListFragment with updated list stats
+                listener.loadCompleteListFragment(
+                        listName,
+                        date,
+                        databaseManager.updateListItemTotal(listName),
+                        databaseManager.updateListSum(listName));
             }
         }
 
