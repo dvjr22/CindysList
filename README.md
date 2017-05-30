@@ -1,7 +1,8 @@
 # CindysList
 ## Grocery Shopping List
 
-An Android application
+An Android application.
+
 Shopping list application I'm building for my wife based on her desires.
 
 ## Features
