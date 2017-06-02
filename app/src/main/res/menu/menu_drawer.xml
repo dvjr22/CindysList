@@ -1,0 +1,32 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ham"
+        android:title="@string/holder" />
+    <item
+        android:id="@+id/nav_about"
+        android:icon="@drawable/ham"
+        android:title="@string/holder" />
+    <item
+        android:id="@+id/nav_settings"
+        android:icon="@drawable/ham"
+        android:title="@string/holder" />
+
+    <item
+        android:id="@+id/navigation_subheader"
+        android:title="@string/holder">
+        <menu>
+            <item
+                android:id="@+id/navigation_sub_item_1"
+                android:icon="@drawable/ham"
+                android:title="@string/holder" />
+            <item
+                android:id="@+id/navigation_sub_item_2"
+                android:icon="@drawable/ham"
+                android:title="@string/holder" />
+        </menu>
+    </item>
+
+</menu>
