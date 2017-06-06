@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,9 +23,13 @@ import android.widget.Toast;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "trace";
+
+    // Layouts
+    private DrawerLayout drawer;
 
     // Widgets
     private Toolbar toolbar;
@@ -51,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setUpToolBar();
+        setUpDrawer();
         loadMain();
     }
 
@@ -72,6 +81,63 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
+    }
+
+    /***********************************************************************************************
+     * Setup Navigation Drawer/View
+     */
+    private void setUpDrawer(){
+
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    /***********************************************************************************************
+     *
+     */
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    /***********************************************************************************************
+     *
+     * @param item
+     * @return
+     */
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+
+        switch (item.getItemId()){
+
+            case R.id.nav_home:
+                break;
+            case R.id.nav_about:
+                break;
+            case R.id.nav_settings:
+                break;
+            case R.id.navigation_sub_item_1:
+                break;
+            case R.id.navigation_sub_item_2:
+                break;
+            default:
+                break;
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
 }
