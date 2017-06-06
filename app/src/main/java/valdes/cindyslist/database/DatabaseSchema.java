@@ -62,4 +62,21 @@ public class DatabaseSchema {
         }
     }
 
+    /***********************************************************************************************
+     * Class for the recipes table
+     */
+    public static final class Recipes{
+
+        public static final String NAME = "recipes";
+
+        public static final class Attributes{
+
+            public static final String RECIPE_NAME = "recipe_name";
+            public static final String PRODUCT = "product";
+            public static final String MEASUREMENT = "measurement";
+        }
+
+
+    }
+
 }

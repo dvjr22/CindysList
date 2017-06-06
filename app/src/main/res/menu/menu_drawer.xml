@@ -3,15 +3,15 @@
 
     <item
         android:id="@+id/nav_home"
-        android:icon="@drawable/ham"
-        android:title="@string/holder" />
+        android:icon="@drawable/ic_android_black_24dp"
+        android:title="@string/recipes" />
     <item
         android:id="@+id/nav_about"
-        android:icon="@drawable/ham"
-        android:title="@string/holder" />
+        android:icon="@drawable/ic_android_black_24dp"
+        android:title="@string/products" />
     <item
         android:id="@+id/nav_settings"
-        android:icon="@drawable/ham"
+        android:icon="@drawable/ic_android_black_24dp"
         android:title="@string/holder" />
 
     <item
@@ -20,11 +20,11 @@
         <menu>
             <item
                 android:id="@+id/navigation_sub_item_1"
-                android:icon="@drawable/ham"
+                android:icon="@drawable/ic_android_black_24dp"
                 android:title="@string/holder" />
             <item
                 android:id="@+id/navigation_sub_item_2"
-                android:icon="@drawable/ham"
+                android:icon="@drawable/ic_android_black_24dp"
                 android:title="@string/holder" />
         </menu>
     </item>
