@@ -1,37 +1,33 @@
-/*
-This is an experiment
-
 package valdes.cindyslist;
 
 import android.app.Application;
+import android.content.res.Configuration;
 import android.util.Log;
 
 import valdes.cindyslist.database.DatabaseManager;
 
-public class God extends Application {
+public class MyApplication extends Application {
 
-    private static DatabaseManager databaseManager;
 
     @Override
     public void onCreate(){
-
-        setUpDatabaseManager();
-        Log.i("trace", "Application called");
-
         super.onCreate();
+        Log.i("trace", "Application called");
     }
 
-    private void setUpDatabaseManager(){
-        databaseManager = DatabaseManager.get(getApplicationContext());
+    // Called by the system when the device configuration changes while your component is running.
+    // Overriding this method is totally optional!
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
-    public static DatabaseManager getDatabaseManager(){
-        return databaseManager;
-    }
-
-    public static String tag(){
-        return "trace";
+    // This is called when the overall system is running low on memory,
+    // and would like actively running processes to tighten their belts.
+    // Overriding this method is totally optional!
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
     }
 
 }
-*/
