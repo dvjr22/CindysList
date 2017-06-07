@@ -47,6 +47,7 @@ public class MainFragment extends Fragment {
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
     private FloatingActionButton createNewList;
+    private TextView emptyView;
 
     private DatabaseManager databaseManager;
 
@@ -93,6 +94,9 @@ public class MainFragment extends Fragment {
             }
         });
 
+        // Setup TextView
+        emptyView = (TextView) view.findViewById(R.id.textview_empty_view);
+
         // Setup RecyclerView
         recyclerView = (RecyclerView) view.findViewById(R.id.recylerview_lists);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -116,6 +120,15 @@ public class MainFragment extends Fragment {
             recyclerView.setAdapter(listAdapter);
         } else {
             listAdapter.notifyDataSetChanged();
+        }
+
+        // Change View visibility based on createdLists size
+        if (createdLists.isEmpty()){
+            recyclerView.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
         }
     }
 

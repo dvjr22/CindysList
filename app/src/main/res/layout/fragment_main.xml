@@ -23,4 +23,11 @@
         android:src="@drawable/ic_playlist_add_black_24dp"
         app:fabSize="normal" />
 
+    <TextView
+        android:id="@+id/textview_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/holder"/>
+
 </android.support.design.widget.CoordinatorLayout>

@@ -3,11 +3,13 @@
 
     <!-- view_created_lists -->
     <!-- fragment_complete_list -->
+    <!-- fragment_main -->
     <string name="list_name">List: %1$s</string>
     <string name="date_created">Created: %1$s</string>
     <string name="total_cost">Total: $ %1$s</string>
     <string name="total_num_items">Items: %1$s</string>
     <string name="finalize_list">Complete List</string>
+    <string name="empty_set">There are no lists to be displayed</string>
 
     <!-- view_item  -->
     <string name="product">Product: </string>
