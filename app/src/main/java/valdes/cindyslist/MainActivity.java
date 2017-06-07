@@ -14,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -38,7 +37,6 @@ public class MainActivity extends AppCompatActivity
 
     /***********************************************************************************************
      * Android method
-     *
      * Called when Activity is starting
      * Inflate Activity UI, programmatically interact with widgets, restore saved states
      *
@@ -81,8 +79,9 @@ public class MainActivity extends AppCompatActivity
     private void setUpDrawer(){
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle =
+                new ActionBarDrawerToggle(this, drawer,
+                        toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -91,10 +90,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     /***********************************************************************************************
-     *
+     * Android method
+     * Called when user has pressed the back key
      */
     @Override
     public void onBackPressed() {
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -103,9 +104,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     /***********************************************************************************************
+     * Android method
+     * Called when an item in the drawer is clicked
      *
-     * @param item
-     * @return
+     * @param item      The selected menu item
+     * @return          True to display the selected item
      */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

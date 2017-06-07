@@ -11,7 +11,6 @@ public class SplashActivity extends AppCompatActivity {
 
     /***********************************************************************************************
      * Android method
-     *
      * Called when Activity is starting
      * Inflate Activity UI, programmatically interact with widgets, restore saved states
      *
@@ -26,7 +25,7 @@ public class SplashActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
 
-        // Finish to destroy SplashActivity
+        // Destroy SplashActivity, take off back stack
         finish();
     }
 
