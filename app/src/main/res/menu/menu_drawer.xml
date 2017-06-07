@@ -10,9 +10,10 @@
         android:id="@+id/nav_recipe"
         android:icon="@drawable/ic_receipt_black_24dp"
         android:title="@string/recipes" />
+
     <item
-        android:id="@+id/nav_about"
-        android:icon="@drawable/ic_android_black_24dp"
+        android:id="@+id/nav_products"
+        android:icon="@drawable/ic_shopping_basket_black_24dp"
         android:title="@string/products" />
 
     <item

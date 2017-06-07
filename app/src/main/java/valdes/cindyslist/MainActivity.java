@@ -15,7 +15,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     private static final String TAG = "trace";
 
@@ -64,6 +64,9 @@ public class MainActivity extends AppCompatActivity
                 replace(R.id.main_activity_fragment_container, fragment).commit();
     }
 
+    /***********************************************************************************************
+     * Loads RecipeFragment in container
+     */
     private void loadRecipeFragment(){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -132,7 +135,7 @@ public class MainActivity extends AppCompatActivity
                 loadRecipeFragment();
                 break;
 
-            case R.id.nav_about:
+            case R.id.nav_products:
                 break;
             case R.id.navigation_sub_item_1:
                 break;
