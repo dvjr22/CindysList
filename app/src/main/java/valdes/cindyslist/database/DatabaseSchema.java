@@ -75,8 +75,6 @@ public class DatabaseSchema {
             public static final String PRODUCT = "product";
             public static final String MEASUREMENT = "measurement";
         }
-
-
     }
 
 }

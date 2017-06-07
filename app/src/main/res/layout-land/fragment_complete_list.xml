@@ -1,0 +1,46 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/view_list_margin"
+    tools:context="valdes.cindyslist.CompleteListFragment">
+
+    <TextView
+        android:id="@+id/textview_list_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_large"
+        android:text="@string/list_name" />
+
+    <TextView
+        android:id="@+id/textview_date_created"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_medium"
+        android:text="@string/date_created" />
+
+    <TextView
+        android:id="@+id/textview_items"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_medium"
+        android:layout_weight="1"
+        android:text="@string/total_num_items"/>
+
+    <TextView
+        android:id="@+id/textview_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_medium"
+        android:layout_weight="1"
+        android:text="@string/total_cost"/>
+<!--
+    <Button
+        android:id="@+id/button_create_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/finalize_list"/>
+-->
+</LinearLayout>
