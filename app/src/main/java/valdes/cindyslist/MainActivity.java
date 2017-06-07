@@ -11,13 +11,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     private static final String TAG = "trace";
+
+    // Save state variables
+    private static final String OUTSTATE_FRAGMENT = "outstate_fragment";
+
+    // Fragments
+    private Fragment fragment;
 
     // Layouts
     private DrawerLayout drawer;
@@ -50,7 +55,19 @@ public class MainActivity extends AppCompatActivity
 
         setUpToolBar();
         setUpDrawer();
-        loadMain();
+
+        // Restore states
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (savedInstanceState != null) {
+            // Restore CategoryFragment
+            fragment = getSupportFragmentManager().
+                    getFragment(savedInstanceState, OUTSTATE_FRAGMENT);
+            fragmentManager.beginTransaction().
+                    replace(R.id.main_activity_fragment_container, fragment).commit();
+        } else {
+            // Initial load of Fragments
+            loadMain();
+        }
     }
 
     /***********************************************************************************************
@@ -59,7 +76,7 @@ public class MainActivity extends AppCompatActivity
     private void loadMain(){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = MainFragment.newInstance();
+        fragment = MainFragment.newInstance();
         fragmentManager.beginTransaction().
                 replace(R.id.main_activity_fragment_container, fragment).commit();
     }
@@ -70,7 +87,7 @@ public class MainActivity extends AppCompatActivity
     private void loadRecipeFragment(){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = RecipesFragment.newInstance();
+        fragment = RecipesFragment.newInstance();
         fragmentManager.beginTransaction().
                 replace(R.id.main_activity_fragment_container, fragment).commit();
     }
@@ -149,5 +166,18 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /***********************************************************************************************
+     * Android method
+     * Saves the state of Activity in order to be restored
+     *
+     * @param outState      Bundle to save state
+     */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        super.onSaveInstanceState(outState);
+        // Save Fragment instance
+        getSupportFragmentManager().putFragment(outState, OUTSTATE_FRAGMENT, fragment);
+    }
 }
 

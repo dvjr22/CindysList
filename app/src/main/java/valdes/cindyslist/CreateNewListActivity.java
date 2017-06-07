@@ -19,10 +19,12 @@ public class CreateNewListActivity extends AppCompatActivity implements
     // Save state variables
     private static final String OUTSTATE_CATEGORY = "category_fragment";
 
-    // widgets
-    private Toolbar toolbar;
+    // Fragments
     private Fragment categoryFragment;
     private Fragment productFragment;
+
+    // widgets
+    private Toolbar toolbar;
 
     /***********************************************************************************************
      * Creates a new intent to start CreateNewListActivity
