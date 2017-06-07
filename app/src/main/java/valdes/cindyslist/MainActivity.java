@@ -64,6 +64,14 @@ public class MainActivity extends AppCompatActivity
                 replace(R.id.main_activity_fragment_container, fragment).commit();
     }
 
+    private void loadRecipeFragment(){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = RecipesFragment.newInstance();
+        fragmentManager.beginTransaction().
+                replace(R.id.main_activity_fragment_container, fragment).commit();
+    }
+
     /***********************************************************************************************
      * Setup the Toolbar
      */
@@ -113,15 +121,18 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
 
         switch (item.getItemId()){
 
             case R.id.nav_home:
+                loadMain();
                 break;
+
+            case R.id.nav_recipe:
+                loadRecipeFragment();
+                break;
+
             case R.id.nav_about:
-                break;
-            case R.id.nav_settings:
                 break;
             case R.id.navigation_sub_item_1:
                 break;

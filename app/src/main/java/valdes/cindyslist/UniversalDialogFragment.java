@@ -73,7 +73,9 @@ public class UniversalDialogFragment extends DialogFragment {
         return fragment;
     }
 
-    // Required empty constructor
+    /***********************************************************************************************
+     * Required empty constructor
+     */
     public UniversalDialogFragment(){}
 
 

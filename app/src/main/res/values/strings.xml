@@ -2,7 +2,7 @@
     <string name="app_name">Cindy\'s List</string>
 
     <!-- view_created_lists -->
-    <!--  fragment_complete_list  -->
+    <!-- fragment_complete_list -->
     <string name="list_name">List: %1$s</string>
     <string name="date_created">Created: %1$s</string>
     <string name="total_cost">Total: $ %1$s</string>
@@ -38,6 +38,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="recipes">Recipes</string>
     <string name="products">Products</string>
+    <string name="home">Home</string>
 
 
     <!-- dialog_universal  -->
