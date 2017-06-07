@@ -74,6 +74,7 @@ public class DatabaseSchema {
             public static final String RECIPE_NAME = "recipe_name";
             public static final String PRODUCT = "product";
             public static final String MEASUREMENT = "measurement";
+            public static final String UNIT = "unit";
         }
     }
 

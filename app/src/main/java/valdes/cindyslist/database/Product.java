@@ -17,7 +17,6 @@ public class Product {
 
     /***********************************************************************************************
      * Constructor
-     *
      * Creates one instance of a product
      *
      * @param category          Category that product falls under
@@ -38,7 +37,6 @@ public class Product {
 
     /***********************************************************************************************
      * Constructor
-     *
      * Creates one instance of a product.
      *
      * @param category          Category that product falls under
