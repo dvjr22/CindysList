@@ -13,6 +13,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -51,6 +53,9 @@ public class UniversalDialogFragment extends DialogFragment {
     private int parentId;
     private List<String> categories;
     private String addedCategory;
+
+    // Dialog
+    AlertDialog dialog;
 
     // Listener setup in case I need to set it up
     private UniversalDialogFragmentListener listener;
@@ -101,30 +106,32 @@ public class UniversalDialogFragment extends DialogFragment {
         categoryName = (EditText) view.findViewById(R.id.univ_diag_edittext_add_category);
         categorySpinner = (Spinner) view.findViewById(R.id.univ_diag_spinner_category);
 
+        // Build dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        dialog = builder.setView(view).
+                setTitle(stringId).
+                setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                sendResult(Activity.RESULT_OK, parentId, listTitle.getText().toString(),
+                        addedCategory, productName.getText().toString());
+            }
+        }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                // TODO: 5/23/2017 need method to handle negative clicks
+                startActivity(MainActivity.newIntent(getContext()));
+            }
+        }).create();
+
         // Set visibility of layouts
         setDisplay();
 
-        // Return Dialog
-        return new AlertDialog.Builder(getActivity())
-                .setView(view)
-                .setTitle(stringId)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        sendResult(Activity.RESULT_OK, parentId, listTitle.getText().toString(),
-                                addedCategory, productName.getText().toString());
-                    }
-                }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        // TODO: 5/23/2017 need method to handle negative clicks
-                        startActivity(MainActivity.newIntent(getContext()));
-                    }
-                }).create();
+        return dialog;
     }
 
     /***********************************************************************************************
@@ -234,6 +241,9 @@ public class UniversalDialogFragment extends DialogFragment {
                 addProductLayout.setVisibility(View.GONE);
                 listTitle.setText(getResources().
                         getString(R.string.univ_diag_generic_title, Magic.getDate()));
+                // Show keyboard on launch with this layout
+                dialog.getWindow().setSoftInputMode
+                        (WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                 break;
         }
 
