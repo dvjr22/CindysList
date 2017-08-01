@@ -292,11 +292,12 @@ public class ListViewFragment extends Fragment {
 
         // List of objects to be displayed in RecyclerView
         private List<ListProduct> listProducts;
-        // List of CreatedList titles to track removal
+        // List of products to track removal
         private List<String> pendingRemoval;
 
-        // 3 sec time until delete
-        private static final int TIMEOUT = 3000;
+        // Sec time until delete
+        // TODO: 8/1/17 add time delay later
+        private static final int TIMEOUT = 0000;
         // Handler class to handle time delay
         private Handler handler = new Handler();
         // Map pending runnables. Allows cancelation if necessary
@@ -411,22 +412,27 @@ public class ListViewFragment extends Fragment {
         }
 
         /*******************************************************************************************
-         * Delete the CreatedList from existence
+         * Delete the ListProduct from existence
          *
-         * @param position      The position of the CreatedList within the adapter
+         * @param position      The position of the ListProduct within the adapter
          */
         private void deleteList(int position){
 
-            ListProduct createdList = listProducts.get(position);
+            ListProduct listProduct = listProducts.get(position);
 
-            if(pendingRemoval.contains(createdList.getProduct())){
-                pendingRemoval.remove(createdList.getProduct());
+            if(pendingRemoval.contains(listProduct.getProduct())){
+                pendingRemoval.remove(listProduct.getProduct());
             }
 
-            if(listProducts.contains(createdList)){
-                listProducts.remove(createdList);
+            if(listProducts.contains(listProduct)){
+                listProducts.remove(listProduct);
                 notifyItemRemoved(position);
-                databaseManager.deleteList(createdList.getProduct());
+
+                // Remove item form database
+                databaseManager.checkOffItem(listName, listProduct.getProduct());
+                // Update list totals
+                databaseManager.updateListItemTotal(listName);
+                databaseManager.updateListSum(listName);
             }
         }
 

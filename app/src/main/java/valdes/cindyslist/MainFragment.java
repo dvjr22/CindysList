@@ -311,8 +311,9 @@ public class MainFragment extends Fragment {
         // List of CreatedList titles to track removal
         private List<String> pendingRemoval;
 
-        // 3 sec time until delete
-        private static final int TIMEOUT = 3000;
+        // Sec time until delete
+        // TODO: 8/1/17 add time delay later 
+        private static final int TIMEOUT = 0000;
         // Handler class to handle time delay
         private Handler handler = new Handler();
         // Map pending runnables. Allows cancelation if necessary
