@@ -60,7 +60,7 @@ public class ListViewActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = ListViewFragment.newInstance(title);
         fragmentManager.beginTransaction().
-                add(R.id.list_view_activity_fragment_container, fragment).commit();
+                replace(R.id.list_view_activity_fragment_container, fragment).commit();
     }
 
     /***********************************************************************************************
